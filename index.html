@@ -832,627 +832,171 @@
     </style>
 </head>
 <body>
-    <!-- Loading overlay -->
-    <div id="loadingOverlay">
-        <div class="loader"></div>
-        <div id="loadingText">Loading Solar System...</div>
-    </div>
-
-    <!-- Skip to content link for accessibility -->
-    <a href="#main-content" class="skip-to-content">Skip to content</a>
-
-    <canvas id="solarSystemCanvas"></canvas>
-
-    <div id="controls">
-        <div class="control-row">
-            <label for="dateInput">Set Date:</label>
-            <input type="date" id="dateInput" aria-label="Set simulation date">
-            <button id="setDateButton">Go</button>
+  <div class="parallax-wrapper">
+    <div class="mountain-background"></div>
+    <div class="front-mountains"></div>
+    <header>
+      <nav class="container">
+        <div class="logo">Francesco Romano</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
         </div>
-        <div id="currentTimeDisplay" aria-live="polite">Loading date...</div>
-        <button id="performanceToggle" aria-pressed="false">Enable Low Performance Mode</button>
-    </div>
-
-    <div class="content-wrapper">
-        <header>
-            <nav class="container">
-                <div class="logo">Francesco Romano</div>
-                <div class="nav-links" role="navigation" aria-label="Main navigation">
-                    <a href="#about">About</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                <div class="burger" role="button" aria-label="Toggle menu" aria-expanded="false" tabindex="0">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </nav>
-        </header>
-
-        <main id="main-content">
-            <section class="hero">
-                <div class="hero-content">
-                    <h1 class="glowing-text">Hello, I'm Francesco</h1>
-                    <p>A Research Engineer in Teamed Autonomy focused on prototyping AI, robotics, and knowledge modeling systems that work in the real world. I build full-stack tools, AI pipelines, and semantic planning agents that interact with humans and environments.</p>
-                    <a class="cta-button" href="#contact">Get in Touch</a>
-                    <a class="resume-button" href="#" download aria-label="Download my resume">Download Resume</a>
-                </div>
-            </section>
-
-            <section id="about" class="about">
-                <div class="container about-grid">
-                    <div class="about-image">
-                        <img src="https://placehold.co/600x400/000000/FFFFFF?text=Your+Image" alt="Francesco Romano - Portfolio headshot">
-                        <div class="about-image-glow"></div>
-                    </div>
-                    <div class="about-content">
-                        <h3>About Me</h3>
-                        <p>MS in Computer Science from Texas A&M. BS in Computer Science and BA in Economics from EIU, where I was also an NCAA Division I runner. I love building fast, functional systems that solve problems at the edge of robotics, autonomy, and data.</p>
-                        <p>Currently working on semantic world modeling, graph-based mission planning, and LLM-driven prototypes for defense applications. Past experience includes LiDAR processing, drone hardware prototyping, and full-stack web dev in PHP, JS, and SQL.</p>
-                        <p>Also into gardening, 3D printing, philosophy, and chess. Based in Bryan, TX. Always open to collaborating on high-impact tech.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="skills" class="skills">
-                <div class="container">
-                    <h2 class="section-title">Skills</h2>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">💻</div>
-                            <h3>Frontend & UI</h3>
-                            <p>HTML, CSS, JavaScript, React</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">🛠️</div>
-                            <h3>Backend & Data</h3>
-                            <p>Python, Java, C++, PHP, SQL, R, Matlab, Ruby</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">☁️</div>
-                            <h3>DevOps & Infra</h3>
-                            <p>Docker, Linux, Nginx, AWS, GCP</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">🤖</div>
-                            <h3>Robotics & AI</h3>
-                            <p>ROS, OpenCV, PyTorch, TensorFlow, Lidar & 3D Mapping</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="projects" class="projects">
-                <div class="container">
-                    <h2 class="section-title">Recent Projects</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="https://placehold.co/600x400/000000/FFFFFF?text=Project+Image+1" alt="Semantic World Modeling visualization">
-                            </div>
-                            <div class="project-content">
-                                <h3>Semantic World Modeling</h3>
-                                <p>Ontology-driven agent environment representations used in graph planners to enable autonomous mission planning.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">OWL</span>
-                                    <span class="project-tag">RDF</span>
-                                    <span class="project-tag">Python</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" aria-label="Learn more about Semantic World Modeling">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="https://placehold.co/600x400/000000/FFFFFF?text=Project+Image+2" alt="Drone with infrared camera modification">
-                            </div>
-                            <div class="project-content">
-                                <h3>Drone IR Mod</h3>
-                                <p>3D printed and mounted an infrared camera system on a drone; collected and processed LiDAR and thermal data.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">3D Printing</span>
-                                    <span class="project-tag">LiDAR</span>
-                                    <span class="project-tag">Infrared</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" aria-label="Learn more about Drone IR Mod">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="https://placehold.co/600x400/000000/FFFFFF?text=Project+Image+3" alt="HappyPlant App Screenshot showing plant watering interface">
-                            </div>
-                            <div class="project-content">
-                                <h3>HappyPlant – Smart Watering Assistant</h3>
-                                <p>A Flask web app that uses plant photo identification (PlantNet API), OpenCV-based pot volume estimation, and botanical heuristics to recommend personalized watering schedules.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Flask</span>
-                                    <span class="project-tag">OpenCV</span>
-                                    <span class="project-tag">PlantNet API</span>
-                                    <span class="project-tag">Computer Vision</span>
-                                    <span class="project-tag">QR Code</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/fwromano/happyplant" target="_blank" aria-label="View HappyPlant project on GitHub">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="contact">
-                <div class="container">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">📍</div>
-                            <div>
-                                <h3>Location</h3>
-                                <p>Bryan, TX</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">📧</div>
-                            <div>
-                                <h3>Email</h3>
-                                <p><a href="mailto:Fwromano15@gmail.com" aria-label="Email me at Fwromano15@gmail.com">Fwromano15@gmail.com</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">💼</div>
-                            <div>
-                                <h3>GitHub</h3>
-                                <p><a href="https://www.github.com/fwromano" target="_blank" aria-label="View my GitHub profile">github.com/fwromano</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="container">
-                <div class="social-links">
-                    <a href="https://github.com/fwromano" class="social-link" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/" class="social-link" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://twitter.com/" class="social-link" target="_blank" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-                <div class="copyright">
-                    &copy; 2025 Francesco Romano. All Rights Reserved.
-                </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="glowing-text">Hello, I'm Francesco</h1>
+        <p>A Research Engineer in Teamed Autonomy focused on prototyping AI, robotics, and knowledge modeling systems that work in the real world. I build full-stack tools, AI pipelines, and semantic planning agents that interact with humans and environments.</p>
+        <a class="cta-button" href="#contact">Get in Touch</a>
+      </div>
+    </section>
+    <section id="about" class="about">
+      <div class="container about-grid">
+        <div class="about-image">
+          <img src="franky.jpg" alt="Francesco Romano">
+          <div class="about-image-glow"></div>
+        </div>
+        <div class="about-content">
+          <h3>About Me</h3>
+          <p>MS in Computer Science from Texas A&M. BS in Computer Science and BA in Economics from EIU, where I was also an NCAA Division I runner. I love building fast, functional systems that solve problems at the edge of robotics, autonomy, and data.</p>
+          <p>Currently working on semantic world modeling, graph-based mission planning, and LLM-driven prototypes for defense applications. Past experience includes LiDAR processing, drone hardware prototyping, and full-stack web dev in PHP, JS, and SQL.</p>
+          <p>Also into gardening, 3D printing, philosophy, and chess. Based in Bryan, TX. Always open to collaborating on high-impact tech.</p>
+        </div>
+      </div>
+    </section>
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon">💻</div>
+            <h3>Frontend & UI</h3>
+            <p>HTML, CSS, JavaScript, React</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">🛠️</div>
+            <h3>Backend & Data</h3>
+            <p>Python, Java, C++, PHP, SQL, R, Matlab, Ruby</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">☁️</div>
+            <h3>DevOps & Infra</h3>
+            <p>Docker, Linux, Nginx, AWS, GCP</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">🤖</div>
+            <h3>Robotics & AI</h3>
+            <p>ROS, OpenCV, PyTorch, TensorFlow, Lidar & 3D Mapping</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title">Recent Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image"><img src="wolf.jpg" alt="Lidar Mapping"></div>
+            <div class="project-content">
+              <h3>Semantic World Modeling</h3>
+              <p>Ontology-driven agent environment representations used in graph planners to enable autonomous mission planning.</p>
+              <div class="project-tags">
+                <span class="project-tag">OWL</span>
+                <span class="project-tag">RDF</span>
+                <span class="project-tag">Python</span>
+              </div>
             </div>
-        </footer>
-    </div>
-
-    <!-- Add Font Awesome for social icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-
-    <script>
-        // --- Loading Screen ---
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        
-        // Wait for resources to load
-        window.addEventListener('load', () => {
-            // Show loading screen for at least 1.5 seconds
-            setTimeout(() => {
-                loadingOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                }, 500);
-            }, 1500);
-        });
-
-        // --- Performance Mode Toggle ---
-        const performanceToggle = document.getElementById('performanceToggle');
-        let lowPerformanceMode = false;
-        
-        performanceToggle.addEventListener('click', () => {
-            lowPerformanceMode = !lowPerformanceMode;
-            document.body.classList.toggle('low-performance', lowPerformanceMode);
-            performanceToggle.textContent = lowPerformanceMode ? 
-                'Disable Low Performance Mode' : 'Enable Low Performance Mode';
-            performanceToggle.setAttribute('aria-pressed', lowPerformanceMode);
-            
-            // Adjust animation framerate based on performance mode
-            requestAnimationFrameRate = lowPerformanceMode ? 20 : 60;
-        });
-
-        // --- Burger Menu Toggle (for smaller screens) ---
-        const burger = document.querySelector('.burger');
-        const navLinks = document.querySelector('.nav-links');
-
-        burger.addEventListener('click', () => {
-            const expanded = navLinks.classList.toggle('active');
-            burger.setAttribute('aria-expanded', expanded);
-        });
-
-        // Keyboard accessibility for burger menu
-        burger.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                burger.click();
-            }
-        });
-
-        // --- Three.js Solar System Simulation ---
-        
-        // --- Scene Setup ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ 
-            canvas: document.getElementById('solarSystemCanvas'), 
-            antialias: true,
-            powerPreference: 'high-performance' 
-        });
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio); // Limit pixel ratio for performance
-
-        // --- Lighting ---
-        // Add ambient light to see the planets and moons
-        const ambientLight = new THREE.AmbientLight(0x333333);
-        scene.add(ambientLight);
-
-        // Add a point light at the position of the sun
-        const sunLight = new THREE.PointLight(0xffffff, 1, 0);
-        scene.add(sunLight);
-
-        // --- Solar System Objects ---
-
-        // Sun (Center)
-        const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
-        const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-        scene.add(sun);
-        sunLight.position.copy(sun.position); // Position the light at the sun
-
-        // --- Optimize Solar System for Performance ---
-        // Reduce planet detail based on device
-        const isMobile = window.innerWidth < 768;
-        const planetDetail = isMobile ? 16 : 32;
-        const moonDetail = isMobile ? 8 : 16;
-
-        // Planets (Using simplified data, basic materials, approximate orbital periods, and moon data)
-        const planetsData = [
-            {
-                name: 'Mercury', radius: 0.5, distance: 10, color: 0x8a8a8a, orbitalPeriodDays: 88, moons: []
-            },
-            {
-                name: 'Venus', radius: 0.8, distance: 15, color: 0xffa500, orbitalPeriodDays: 225, moons: []
-            },
-            {
-                name: 'Earth', radius: 1, distance: 20, color: 0x0000ff, orbitalPeriodDays: 365.25,
-                moons: [
-                    { name: 'Moon', radius: 0.2, distance: 2, color: 0xcccccc, orbitalPeriodDays: 27.3 }
-                ]
-            },
-            {
-                name: 'Mars', radius: 0.7, distance: 25, color: 0xff0000, orbitalPeriodDays: 687,
-                moons: [
-                    { name: 'Phobos', radius: 0.1, distance: 0.5, color: 0x888888, orbitalPeriodDays: 0.3 },
-                    { name: 'Deimos', radius: 0.08, distance: 1, color: 0x777777, orbitalPeriodDays: 1.26 }
-                ]
-            },
-            {
-                name: 'Jupiter', radius: 3, distance: 40, color: 0xffd700, orbitalPeriodDays: 4333,
-                moons: isMobile ? 
-                [{ name: 'Io', radius: 0.4, distance: 5, color: 0xffa500, orbitalPeriodDays: 1.77 }] : 
-                [
-                    { name: 'Io', radius: 0.4, distance: 5, color: 0xffa500, orbitalPeriodDays: 1.77 },
-                    { name: 'Europa', radius: 0.35, distance: 7, color: 0xaaaaaa, orbitalPeriodDays: 3.55 },
-                    { name: 'Ganymede', radius: 0.5, distance: 10, color: 0xbbbbbb, orbitalPeriodDays: 7.15 },
-                    { name: 'Callisto', radius: 0.45, distance: 15, color: 0x999999, orbitalPeriodDays: 16.69 }
-                ]
-            },
-            {
-                name: 'Saturn', radius: 2.5, distance: 55, color: 0xdaa520, orbitalPeriodDays: 10759,
-                 moons: [
-                    { name: 'Titan', radius: 0.6, distance: 8, color: 0xf5f5dc, orbitalPeriodDays: 15.95 }
-                ]
-            },
-            {
-                name: 'Uranus', radius: 2, distance: 70, color: 0xadd8e6, orbitalPeriodDays: 30687,
-                 moons: [
-                    { name: 'Miranda', radius: 0.2, distance: 3, color: 0xcccccc, orbitalPeriodDays: 1.41 }
-                ]
-            },
-            {
-                name: 'Neptune', radius: 2, distance: 85, color: 0x00008b, orbitalPeriodDays: 60190,
-                 moons: [
-                    { name: 'Triton', radius: 0.3, distance: 4, color: 0xabcdef, orbitalPeriodDays: 5.88 }
-                ]
-            }
-        ];
-
-        const planets = [];
-        planetsData.forEach(data => {
-            // Create Planet
-            const planetGeometry = new THREE.SphereGeometry(data.radius, planetDetail, planetDetail);
-            const planetMaterial = new THREE.MeshStandardMaterial({ color: data.color });
-            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
-            planet.userData = { distance: data.distance, orbitalPeriodDays: data.orbitalPeriodDays };
-            scene.add(planet);
-            planets.push(planet);
-
-            // Optional: Add orbit lines (simplified circles)
-            const orbitGeometry = new THREE.RingGeometry(data.distance - 0.1, data.distance + 0.1, 64);
-            const orbitMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xffffff, 
-                side: THREE.DoubleSide,
-                transparent: true, 
-                opacity: 0.3 
-            });
-            const orbit = new THREE.Mesh(orbitGeometry, orbitMaterial);
-            orbit.rotation.x = Math.PI / 2; // Rotate to be horizontal
-            scene.add(orbit);
-
-            // Create Moons for the Planet
-            if (data.moons && data.moons.length > 0) {
-                planet.userData.moons = []; // Array to store moon meshes
-                data.moons.forEach(moonData => {
-                    const moonGeometry = new THREE.SphereGeometry(moonData.radius, moonDetail, moonDetail);
-                    const moonMaterial = new THREE.MeshStandardMaterial({ color: moonData.color });
-                    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-                    // Store moon's orbital data relative to the planet
-                    moon.userData = { distance: moonData.distance, orbitalPeriodDays: moonData.orbitalPeriodDays };
-                    planet.add(moon); // Add moon as a child of the planet
-                    planet.userData.moons.push(moon); // Store moon mesh in planet's userData
-                });
-            }
-        });
-
-        // --- Camera Position ---
-        camera.position.z = 100;
-        camera.position.y = 50;
-        camera.lookAt(0, 0, 0); // Look at the center of the scene (the sun)
-
-        // --- Animation Variables ---
-        let scrollTimeOffsetDays = 0; // Time offset in days due to scrolling
-        // Adjusted timeScale: A typical scroll deltaY is around 100.
-        // To make 1 scroll unit (deltaY of ~100) equal to 1 day, timeScale = 1 day / 100 deltaY = 0.01.
-        const timeScale = 0.01;
-        let baseTimeOffsetDays = 0; // Time offset in days based on the selected date
-        let requestAnimationFrameRate = 60; // Default frame rate
-        let lastFrameTime = 0;
-        let isScrolling = false;
-        let scrollTimeout;
-
-        // --- Reference Date (January 1, 2000, 00:00 UTC) ---
-        const referenceDate = new Date(Date.UTC(2000, 0, 1, 0, 0, 0));
-
-        // --- Get Time Display Element ---
-        const currentTimeDisplay = document.getElementById('currentTimeDisplay');
-
-        // --- Function to Set Planet Positions Based on Date ---
-        function setPlanetPositionsByDate(dateString) {
-            const selectedDate = new Date(dateString);
-            if (isNaN(selectedDate)) {
-                console.error("Invalid date entered.");
-                return;
-            }
-
-            // Calculate the difference in days between the selected date and the reference date
-            const timeDiffMilliseconds = selectedDate.getTime() - referenceDate.getTime();
-            baseTimeOffsetDays = timeDiffMilliseconds / (1000 * 60 * 60 * 24);
-
-            // Reset the scroll-based time offset when a new date is set
-            scrollTimeOffsetDays = 0;
-        }
-
-        // --- Event Listener for Set Date Button ---
-        document.getElementById('setDateButton').addEventListener('click', () => {
-            const dateInput = document.getElementById('dateInput');
-            setPlanetPositionsByDate(dateInput.value);
-        });
-
-        // --- Scroll Event Listener with throttling ---
-        window.addEventListener('wheel', (event) => {
-            // Set scrolling flag to true
-            isScrolling = true;
-            
-            // Clear any existing timeout
-            clearTimeout(scrollTimeout);
-            
-            // Set a timeout to reset the scrolling flag
-            scrollTimeout = setTimeout(() => {
-                isScrolling = false;
-            }, 150);
-            
-            // event.deltaY is positive when scrolling down, negative when scrolling up
-            // We want each scroll unit (approx 100 deltaY) to be 1 day.
-            scrollTimeOffsetDays += event.deltaY * timeScale;
-        });
-
-        // --- Mouse Controls for Camera (Basic Orbit) ---
-        let isDragging = false;
-        let previousMousePosition = { x: 0, y: 0 };
-
-        renderer.domElement.addEventListener('mousedown', (event) => {
-            isDragging = true;
-            previousMousePosition.x = event.clientX;
-            previousMousePosition.y = event.clientY;
-        });
-
-        renderer.domElement.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-
-        renderer.domElement.addEventListener('mousemove', (event) => {
-            if (!isDragging) return;
-
-            const deltaX = event.clientX - previousMousePosition.x;
-            const deltaY = event.clientY - previousMousePosition.y;
-
-            // Rotate camera around the center (sun)
-            const rotationSpeed = 0.005;
-            const angleX = deltaX * rotationSpeed;
-            const angleY = deltaY * rotationSpeed;
-
-            // Get the current camera position relative to the origin
-            const currentPos = camera.position.clone();
-
-            // Rotate around the Y axis (horizontal drag)
-            const quaternionY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -angleX);
-            currentPos.applyQuaternion(quaternionY);
-
-            // Rotate around the X axis (vertical drag) - be careful not to flip
-            const currentUp = camera.up.clone();
-            const axisX = new THREE.Vector3().crossVectors(currentUp, currentPos).normalize();
-            const quaternionX = new THREE.Quaternion().setFromAxisAngle(axisX, -angleY);
-
-            // Apply rotation, but prevent camera from going below the plane
-            const newPos = currentPos.clone().applyQuaternion(quaternionX);
-            if (newPos.y > -10) { // Prevent camera from going too far below the origin plane
-                camera.position.copy(newPos);
-            }
-
-            camera.lookAt(0, 0, 0); // Keep looking at the sun
-
-            previousMousePosition.x = event.clientX;
-            previousMousePosition.y = event.clientY;
-        });
-
-        // Mobile touch support
-        let touchStartPosition = { x: 0, y: 0 };
-        
-        renderer.domElement.addEventListener('touchstart', (event) => {
-            if (event.touches.length === 1) {
-                touchStartPosition.x = event.touches[0].clientX;
-                touchStartPosition.y = event.touches[0].clientY;
-                isDragging = true;
-            }
-        });
-        
-        renderer.domElement.addEventListener('touchmove', (event) => {
-            if (isDragging && event.touches.length === 1) {
-                // Calculate delta from touch start
-                const deltaX = event.touches[0].clientX - touchStartPosition.x;
-                const deltaY = event.touches[0].clientY - touchStartPosition.y;
-                
-                // Update touch start for continuous movement
-                touchStartPosition.x = event.touches[0].clientX;
-                touchStartPosition.y = event.touches[0].clientY;
-                
-                // Same rotation logic as mouse
-                const rotationSpeed = 0.01;
-                const angleX = deltaX * rotationSpeed;
-                const angleY = deltaY * rotationSpeed;
-                
-                const currentPos = camera.position.clone();
-                
-                const quaternionY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -angleX);
-                currentPos.applyQuaternion(quaternionY);
-                
-                const axisX = new THREE.Vector3().crossVectors(camera.up, currentPos).normalize();
-                const quaternionX = new THREE.Quaternion().setFromAxisAngle(axisX, -angleY);
-                
-                const newPos = currentPos.clone().applyQuaternion(quaternionX);
-                if (newPos.y > -10) {
-                    camera.position.copy(newPos);
-                }
-                
-                camera.lookAt(0, 0, 0);
-                
-                // Prevent default to avoid scrolling the page
-                event.preventDefault();
-            }
-        });
-        
-        renderer.domElement.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-
-        // --- Animation Loop with performance optimization ---
-        function animate(currentTime) {
-            requestAnimationFrame(animate);
-            
-            // Throttle the frame rate when not interacting
-            if (!isScrolling && !isDragging && lowPerformanceMode) {
-                // Skip frames based on frame rate when in low performance mode and not interacting
-                if (currentTime - lastFrameTime < 1000 / requestAnimationFrameRate) {
-                    return;
-                }
-            }
-            
-            lastFrameTime = currentTime;
-
-            // Calculate the total simulated days since the reference date
-            const totalDays = baseTimeOffsetDays + scrollTimeOffsetDays;
-
-            // Update planet and moon positions based on total simulated days
-            planets.forEach(planet => {
-                // Calculate the planet's angle based on the fraction of its orbit completed
-                const planetFractionOfOrbit = totalDays / planet.userData.orbitalPeriodDays;
-                const planetAngle = (planetFractionOfOrbit * 2 * Math.PI);
-
-                // Calculate planet position using polar coordinates (distance and angle) relative to the sun
-                const planetX = planet.userData.distance * Math.cos(planetAngle);
-                const planetZ = planet.userData.distance * Math.sin(planetAngle);
-                const planetY = 0; // Keep planets on the same plane for simplicity
-
-                planet.position.set(planetX, planetY, planetZ);
-
-                // Update moon positions relative to the planet
-                if (planet.userData.moons) {
-                    planet.userData.moons.forEach(moon => {
-                         // Calculate the moon's angle based on the fraction of its orbit around the planet
-                        const moonFractionOfOrbit = totalDays / moon.userData.orbitalPeriodDays;
-                        const moonAngle = (moonFractionOfOrbit * 2 * Math.PI);
-
-                        // Calculate moon position using polar coordinates (distance and angle) relative to the planet
-                        const moonX = moon.userData.distance * Math.cos(moonAngle);
-                        const moonZ = moon.userData.distance * Math.sin(moonAngle);
-                        const moonY = 0; // Keep moons on the same plane relative to the planet for simplicity
-
-                        moon.position.set(moonX, moonY, moonZ);
-                    });
-                }
-            });
-
-            // --- Update Current Time Display ---
-            // Calculate the date based on the reference date and total days
-            const simulatedDate = new Date(referenceDate.getTime() + totalDays * (1000 * 60 * 60 * 24));
-            // Display only the date part
-            currentTimeDisplay.textContent = `Simulated Date: ${simulatedDate.toLocaleDateString()}`;
-
-            renderer.render(scene, camera);
-        }
-
-        // Start the animation loop
-        window.onload = function () {
-             // Set an initial date (e.g., today's date) when the page loads
-             const today = new Date().toISOString().split('T')[0];
-             document.getElementById('dateInput').value = today;
-             setPlanetPositionsByDate(today);
-
-             // Start animation
-             animate();
-
-             // Add event listener for burger menu toggle after the DOM is loaded
-             const burger = document.querySelector('.burger');
-             const navLinks = document.querySelector('.nav-links');
-             burger.addEventListener('click', () => {
-                 navLinks.classList.toggle('active');
-             });
-        }
-
-        // --- Handle Window Resize ---
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+          </div>
+          <div class="project-card">
+            <div class="project-image"><img src="drone.jpg" alt="Drone Infrared"></div>
+            <div class="project-content">
+              <h3>Drone IR Mod</h3>
+              <p>3D printed and mounted an infrared camera system on a drone; collected and processed LiDAR and thermal data.</p>
+              <div class="project-tags">
+                <span class="project-tag">3D Printing</span>
+                <span class="project-tag">LiDAR</span>
+                <span class="project-tag">Infrared</span>
+              </div>
+            </div>
+          
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img src="plant.jpg" alt="HappyPlant App Screenshot">
+            </div>
+            <div class="project-content">
+              <h3>HappyPlant – Smart Watering Assistant</h3>
+              <p>A Flask web app that uses plant photo identification (PlantNet API), OpenCV-based pot volume estimation, and botanical heuristics to recommend personalized watering schedules.</p>
+              <div class="project-tags">
+                <span class="project-tag">Flask</span>
+                <span class="project-tag">OpenCV</span>
+                <span class="project-tag">PlantNet API</span>
+                <span class="project-tag">Computer Vision</span>
+                <span class="project-tag">QR Code</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/fwromano/happyplant" target="_blank">GitHub</a>
+                <!-- TODO: Add if deployed -->
+                <!-- <a href="https://your-deployment-url.com" target="_blank">Live Demo</a> -->
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="contact">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h3>Location</h3>
+              <p>Bryan, TX</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <h3>Email</h3>
+              <p><a href="mailto:Fwromano15@gmail.com">Fwromano15@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div>
+              <h3>GitHub</h3>
+              <p><a href="https://www.github.com/fwromano">github.com/fwromano</a></p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+    <footer>
+      <div class="container">
+        <div class="copyright">
+          &copy; 2025 Francesco Romano. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
