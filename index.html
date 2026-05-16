@@ -3,1469 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco Romano - Portfolio</title>
+    <title>Francesco Romano — Research Engineer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
-    <!-- Add preconnect for CDN resources -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2a4066;
-            --secondary-color: #166088;
-            --accent-color: #64ecf5;
-            --text-color: #f0f0f0;
-            --light-bg: #1a1f35;
-            --dark-bg: #0f1525;
-            --white: #ffffff;
+            --accent: #5ce0d6;
+            --accent-dim: rgba(92,224,214,0.10);
+            --accent-glow: rgba(92,224,214,0.25);
+            --text: #e8eaf0;
+            --text-dim: rgba(232,234,240,0.55);
+            --text-mid: rgba(232,234,240,0.78);
+            --s1: #0c1220; --s2: #111827; --s3: #1a2238;
+            --card: rgba(18,26,46,0.88);
+            --border: rgba(92,224,214,0.07);
+            --bh: rgba(92,224,214,0.2);
+            --font: 'DM Sans', sans-serif;
+            --mono: 'IBM Plex Mono', monospace;
         }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font);color:var(--text);background:var(--s1);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        a{color:var(--accent);text-decoration:none;transition:color .2s}a:hover{color:#fff}
+        .container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Canvas & Orrery */
+        #c{position:fixed;inset:0;width:100vw;height:100vh;z-index:0}
+        #planetLabel{
+            position:fixed;pointer-events:none;z-index:5;
+            font-family:var(--mono);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;
+            color:var(--accent);background:rgba(12,18,32,.7);backdrop-filter:blur(8px);
+            padding:4px 10px;border-radius:4px;border:1px solid var(--bh);
+            opacity:0;transition:opacity .2s;white-space:nowrap;
         }
+        #planetLabel.show{opacity:1}
+        #timeDisp{
+            position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:5;
+            font-family:var(--mono);font-size:.7rem;letter-spacing:.5px;
+            color:var(--text-dim);background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+            padding:5px 14px;border-radius:6px;border:1px solid var(--border);
+            opacity:0;transition:opacity .4s;pointer-events:none;
+        }
+        #timeDisp.show{opacity:.7}
 
-        body {
-            color: var(--text-color);
-            background-color: var(--dark-bg); /* Fallback background */
-            line-height: 1.6;
-            overflow-x: hidden;
-            /* Add padding to the bottom to create scrollable space below content */
-            padding-bottom: 150vh; /* Reduced padding for better user experience */
-        }
-
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--white);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1; /* Ensure content is above the canvas */
-        }
-
-        /* Style the solar system canvas to be fixed in the background */
-        #solarSystemCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1; /* Place it behind all other content */
-            display: block;
-        }
-
-        /* Loading overlay */
-        #loadingOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--dark-bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader {
-            border: 5px solid rgba(100, 236, 245, 0.1);
-            border-radius: 50%;
-            border-top: 5px solid var(--accent-color);
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #loadingText {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-        }
-
-        /* Style the controls to be fixed at the bottom left */
-        #controls {
-            position: fixed;
-            bottom: 10px; /* Position at the bottom */
-            left: 10px;
-            z-index: 10; /* Make sure controls are above content */
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
-            padding: 10px;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            color: var(--text-color);
-        }
-
-        #controls .control-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #controls label {
-            color: var(--text-color);
-        }
-
-        #controls input[type="date"],
-        #controls button {
-            padding: 5px;
-            border: none;
-            border-radius: 3px;
-        }
-
-        #controls button {
-            background-color: var(--accent-color); /* Using accent color for button */
-            color: var(--dark-bg); /* Using dark background color for button text */
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        #controls button:hover {
-            background-color: var(--secondary-color); /* Hover effect */
-            transform: translateY(-2px);
-        }
-
-        #currentTimeDisplay {
-            font-size: 1em;
-            color: var(--text-color);
-        }
-
-        /* Performance toggle button */
-        #performanceToggle {
-            margin-top: 10px;
-        }
+        /* Loading */
+        #lo{position:fixed;inset:0;background:var(--s1);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .6s}
+        .ld{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin-bottom:14px}
+        @keyframes sp{to{transform:rotate(360deg)}}
+        #lo span{color:var(--text-dim);font-family:var(--mono);font-size:.8rem;letter-spacing:.5px}
 
         /* Header */
-        header {
-            background-color: rgba(15, 21, 37, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            position: relative;
-            padding: 5px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .burger {
-            display: none; /* Hidden by default, shown on smaller screens */
-            cursor: pointer;
-        }
-         /* Burger icon styles (for smaller screens) */
-        .burger .line {
-            width: 30px;
-            height: 3px;
-            background-color: var(--accent-color);
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-
-
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            color: var(--white);
-            text-align: center;
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-            margin-top: 80px; /* Offset for fixed header */
-             /* Ensure hero content is above the canvas but below the header */
-            z-index: 2;
-        }
-
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            transform-style: preserve-3d;
-            animation: float 6s ease-in-out infinite;
-            backdrop-filter: blur(5px);
-            background-color: rgba(26, 31, 53, 0.3); /* Semi-transparent background */
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(100, 236, 245, 0.1);
-            border: 1px solid rgba(100, 236, 245, 0.1);
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateZ(0px) translateY(0px);
-            }
-            50% {
-                transform: translateZ(20px) translateY(-10px);
-            }
-            100% {
-                transform: translateZ(0px) translateY(0px);
-            }
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .glowing-text {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--accent-color), 0 0 20px var(--accent-color);
-            }
-            to {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent-color), 0 0 40px var(--accent-color);
-            }
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--dark-bg);
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            border: 2px solid var(--accent-color);
-        }
-
-        .cta-button:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            background-color: var(--white);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover {
-            color: var(--dark-bg);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(100, 236, 245, 0.4);
-        }
-
-        .cta-button:hover:before {
-            width: 100%;
-        }
-
-
-        /* About Section enhancements */
-        .about {
-            padding: 150px 0;
-            position: relative;
-            background-color: rgba(15, 21, 37, 0.9); /* Semi-transparent background */
-            backdrop-filter: blur(10px);
-            z-index: 1;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .about-image {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .about-image img {
-            width: 100%;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-image-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(100, 236, 245, 0.2) 0%, rgba(15, 21, 37, 0) 70%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .about-image:hover .about-image-glow {
-            opacity: 1;
-        }
-
-        .about-content h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(100, 236, 245, 0.3);
-        }
-
-        .about-content p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* Section titles enhancement */
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 70px;
-            color: var(--accent-color);
-            position: relative;
-            text-shadow: 0 0 15px rgba(100, 236, 245, 0.3);
-        }
-
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
-        }
-
-        /* Skills Section enhancements */
-        .skills {
-            padding: 150px 0;
-            position: relative;
-            background-color: rgba(26, 31, 53, 0.95); /* Semi-transparent background */
-            z-index: 1;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-card {
-            background-color: rgba(15, 21, 37, 0.8); /* Semi-transparent background */
-            border-radius: 15px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            border: 1px solid rgba(100, 236, 245, 0.1);
-            backdrop-filter: blur(5px);
-        }
-
-        .skill-card:hover {
-            transform: rotateY(10deg) rotateX(10deg) translateY(-10px);
-            box-shadow: -10px 10px 30px rgba(100, 236, 245, 0.2);
-            border: 1px solid rgba(100, 236, 245, 0.3);
-        }
-
-        .skill-icon {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-            color: var(--accent-color);
-            text-shadow: 0 0 15px var(--accent-color);
-        }
-
-        .skill-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--white);
-        }
-
-        .skill-card p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-        }
-
-        /* Projects Section enhancements */
-        .projects {
-            padding: 150px 0;
-            position: relative;
-            background-color: rgba(15, 21, 37, 0.9); /* Semi-transparent background */
-            z-index: 1;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .project-card {
-            background-color: rgba(26, 31, 53, 0.8); /* Semi-transparent background */
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            border: 1px solid rgba(100, 236, 245, 0.1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 0 25px 50px rgba(100, 236, 245, 0.2);
-            border: 1px solid rgba(100, 236, 245, 0.3);
-        }
-
-        .project-card .project-image {
-            transform: translateZ(20px);
-            transition: transform 0.5s ease;
-            height: 220px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card:hover .project-image {
-            transform: translateZ(40px);
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .project-card:hover .project-image img {
-            transform: scale(1.1);
-        }
-
-        .project-content {
-            padding: 30px;
-            position: relative;
-        }
-
-        .project-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--accent-color);
-        }
-
-        .project-content p {
-            margin-bottom: 25px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .project-tag {
-            background-color: rgba(100, 236, 245, 0.1);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            border: 1px solid rgba(100, 236, 245, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .project-tag:hover {
-            background-color: rgba(100, 236, 245, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .project-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .project-links a {
-            position: relative;
-            padding: 3px 0;
-        }
-
-        .project-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 5px var(--accent-color);
-        }
-
-        .project-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Contact Section enhancements - Simplified for static page */
-        .contact {
-            padding: 150px 0;
-            position: relative;
-            background-color: rgba(26, 31, 53, 0.9); /* Semi-transparent background */
-            z-index: 1;
-            text-align: center;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(100, 236, 245, 0.1);
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            box-shadow: 0 0 15px rgba(100, 236, 245, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover .contact-icon {
-            background-color: var(--accent-color);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px rgba(100, 236, 245, 0.5);
-        }
-
-        .contact-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            color: var(--white);
-        }
-
-        .contact-item p {
-            color: var(--accent-color);
-        }
-
-        /* Footer enhancements */
-        footer {
-            background-color: var(--dark-bg); /* Solid background for footer */
-            color: var(--white);
-            padding: 40px 0 20px;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background-color: rgba(100, 236, 245, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(100, 236, 245, 0.3);
-        }
-
-        .social-link:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(100, 236, 245, 0.3);
-        }
-
-        .social-link i {
-            transition: all 0.3s ease;
-            color: var(--white);
-            font-size: 1.2rem;
-        }
-
-        .social-link:hover i {
-            color: var(--dark-bg);
-        }
-
-        .copyright {
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* Resume button */
-        .resume-button {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: var(--white);
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .resume-button:hover {
-            background-color: var(--accent-color);
-            color: var(--dark-bg);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(100, 236, 245, 0.3);
-        }
-
-        /* Skip to content - Accessibility */
-        .skip-to-content {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            background: var(--accent-color);
-            color: var(--dark-bg);
-            padding: 10px 20px;
-            z-index: 9999;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .skip-to-content:focus {
-            left: 10px;
-            top: 10px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            /* Simplify solar system on larger tablets */
-            .low-performance #solarSystemCanvas {
-                opacity: 0.6;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Hide nav links by default on small screens */
-                position: absolute;
-                top: 80px; /* Adjust based on header height */
-                left: 0;
-                width: 100%;
-                background-color: rgba(15, 21, 37, 0.95);
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(100, 236, 245, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex; /* Show nav links when active */
-            }
-
-            .burger {
-                display: flex; /* Show burger icon on small screens */
-                flex-direction: column;
-                justify-content: space-between;
-                width: 30px;
-                height: 20px;
-                cursor: pointer;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-             /* Adjust controls position for smaller screens if needed */
-            #controls {
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                flex-direction: row; /* Display controls in a row */
-                gap: 15px;
-                align-items: center;
-            }
-             #controls .control-row {
-                flex-direction: row;
-                gap: 10px;
-            }
-             #currentTimeDisplay {
-                margin-top: 0; /* Remove top margin when in a row */
-            }
-            
-            /* On mobile, reduce complexity significantly */
-            body.low-performance #solarSystemCanvas {
-                opacity: 0.4;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-content {
-                padding: 30px 20px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-             #controls {
-                flex-direction: column; /* Stack controls vertically again on very small screens */
-                left: 10px;
-                transform: none;
-                align-items: flex-start;
-            }
-             #currentTimeDisplay {
-                margin-top: 10px; /* Add margin back */
-            }
-        }
+        header{position:fixed;width:100%;top:0;z-index:1000;background:rgba(12,18,32,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+        nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+        .logo{font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--accent);letter-spacing:-.3px}
+        .nl{display:flex;gap:28px}
+        .nl a{font-size:.88rem;font-weight:500;color:var(--text-dim);padding:4px 0;position:relative}
+        .nl a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--accent);transition:width .25s}
+        .nl a:hover{color:var(--text)}.nl a:hover::after{width:100%}
+        .burger{display:none;cursor:pointer}.burger .line{width:22px;height:2px;background:var(--accent);margin:4px 0}
+
+        /* Reveal */
+        .rv{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+        .rv.vis{opacity:1;transform:none}
+        .rvs{transition-delay:calc(var(--i,0)*.08s)}
+
+        /* Hero */
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;z-index:2;padding-top:60px}
+        .hero-content{backdrop-filter:blur(12px);background:rgba(17,24,39,.38);padding:52px 44px;border-radius:18px;border:1px solid var(--border);max-width:720px;animation:hIn .9s cubic-bezier(.16,1,.3,1) .3s both}
+        @keyframes hIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+        .hero h1{font-size:3rem;font-weight:700;letter-spacing:-1.5px;margin-bottom:6px;background:linear-gradient(135deg,#fff 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-sub{font-family:var(--mono);font-size:.85rem;color:var(--accent);margin-bottom:24px;letter-spacing:.3px;opacity:.8}
+        .hero p{font-size:1.05rem;color:var(--text-mid);max-width:600px;margin:0 auto 28px;line-height:1.75}
+        .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .btn{display:inline-block;font-family:var(--mono);font-size:.82rem;font-weight:500;padding:11px 26px;border-radius:8px;transition:all .25s}
+        .btn-primary{background:var(--accent-dim);color:var(--accent);border:1px solid var(--bh)}
+        .btn-primary:hover{background:var(--accent);color:var(--s1);box-shadow:0 8px 28px rgba(92,224,214,.2);transform:translateY(-2px)}
+        .btn-ghost{background:transparent;color:var(--text-mid);border:1px solid var(--border)}
+        .btn-ghost:hover{color:var(--text);border-color:var(--bh);transform:translateY(-2px)}
+
+        /* Sections */
+        section{position:relative;z-index:1}
+        .sb{background:var(--s2);border-top:1px solid var(--border)}
+        .sa{background:var(--s1);border-top:1px solid var(--border)}
+        .sp{padding:96px 0}
+        .sl{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--accent);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:10px}
+        .st{text-align:center;font-size:2.2rem;font-weight:700;letter-spacing:-.8px;color:var(--text);margin-bottom:56px}
+
+        /* About */
+        .ag{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center}
+        .ai{border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 48px rgba(0,0,0,.35)}
+        .ai img{width:100%;display:block;transition:transform .5s}.ai:hover img{transform:scale(1.03)}
+        .at h3{font-size:1.5rem;font-weight:600;margin-bottom:18px}
+        .at p{font-size:.98rem;line-height:1.8;color:var(--text-mid);margin-bottom:14px}
+        .hl{color:var(--accent);font-weight:500}
+
+        /* Research */
+        .research-card{max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px 36px}
+        .research-card h3{font-size:1.2rem;font-weight:600;margin-bottom:4px}
+        .research-venue{font-family:var(--mono);font-size:.78rem;color:var(--accent);margin-bottom:14px}
+        .research-card p{font-size:.92rem;color:var(--text-mid);line-height:1.7}
+
+        /* Skills */
+        .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+        .sk{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 22px;transition:border-color .3s,box-shadow .3s,transform .3s}
+        .sk:hover{border-color:var(--bh);box-shadow:0 6px 28px rgba(92,224,214,.06);transform:translateY(-3px)}
+        .si{width:40px;height:40px;background:var(--accent-dim);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+        .si svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+        .sk h3{font-size:1rem;font-weight:600;margin-bottom:8px}.sk p{font-size:.85rem;color:var(--text-dim);line-height:1.55}
+
+        /* Projects */
+        .pg{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+        .pj{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s,box-shadow .3s,transform .3s}
+        .pj:hover{border-color:var(--bh);box-shadow:0 10px 40px rgba(92,224,214,.06);transform:translateY(-3px)}
+        .pt{height:170px;position:relative;overflow:hidden;background:var(--s3)}
+        .pt img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.pj:hover .pt img{transform:scale(1.04)}
+        .pt.gf{background:linear-gradient(135deg,#1a0e0a,#3d1a0a 50%,#b84010)}.pt.ge{background:linear-gradient(135deg,#0a1a14,#0d3320 50%,#1a6b3a)}.pt.gs{background:linear-gradient(135deg,#0c1225,#1a2855 50%,#2e5090)}
+        .ptl{position:absolute;bottom:14px;left:18px;font-family:var(--mono);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+        .pb{padding:22px}.pb h3{font-size:1.15rem;font-weight:600;margin-bottom:8px}.pb p{font-size:.88rem;color:var(--text-mid);line-height:1.6;margin-bottom:14px}
+        .tg{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+        .t{font-family:var(--mono);font-size:.68rem;font-weight:500;padding:2px 9px;border-radius:4px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(92,224,214,.12)}
+        .pl{display:flex;gap:14px}.pl a{font-family:var(--mono);font-size:.78rem;font-weight:500}
+
+        /* Kriegspiel link card */
+        .kriegspiel-link{display:flex;align-items:center;gap:24px;max-width:600px;margin:48px auto 0;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;transition:border-color .3s,transform .3s}
+        .kriegspiel-link:hover{border-color:var(--bh);transform:translateY(-2px)}
+        .kriegspiel-link .kl-icon{width:56px;height:56px;background:var(--accent-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .kriegspiel-link .kl-icon svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.5}
+        .kriegspiel-link h3{font-size:1.1rem;font-weight:600;margin-bottom:4px}
+        .kriegspiel-link p{font-size:.85rem;color:var(--text-dim);line-height:1.5}
+
+        /* Contact */
+        .cg{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+        .ct{display:flex;align-items:center;gap:14px;transition:transform .2s}.ct:hover{transform:translateY(-2px)}
+        .ci{width:44px;height:44px;background:var(--accent-dim);border:1px solid var(--bh);border-radius:10px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+        .ci svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+        .ct:hover .ci{background:var(--accent);border-color:var(--accent)}.ct:hover .ci svg{stroke:var(--s1)}
+        .cl{font-size:.72rem;color:var(--text-dim);font-family:var(--mono)}.cv{font-size:.95rem;font-weight:500}.cv a{color:var(--accent)}
+
+        /* Footer */
+        footer{background:var(--s1);border-top:1px solid var(--border);padding:28px 0;text-align:center;position:relative;z-index:1}
+        .soc{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+        .soc a{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s}
+        .soc a:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+        .soc svg{width:16px;height:16px;fill:var(--text);transition:fill .2s}.soc a:hover svg{fill:var(--s1)}
+        .copy{font-family:var(--mono);font-size:.7rem;color:var(--text-dim)}
+
+        /* Orrery coda - transparent zone after footer */
+        .orrery-coda{height:45vh;position:relative;z-index:0}
+
+        /* Responsive */
+        @media(max-width:992px){.ag{grid-template-columns:1fr}.sg{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:2.4rem}}
+        @media(max-width:768px){
+            .nl{display:none;position:absolute;top:54px;left:0;width:100%;background:rgba(12,18,32,.96);backdrop-filter:blur(16px);flex-direction:column;align-items:center;padding:16px 0;border-bottom:1px solid var(--border)}
+            .nl.active{display:flex}.burger{display:flex;flex-direction:column}.pg{grid-template-columns:1fr}.cg{flex-direction:column;align-items:center;gap:20px}.st{font-size:1.8rem}
+        }
+        @media(max-width:576px){.hero-content{padding:32px 22px}.hero h1{font-size:1.8rem}.sg{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
-    <!-- Loading overlay -->
-    <div id="loadingOverlay">
-        <div class="loader"></div>
-        <div id="loadingText">Loading Solar System...</div>
-    </div>
+    <div id="lo"><div class="ld"></div><span>Initializing orrery...</span></div>
+    <canvas id="c"></canvas>
+    <div id="planetLabel"></div>
+    <div id="timeDisp"></div>
 
-    <!-- Skip to content link for accessibility -->
-    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <header>
+        <nav class="container">
+            <div class="logo">fwromano</div>
+            <div class="nl">
+                <a href="#about">About</a>
+                <a href="#research">Research</a>
+                <a href="#skills">Capabilities</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="burger" role="button" aria-label="Toggle menu" tabindex="0">
+                <div class="line"></div><div class="line"></div><div class="line"></div>
+            </div>
+        </nav>
+    </header>
 
-    <canvas id="solarSystemCanvas"></canvas>
-
-    <div id="controls">
-        <div class="control-row">
-            <label for="dateInput">Set Date:</label>
-            <input type="date" id="dateInput" aria-label="Set simulation date">
-            <button id="setDateButton">Go</button>
-        </div>
-        <div id="currentTimeDisplay" aria-live="polite">Loading date...</div>
-        <button id="performanceToggle" aria-pressed="false">Enable Low Performance Mode</button>
-    </div>
-
-    <div class="content-wrapper">
-        <header>
-            <nav class="container">
-                <div class="logo">Francesco Romano</div>
-                <div class="nav-links" role="navigation" aria-label="Main navigation">
-                    <a href="#about">About</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                <div class="burger" role="button" aria-label="Toggle menu" aria-expanded="false" tabindex="0">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </nav>
-        </header>
-
-        <main id="main-content">
-            <section class="hero">
-                <div class="hero-content">
-                    <h1 class="glowing-text">Hello, I'm Francesco</h1>
-                    <p>A Research Engineer in Teamed Autonomy focused on prototyping AI, robotics, and knowledge modeling systems that work in the real world. I build full-stack tools, AI pipelines, and semantic planning agents that interact with humans and environments.</p>
-                    <a class="cta-button" href="#contact">Get in Touch</a>
-                    <!-- <a class="resume-button" href="#" download aria-label="Download my resume">Download Resume</a> -->
-                </div>
-            </section>
-
-            <section id="about" class="about">
-                <div class="container about-grid">
-                    <div class="about-image">
-                        <img src="franky.jpg" alt="Francesco Romano - Portfolio headshot">
-                        <div class="about-image-glow"></div>
-                    </div>
-                    <div class="about-content">
-                        <h3>About Me</h3>
-                        <p>MS in Computer Science from Texas A&M. BS in Computer Science and BA in Economics from EIU, where I was also an NCAA Division I runner. I love building fast, functional systems that solve problems at the edge of robotics, autonomy, and data.</p>
-                        <p>Currently working on semantic world modeling, graph-based mission planning, and LLM-driven prototypes for defense applications. Past experience includes LiDAR processing, drone hardware prototyping, and full-stack web dev in PHP, JS, and SQL.</p>
-                        <p>Also into gardening, 3D printing, philosophy, and chess. Based in Bryan, TX. Always open to collaborating on high-impact tech.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="skills" class="skills">
-                <div class="container">
-                    <h2 class="section-title">Skills</h2>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">💻</div>
-                            <h3>Frontend & UI</h3>
-                            <p>HTML, CSS, JavaScript, React</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">🛠️</div>
-                            <h3>Backend & Data</h3>
-                            <p>Python, Java, C++, PHP, SQL, R, Matlab, Ruby</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">☁️</div>
-                            <h3>DevOps & Infra</h3>
-                            <p>Docker, Linux, Nginx, AWS, GCP</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon" aria-hidden="true">🤖</div>
-                            <h3>Robotics & AI</h3>
-                            <p>ROS, OpenCV, PyTorch, TensorFlow, Lidar & 3D Mapping</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="projects" class="projects">
-                <div class="container">
-                    <h2 class="section-title">Recent Projects</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="wolf.jpg" alt="Semantic World Modeling visualization">
-                            </div>
-                            <div class="project-content">
-                                <h3>Semantic World Modeling</h3>
-                                <p>Ontology-driven agent environment representations used in graph planners to enable autonomous mission planning.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">OWL</span>
-                                    <span class="project-tag">RDF</span>
-                                    <span class="project-tag">Python</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" aria-label="Learn more about Semantic World Modeling">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="drone.jpg" alt="Drone with infrared camera modification">
-                            </div>
-                            <div class="project-content">
-                                <h3>Drone IR Mod</h3>
-                                <p>3D printed and mounted an infrared camera system on a drone; collected and processed LiDAR and thermal data.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">3D Printing</span>
-                                    <span class="project-tag">LiDAR</span>
-                                    <span class="project-tag">Infrared</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" aria-label="Learn more about Drone IR Mod">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <div class="project-image">
-                                <img src="plant.jpg" alt="HappyPlant App Screenshot showing plant watering interface">
-                            </div>
-                            <div class="project-content">
-                                <h3>HappyPlant – Smart Watering Assistant</h3>
-                                <p>A Flask web app that uses plant photo identification (PlantNet API), OpenCV-based pot volume estimation, and botanical heuristics to recommend personalized watering schedules.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Flask</span>
-                                    <span class="project-tag">OpenCV</span>
-                                    <span class="project-tag">PlantNet API</span>
-                                    <span class="project-tag">Computer Vision</span>
-                                    <span class="project-tag">QR Code</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/fwromano/happyplant" target="_blank" aria-label="View HappyPlant project on GitHub">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top: 80px; text-align: center;">
-                    <h2 class="section-title">Play Kriegspiel</h2>
-                    <p>Try my Kriegspiel game — a hidden-information chess variant. Let me know what you think!</p>
-                    <iframe 
-                        src="https://fwromano.github.io/kriegspiel-chess/" 
-                        width="100%" 
-                        height="1000" 
-                        style="border: 2px solid var(--accent-color); border-radius: 10px;"
-                        loading="lazy">
-                    </iframe>
-                </div>
-            </section>
-
-
-
-            <section id="contact" class="contact">
-                <div class="container">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">📍</div>
-                            <div>
-                                <h3>Location</h3>
-                                <p>Bryan, TX</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">📧</div>
-                            <div>
-                                <h3>Email</h3>
-                                <p><a href="mailto:Fwromano15@gmail.com" aria-label="Email me at Fwromano15@gmail.com">Fwromano15@gmail.com</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon" aria-hidden="true">💼</div>
-                            <div>
-                                <h3>GitHub</h3>
-                                <p><a href="https://www.github.com/fwromano" target="_blank" aria-label="View my GitHub profile">github.com/fwromano</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="container">
-                <div class="social-links">
-                    <a href="https://github.com/fwromano" class="social-link" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/" class="social-link" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://twitter.com/" class="social-link" target="_blank" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-                <div class="copyright">
-                    &copy; 2025 Francesco Romano. All Rights Reserved.
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Francesco Romano</h1>
+                <p class="hero-sub">Research Engineer &middot; Autonomous Systems &middot; AI Safety</p>
+                <p>I build autonomous mission planning systems, multi-robot coordination protocols, and ML pipelines for defense applications on the DARPA ALIAS program. I think about how to make advanced AI systems safe, and I build the tools to test that in the real world.</p>
+                <div class="hero-btns">
+                    <a class="btn btn-primary" href="#contact">Get in touch &rarr;</a>
+                    <a class="btn btn-ghost" href="Romano_Resume.pdf" download>Download r&eacute;sum&eacute;</a>
                 </div>
             </div>
-        </footer>
-    </div>
+        </section>
 
-    <!-- Add Font Awesome for social icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+        <section id="about" class="sb">
+            <div class="sp container">
+                <div class="ag">
+                    <div class="ai rv"><img src="franky.jpg" alt="Francesco Romano" onerror="this.parentElement.style.background='linear-gradient(135deg,var(--s3),var(--s2))';this.remove()"></div>
+                    <div class="at rv" style="--i:1">
+                        <h3>About</h3>
+                        <p>Research Engineer at the <span class="hl">Bush Combat Development Complex / RELLIS Autonomous Systems Lab</span> at Texas A&M, working on DARPA-funded autonomous systems. Current work centers on the <span class="hl">ALIAS program</span>&mdash;interfacing AI planners with UH-60 Black Hawks for unmanned wildfire suppression&mdash;and building a <span class="hl">Semantic World Model</span> for multi-robot task allocation and mission execution.</p>
+                        <p>MS and BS in Computer Science from Texas A&M and EIU. BA in Economics. Former NCAA D1 distance runner&mdash;2023 SEC Champion, 2019 USATF U20 Championship finalist in the 3000m steeplechase.</p>
+                        <p>I care about AI safety, building things that last, and working where autonomous systems meet the physical world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="sa">
+            <div class="sp container">
+                <div class="sl rv">Research</div>
+                <h2 class="st rv">Publications &amp; Working Papers</h2>
+                <div class="research-card rv">
+                    <h3>The Shape of the Attractor</h3>
+                    <div class="research-venue">Target: AAAI/AIES 2026 &middot; In preparation</div>
+                    <p>A formal argument that sufficiently intelligent systems converge on cooperative equilibria. Dissolves Hume's guillotine through RL/GA framing, inverts the orthogonality thesis via modus tollens, and reframes alignment as an attractor in value-space rather than an external constraint. Connects evolutionary moral economics to multi-agent coordination theory.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="sb">
+            <div class="sp container">
+                <div class="sl rv">What I Do</div>
+                <h2 class="st rv">Capabilities</h2>
+                <div class="sg">
+                    <div class="sk rv rvs" style="--i:0"><div class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><h3>Autonomous Systems</h3><p>ROS2, Nav2, TAK/ATAK, multi-robot coordination, graph-based mission planning, ontological world models, sensor fusion</p></div>
+                    <div class="sk rv rvs" style="--i:1"><div class="si"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 014 4c0 2-1.4 3.6-3.25 3.93L12 22"/><path d="M8 6a4 4 0 018 0"/><path d="M7 14.5C5 15.5 3.5 18 3.5 20.5h17c0-2.5-1.5-5-3.5-6"/></svg></div><h3>ML &amp; AI</h3><p>PyTorch, TensorFlow, LLM deployment &amp; eval, terrain classification, Monte Carlo methods, uncertainty quantification</p></div>
+                    <div class="sk rv rvs" style="--i:2"><div class="si"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Systems &amp; Infra</h3><p>Docker, Linux, multi-GPU clusters (A100), AWS, GCP, Nginx, lidar processing, 3D mapping, CUI environments</p></div>
+                    <div class="sk rv rvs" style="--i:3"><div class="si"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></div><h3>Software Engineering</h3><p>Python, C++, Java, JavaScript, SQL, React, Flask, full-stack web applications, data pipelines at scale</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="sa">
+            <div class="sp container">
+                <div class="sl rv">Selected Work</div>
+                <h2 class="st rv">Projects</h2>
+                <div class="pg">
+                    <div class="pj rv rvs" style="--i:0"><div class="pt"><img src="wolf.jpg" alt="Semantic World Model" onerror="this.parentElement.classList.add('gs');this.remove()"></div><div class="pb"><h3>Semantic World Model</h3><p>Ontology-driven environment representations integrated with graph planners for autonomous multi-robot mission planning. Core architecture for DARPA ALIAS.</p><div class="tg"><span class="t">OWL/RDF</span><span class="t">Python</span><span class="t">Graph Planning</span><span class="t">DARPA</span></div></div></div>
+                    <div class="pj rv rvs" style="--i:1"><div class="pt gf"><span class="ptl">Simulation</span></div><div class="pb"><h3>Autonomous Wildfire Suppression</h3><p>Interactive manned vs. autonomous helicopter simulator with Monte Carlo economic analysis of cloud seeding risk mitigation.</p><div class="tg"><span class="t">JavaScript</span><span class="t">Monte Carlo</span><span class="t">Simulation</span></div><div class="pl"><a href="https://github.com/fwromano/AutonomousWildfireSuppression" target="_blank">GitHub &rarr;</a><a href="https://fwromano.github.io/AutonomousWildfireSuppression/" target="_blank">Live Demo &rarr;</a></div></div></div>
+                    <div class="pj rv rvs" style="--i:2"><div class="pt ge"><span class="ptl">ML Pipeline</span></div><div class="pb"><h3>Terrain Classification</h3><p>DeepLabV3+ with MC Dropout uncertainty quantification, fusing NAIP imagery and USGS 3DEP elevation data for autonomous ground vehicle navigation.</p><div class="tg"><span class="t">PyTorch</span><span class="t">DeepLabV3+</span><span class="t">NAIP/3DEP</span></div></div></div>
+                    <div class="pj rv rvs" style="--i:3"><div class="pt gs"><span class="ptl">Hardware Architecture</span></div><div class="pb"><h3>Multi-Radio SA Node</h3><p>Multi-protocol comms node (BLE + LoRa + VHF + Iridium) for first-responder mesh networking. ICS hierarchy as channel-partitioning function.</p><div class="tg"><span class="t">LoRa</span><span class="t">BLE</span><span class="t">Iridium</span><span class="t">Mesh</span></div></div></div>
+                    <div class="pj rv rvs" style="--i:4"><div class="pt"><img src="drone.jpg" alt="Drone IR" onerror="this.parentElement.classList.add('ge');this.remove()"></div><div class="pb"><h3>Drone IR Modification</h3><p>3D-printed sensor mount for IR capture on UAV platforms. Processed lidar point clouds into high-res 3D maps for disaster response.</p><div class="tg"><span class="t">3D Printing</span><span class="t">LiDAR</span><span class="t">Infrared</span></div></div></div>
+                    <div class="pj rv rvs" style="--i:5"><div class="pt"><img src="plant.jpg" alt="HappyPlant" onerror="this.parentElement.classList.add('gf');this.remove()"></div><div class="pb"><h3>HappyPlant</h3><p>Flask app using plant photo ID, OpenCV pot volume estimation, and botanical heuristics for personalized watering schedules.</p><div class="tg"><span class="t">Flask</span><span class="t">OpenCV</span><span class="t">PlantNet</span></div><div class="pl"><a href="https://github.com/fwromano/happyplant" target="_blank">GitHub &rarr;</a></div></div></div>
+                </div>
+
+                <a href="https://fwromano.github.io/kriegspiel-chess/" target="_blank" class="kriegspiel-link rv" style="text-decoration:none">
+                    <div class="kl-icon"><svg viewBox="0 0 24 24"><path d="M8 2L6 6l-4 2 4 2 2 4 2-4 4-2-4-2z"/><path d="M18 12l-1 2-2 1 2 1 1 2 1-2 2-1-2-1z"/><path d="M12 15l-1 3-3 1 3 1 1 3 1-3 3-1-3-1z"/></svg></div>
+                    <div>
+                        <h3>Play Kriegspiel &rarr;</h3>
+                        <p>A hidden-information chess variant. You can only see your own pieces.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="contact" class="sb">
+            <div class="sp container">
+                <div class="sl rv">Let's Talk</div>
+                <h2 class="st rv">Get In Touch</h2>
+                <div class="cg">
+                    <div class="ct rv rvs" style="--i:0"><div class="ci"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cl">Location</div><div class="cv">Bryan, TX</div></div></div>
+                    <div class="ct rv rvs" style="--i:1"><div class="ci"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cl">Email</div><div class="cv"><a href="mailto:Fwromano15@gmail.com">Fwromano15@gmail.com</a></div></div></div>
+                    <div class="ct rv rvs" style="--i:2"><div class="ci"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></div><div><div class="cl">GitHub</div><div class="cv"><a href="https://github.com/fwromano" target="_blank">github.com/fwromano</a></div></div></div>
+                    <div class="ct rv rvs" style="--i:3"><div class="ci"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="cl">LinkedIn</div><div class="cv"><a href="https://linkedin.com/in/fwromano" target="_blank">linkedin.com/in/fwromano</a></div></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="soc">
+                <a href="https://github.com/fwromano" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
+                <a href="https://linkedin.com/in/fwromano" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            </div>
+            <div class="copy">&copy; 2025 Francesco Romano</div>
+        </div>
+    </footer>
+
+    <!-- Orrery coda: transparent zone revealing the solar system after footer -->
+    <div class="orrery-coda"></div>
 
     <script>
-        // --- Loading Screen ---
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        
-        // Wait for resources to load
-        window.addEventListener('load', () => {
-            // Show loading screen for at least 1.5 seconds
-            setTimeout(() => {
-                loadingOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                }, 500);
-            }, 1500);
-        });
+    // === Loading ===
+    addEventListener('load',()=>{setTimeout(()=>{const o=document.getElementById('lo');o.style.opacity='0';setTimeout(()=>o.style.display='none',600)},1200)});
 
-        // --- Performance Mode Toggle ---
-        const performanceToggle = document.getElementById('performanceToggle');
-        let lowPerformanceMode = false;
-        
-        performanceToggle.addEventListener('click', () => {
-            lowPerformanceMode = !lowPerformanceMode;
-            document.body.classList.toggle('low-performance', lowPerformanceMode);
-            performanceToggle.textContent = lowPerformanceMode ? 
-                'Disable Low Performance Mode' : 'Enable Low Performance Mode';
-            performanceToggle.setAttribute('aria-pressed', lowPerformanceMode);
-            
-            // Adjust animation framerate based on performance mode
-            requestAnimationFrameRate = lowPerformanceMode ? 20 : 60;
-        });
+    // === Scroll Reveal ===
+    const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
 
-        // --- Burger Menu Toggle (for smaller screens) ---
-        const burger = document.querySelector('.burger');
-        const navLinks = document.querySelector('.nav-links');
+    // === Burger ===
+    document.querySelector('.burger').addEventListener('click',()=>document.querySelector('.nl').classList.toggle('active'));
 
-        burger.addEventListener('click', () => {
-            const expanded = navLinks.classList.toggle('active');
-            burger.setAttribute('aria-expanded', expanded);
-        });
+    // === THREE.JS ORRERY ===
+    const W=innerWidth, H=innerHeight, mob=W<768;
+    const scene=new THREE.Scene();
+    const cam=new THREE.PerspectiveCamera(60,W/H,0.1,2000);
+    const ren=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:!mob,alpha:false});
+    ren.setSize(W,H);ren.setPixelRatio(Math.min(devicePixelRatio,2));
+    ren.setClearColor(0x050a15);
 
-        // Keyboard accessibility for burger menu
-        burger.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                burger.click();
+    // --- Starfield ---
+    const starCount=mob?1500:3500;
+    const starPos=new Float32Array(starCount*3);
+    const starSizes=new Float32Array(starCount);
+    for(let i=0;i<starCount;i++){
+        const r=300+Math.random()*700;
+        const theta=Math.random()*Math.PI*2;
+        const phi=Math.acos(2*Math.random()-1);
+        starPos[i*3]=r*Math.sin(phi)*Math.cos(theta);
+        starPos[i*3+1]=r*Math.sin(phi)*Math.sin(theta);
+        starPos[i*3+2]=r*Math.cos(phi);
+        starSizes[i]=Math.random()*1.8+0.3;
+    }
+    const starGeo=new THREE.BufferGeometry();
+    starGeo.setAttribute('position',new THREE.BufferAttribute(starPos,3));
+    starGeo.setAttribute('size',new THREE.BufferAttribute(starSizes,1));
+    const starMat=new THREE.PointsMaterial({color:0xffffff,size:0.6,sizeAttenuation:true,transparent:true,opacity:0.85});
+    scene.add(new THREE.Points(starGeo,starMat));
+
+    // --- Lighting ---
+    scene.add(new THREE.AmbientLight(0x222233));
+    const sunLight=new THREE.PointLight(0xfff8e0,1.5,300);
+    scene.add(sunLight);
+
+    // --- Sun ---
+    const sunMesh=new THREE.Mesh(new THREE.SphereGeometry(5,48,48),new THREE.MeshBasicMaterial({color:0xffee88}));
+    scene.add(sunMesh);
+
+    // Sun glow sprite
+    const glowCanvas=document.createElement('canvas');glowCanvas.width=256;glowCanvas.height=256;
+    const gctx=glowCanvas.getContext('2d');
+    const grad=gctx.createRadialGradient(128,128,0,128,128,128);
+    grad.addColorStop(0,'rgba(255,248,200,1)');grad.addColorStop(0.15,'rgba(255,220,100,0.6)');
+    grad.addColorStop(0.4,'rgba(255,180,50,0.12)');grad.addColorStop(1,'rgba(255,150,0,0)');
+    gctx.fillStyle=grad;gctx.fillRect(0,0,256,256);
+    const glowTex=new THREE.CanvasTexture(glowCanvas);
+    const glowSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
+    glowSprite.scale.set(28,28,1);
+    scene.add(glowSprite);
+
+    // --- Planets ---
+    const pd=mob?20:36,mmd=mob?10:20;
+    const names=['Mercury','Venus','Earth','Mars','Jupiter','Saturn','Uranus','Neptune'];
+    const D=[
+        {r:.38,d:10,c:0x9a9a9a, rough:.9, metal:.1, T:88, inc:7, m:[]},
+        {r:.72,d:15,c:0xe8cda0, rough:.8, metal:0, T:225, inc:3.4, m:[]},
+        {r:.8, d:20,c:0x4488cc, rough:.6, metal:.1, T:365.25, inc:0, m:[{r:.18,d:1.8,c:0xcccccc,T:27.3}]},
+        {r:.5, d:26,c:0xc44422, rough:.85,metal:.05,T:687, inc:1.85, m:[{r:.06,d:.6,c:0x888888,T:.32}]},
+        {r:2.8,d:42,c:0xc8a850, rough:.7, metal:0, T:4333, inc:1.3, m:mob?[{r:.3,d:4.5,c:0xdda020,T:1.77}]:[{r:.3,d:4.5,c:0xdda020,T:1.77},{r:.27,d:6,c:0xaaaaaa,T:3.55},{r:.38,d:8.5,c:0xbbbbbb,T:7.15},{r:.33,d:12,c:0x999999,T:16.69}]},
+        {r:2.2,d:58,c:0xdaa860, rough:.65,metal:0, T:10759, inc:2.5, m:[{r:.45,d:7,c:0xf0e8c8,T:15.95}], rings:true},
+        {r:1.6,d:73,c:0x7ec8d8, rough:.5, metal:.1, T:30687, inc:.77, m:[{r:.15,d:2.8,c:0xcccccc,T:1.41}]},
+        {r:1.5,d:88,c:0x3366aa, rough:.5, metal:.1, T:60190, inc:1.77, m:[{r:.22,d:3.2,c:0x9abcde,T:5.88}]}
+    ];
+
+    const planets=[], planetMeshes=[];
+    D.forEach((p,idx)=>{
+        const geo=new THREE.SphereGeometry(p.r,pd,pd);
+        const mat=new THREE.MeshStandardMaterial({color:p.c,roughness:p.rough,metalness:p.metal});
+        const mesh=new THREE.Mesh(geo,mat);
+        mesh.userData={d:p.d,T:p.T,inc:p.inc*Math.PI/180,moons:[],name:names[idx]};
+        scene.add(mesh);
+        planets.push(mesh);
+        planetMeshes.push(mesh);
+
+        // Orbit ring
+        const orbGeo=new THREE.RingGeometry(p.d-.04,p.d+.04,128);
+        const orbMat=new THREE.MeshBasicMaterial({color:0x445577,side:THREE.DoubleSide,transparent:true,opacity:.12});
+        const orb=new THREE.Mesh(orbGeo,orbMat);
+        orb.rotation.x=Math.PI/2+p.inc*Math.PI/180;
+        scene.add(orb);
+
+        // Saturn rings
+        if(p.rings){
+            const ringGeo=new THREE.RingGeometry(3.2,5.2,64);
+            // Manually set UVs for ring opacity gradient
+            const pos=ringGeo.attributes.position;
+            const uv=ringGeo.attributes.uv;
+            for(let i=0;i<pos.count;i++){
+                const x=pos.getX(i),y=pos.getY(i);
+                const dist=Math.sqrt(x*x+y*y);
+                uv.setXY(i,(dist-3.2)/2,0.5);
             }
+            const ringMat=new THREE.MeshBasicMaterial({color:0xc8a860,side:THREE.DoubleSide,transparent:true,opacity:.45});
+            const ring=new THREE.Mesh(ringGeo,ringMat);
+            ring.rotation.x=Math.PI/2.3;
+            mesh.add(ring);
+        }
+
+        // Earth atmosphere glow
+        if(idx===2){
+            const atmoGeo=new THREE.SphereGeometry(p.r*1.12,pd,pd);
+            const atmoMat=new THREE.MeshBasicMaterial({color:0x4488ff,transparent:true,opacity:.12,side:THREE.BackSide});
+            mesh.add(new THREE.Mesh(atmoGeo,atmoMat));
+        }
+
+        // Moons
+        p.m.forEach(mo=>{
+            const mm=new THREE.Mesh(new THREE.SphereGeometry(mo.r,mmd,mmd),new THREE.MeshStandardMaterial({color:mo.c,roughness:.8}));
+            mm.userData={d:mo.d,T:mo.T};
+            mesh.add(mm);mesh.userData.moons.push(mm);
         });
+    });
 
-        // --- Three.js Solar System Simulation ---
-        
-        // --- Scene Setup ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ 
-            canvas: document.getElementById('solarSystemCanvas'), 
-            antialias: true,
-            powerPreference: 'high-performance' 
-        });
+    // --- Camera ---
+    cam.position.set(30,55,95);cam.lookAt(0,0,0);
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio); // Limit pixel ratio for performance
+    // --- State ---
+    let scrollD=0,baseD=0,lf=0,drag=false,prev={x:0,y:0},autoAngle=0;
+    const ref=new Date(Date.UTC(2000,0,1));
+    const td=document.getElementById('timeDisp');
+    const label=document.getElementById('planetLabel');
+    const raycaster=new THREE.Raycaster();
+    const mouse=new THREE.Vector2();
+    let idleTimer=0;
 
-        // --- Lighting ---
-        // Add ambient light to see the planets and moons
-        const ambientLight = new THREE.AmbientLight(0x333333);
-        scene.add(ambientLight);
+    // Set initial date to today
+    const todayMs=Date.now();
+    baseD=(todayMs-ref.getTime())/864e5;
 
-        // Add a point light at the position of the sun
-        const sunLight = new THREE.PointLight(0xffffff, 1, 0);
-        scene.add(sunLight);
+    // --- Scroll → time ---
+    let showTimeTimer;
+    addEventListener('wheel',e=>{
+        scrollD+=e.deltaY*0.015;
+        td.classList.add('show');
+        clearTimeout(showTimeTimer);
+        showTimeTimer=setTimeout(()=>td.classList.remove('show'),2000);
+    });
 
-        // --- Solar System Objects ---
+    // --- Mouse orbit ---
+    const cv=document.getElementById('c');
+    cv.addEventListener('mousedown',e=>{drag=true;prev={x:e.clientX,y:e.clientY};idleTimer=0});
+    addEventListener('mouseup',()=>drag=false);
+    addEventListener('mousemove',e=>{
+        // Hover label
+        mouse.x=(e.clientX/innerWidth)*2-1;
+        mouse.y=-(e.clientY/innerHeight)*2+1;
 
-        // Sun (Center)
-        const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
-        const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-        scene.add(sun);
-        sunLight.position.copy(sun.position); // Position the light at the sun
+        if(!drag)return;
+        idleTimer=0;
+        const dx=e.clientX-prev.x,dy=e.clientY-prev.y;
+        prev={x:e.clientX,y:e.clientY};
+        const p=cam.position.clone();
+        p.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),-dx*.004));
+        const ax=new THREE.Vector3().crossVectors(cam.up,p).normalize();
+        const np=p.clone().applyQuaternion(new THREE.Quaternion().setFromAxisAngle(ax,-dy*.004));
+        if(np.y>2&&np.y<150)cam.position.copy(np);
+        cam.lookAt(0,0,0);
+        // Update autoAngle to match current position so auto-orbit continues smoothly
+        autoAngle=Math.atan2(cam.position.x,cam.position.z);
+    });
 
-        // --- Optimize Solar System for Performance ---
-        // Reduce planet detail based on device
-        const isMobile = window.innerWidth < 768;
-        const planetDetail = isMobile ? 16 : 32;
-        const moonDetail = isMobile ? 8 : 16;
+    // Touch
+    let tp={x:0,y:0};
+    cv.addEventListener('touchstart',e=>{if(e.touches.length===1){tp={x:e.touches[0].clientX,y:e.touches[0].clientY};drag=true;idleTimer=0}});
+    cv.addEventListener('touchmove',e=>{
+        if(!drag||e.touches.length!==1)return;idleTimer=0;
+        const dx=e.touches[0].clientX-tp.x,dy=e.touches[0].clientY-tp.y;
+        tp={x:e.touches[0].clientX,y:e.touches[0].clientY};
+        const p=cam.position.clone();
+        p.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),-dx*.008));
+        const ax=new THREE.Vector3().crossVectors(cam.up,p).normalize();
+        const np=p.clone().applyQuaternion(new THREE.Quaternion().setFromAxisAngle(ax,-dy*.008));
+        if(np.y>2&&np.y<150)cam.position.copy(np);
+        cam.lookAt(0,0,0);autoAngle=Math.atan2(cam.position.x,cam.position.z);
+        e.preventDefault();
+    },{passive:false});
+    cv.addEventListener('touchend',()=>drag=false);
 
-        // Planets (Using simplified data, basic materials, approximate orbital periods, and moon data)
-        const planetsData = [
-            {
-                name: 'Mercury', radius: 0.5, distance: 10, color: 0x8a8a8a, orbitalPeriodDays: 88, moons: []
-            },
-            {
-                name: 'Venus', radius: 0.8, distance: 15, color: 0xffa500, orbitalPeriodDays: 225, moons: []
-            },
-            {
-                name: 'Earth', radius: 1, distance: 20, color: 0x0000ff, orbitalPeriodDays: 365.25,
-                moons: [
-                    { name: 'Moon', radius: 0.2, distance: 2, color: 0xcccccc, orbitalPeriodDays: 27.3 }
-                ]
-            },
-            {
-                name: 'Mars', radius: 0.7, distance: 25, color: 0xff0000, orbitalPeriodDays: 687,
-                moons: [
-                    { name: 'Phobos', radius: 0.1, distance: 0.5, color: 0x888888, orbitalPeriodDays: 0.3 },
-                    { name: 'Deimos', radius: 0.08, distance: 1, color: 0x777777, orbitalPeriodDays: 1.26 }
-                ]
-            },
-            {
-                name: 'Jupiter', radius: 3, distance: 40, color: 0xffd700, orbitalPeriodDays: 4333,
-                moons: isMobile ? 
-                [{ name: 'Io', radius: 0.4, distance: 5, color: 0xffa500, orbitalPeriodDays: 1.77 }] : 
-                [
-                    { name: 'Io', radius: 0.4, distance: 5, color: 0xffa500, orbitalPeriodDays: 1.77 },
-                    { name: 'Europa', radius: 0.35, distance: 7, color: 0xaaaaaa, orbitalPeriodDays: 3.55 },
-                    { name: 'Ganymede', radius: 0.5, distance: 10, color: 0xbbbbbb, orbitalPeriodDays: 7.15 },
-                    { name: 'Callisto', radius: 0.45, distance: 15, color: 0x999999, orbitalPeriodDays: 16.69 }
-                ]
-            },
-            {
-                name: 'Saturn', radius: 2.5, distance: 55, color: 0xdaa520, orbitalPeriodDays: 10759,
-                 moons: [
-                    { name: 'Titan', radius: 0.6, distance: 8, color: 0xf5f5dc, orbitalPeriodDays: 15.95 }
-                ]
-            },
-            {
-                name: 'Uranus', radius: 2, distance: 70, color: 0xadd8e6, orbitalPeriodDays: 30687,
-                 moons: [
-                    { name: 'Miranda', radius: 0.2, distance: 3, color: 0xcccccc, orbitalPeriodDays: 1.41 }
-                ]
-            },
-            {
-                name: 'Neptune', radius: 2, distance: 85, color: 0x00008b, orbitalPeriodDays: 60190,
-                 moons: [
-                    { name: 'Triton', radius: 0.3, distance: 4, color: 0xabcdef, orbitalPeriodDays: 5.88 }
-                ]
-            }
-        ];
+    // === Animate ===
+    function animate(t){
+        requestAnimationFrame(animate);
+        const dt=(t-lf)/1000||0;lf=t;
 
-        const planets = [];
-        planetsData.forEach(data => {
-            // Create Planet
-            const planetGeometry = new THREE.SphereGeometry(data.radius, planetDetail, planetDetail);
-            const planetMaterial = new THREE.MeshStandardMaterial({ color: data.color });
-            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
-            planet.userData = { distance: data.distance, orbitalPeriodDays: data.orbitalPeriodDays };
-            scene.add(planet);
-            planets.push(planet);
+        const days=baseD+scrollD;
 
-            // Optional: Add orbit lines (simplified circles)
-            const orbitGeometry = new THREE.RingGeometry(data.distance - 0.1, data.distance + 0.1, 64);
-            const orbitMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xffffff, 
-                side: THREE.DoubleSide,
-                transparent: true, 
-                opacity: 0.3 
+        // Update planets
+        planets.forEach(p=>{
+            const a=days/p.userData.T*Math.PI*2;
+            const inc=p.userData.inc;
+            p.position.set(
+                p.userData.d*Math.cos(a),
+                p.userData.d*Math.sin(a)*Math.sin(inc),
+                p.userData.d*Math.sin(a)*Math.cos(inc)
+            );
+            p.userData.moons.forEach(m=>{
+                const ma=days/m.userData.T*Math.PI*2;
+                m.position.set(m.userData.d*Math.cos(ma),0,m.userData.d*Math.sin(ma));
             });
-            const orbit = new THREE.Mesh(orbitGeometry, orbitMaterial);
-            orbit.rotation.x = Math.PI / 2; // Rotate to be horizontal
-            scene.add(orbit);
-
-            // Create Moons for the Planet
-            if (data.moons && data.moons.length > 0) {
-                planet.userData.moons = []; // Array to store moon meshes
-                data.moons.forEach(moonData => {
-                    const moonGeometry = new THREE.SphereGeometry(moonData.radius, moonDetail, moonDetail);
-                    const moonMaterial = new THREE.MeshStandardMaterial({ color: moonData.color });
-                    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-                    // Store moon's orbital data relative to the planet
-                    moon.userData = { distance: moonData.distance, orbitalPeriodDays: moonData.orbitalPeriodDays };
-                    planet.add(moon); // Add moon as a child of the planet
-                    planet.userData.moons.push(moon); // Store moon mesh in planet's userData
-                });
-            }
         });
 
-        // --- Camera Position ---
-        camera.position.z = 100;
-        camera.position.y = 50;
-        camera.lookAt(0, 0, 0); // Look at the center of the scene (the sun)
-
-        // --- Animation Variables ---
-        let scrollTimeOffsetDays = 0; // Time offset in days due to scrolling
-        // Adjusted timeScale: A typical scroll deltaY is around 100.
-        // To make 1 scroll unit (deltaY of ~100) equal to 1 day, timeScale = 1 day / 100 deltaY = 0.01.
-        const timeScale = 0.01;
-        let baseTimeOffsetDays = 0; // Time offset in days based on the selected date
-        let requestAnimationFrameRate = 60; // Default frame rate
-        let lastFrameTime = 0;
-        let isScrolling = false;
-        let scrollTimeout;
-
-        // --- Reference Date (January 1, 2000, 00:00 UTC) ---
-        const referenceDate = new Date(Date.UTC(2000, 0, 1, 0, 0, 0));
-
-        // --- Get Time Display Element ---
-        const currentTimeDisplay = document.getElementById('currentTimeDisplay');
-
-        // --- Function to Set Planet Positions Based on Date ---
-        function setPlanetPositionsByDate(dateString) {
-            const selectedDate = new Date(dateString);
-            if (isNaN(selectedDate)) {
-                console.error("Invalid date entered.");
-                return;
+        // Auto-orbit camera when idle
+        if(!drag){
+            idleTimer+=dt;
+            if(idleTimer>1.5){
+                const speed=.06*dt;
+                autoAngle+=speed;
+                const radius=cam.position.length();
+                const elev=cam.position.y;
+                const horizR=Math.sqrt(radius*radius-elev*elev);
+                cam.position.x=horizR*Math.sin(autoAngle);
+                cam.position.z=horizR*Math.cos(autoAngle);
+                cam.lookAt(0,0,0);
             }
-
-            // Calculate the difference in days between the selected date and the reference date
-            const timeDiffMilliseconds = selectedDate.getTime() - referenceDate.getTime();
-            baseTimeOffsetDays = timeDiffMilliseconds / (1000 * 60 * 60 * 24);
-
-            // Reset the scroll-based time offset when a new date is set
-            scrollTimeOffsetDays = 0;
         }
 
-        // --- Event Listener for Set Date Button ---
-        document.getElementById('setDateButton').addEventListener('click', () => {
-            const dateInput = document.getElementById('dateInput');
-            setPlanetPositionsByDate(dateInput.value);
-        });
-
-        // --- Scroll Event Listener with throttling ---
-        window.addEventListener('wheel', (event) => {
-            // Set scrolling flag to true
-            isScrolling = true;
-            
-            // Clear any existing timeout
-            clearTimeout(scrollTimeout);
-            
-            // Set a timeout to reset the scrolling flag
-            scrollTimeout = setTimeout(() => {
-                isScrolling = false;
-            }, 150);
-            
-            // event.deltaY is positive when scrolling down, negative when scrolling up
-            // We want each scroll unit (approx 100 deltaY) to be 1 day.
-            scrollTimeOffsetDays += event.deltaY * timeScale;
-        });
-
-        // --- Mouse Controls for Camera (Basic Orbit) ---
-        let isDragging = false;
-        let previousMousePosition = { x: 0, y: 0 };
-
-        renderer.domElement.addEventListener('mousedown', (event) => {
-            isDragging = true;
-            previousMousePosition.x = event.clientX;
-            previousMousePosition.y = event.clientY;
-        });
-
-        renderer.domElement.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-
-        renderer.domElement.addEventListener('mousemove', (event) => {
-            if (!isDragging) return;
-
-            const deltaX = event.clientX - previousMousePosition.x;
-            const deltaY = event.clientY - previousMousePosition.y;
-
-            // Rotate camera around the center (sun)
-            const rotationSpeed = 0.005;
-            const angleX = deltaX * rotationSpeed;
-            const angleY = deltaY * rotationSpeed;
-
-            // Get the current camera position relative to the origin
-            const currentPos = camera.position.clone();
-
-            // Rotate around the Y axis (horizontal drag)
-            const quaternionY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -angleX);
-            currentPos.applyQuaternion(quaternionY);
-
-            // Rotate around the X axis (vertical drag) - be careful not to flip
-            const currentUp = camera.up.clone();
-            const axisX = new THREE.Vector3().crossVectors(currentUp, currentPos).normalize();
-            const quaternionX = new THREE.Quaternion().setFromAxisAngle(axisX, -angleY);
-
-            // Apply rotation, but prevent camera from going below the plane
-            const newPos = currentPos.clone().applyQuaternion(quaternionX);
-            if (newPos.y > -10) { // Prevent camera from going too far below the origin plane
-                camera.position.copy(newPos);
-            }
-
-            camera.lookAt(0, 0, 0); // Keep looking at the sun
-
-            previousMousePosition.x = event.clientX;
-            previousMousePosition.y = event.clientY;
-        });
-
-        // Mobile touch support
-        let touchStartPosition = { x: 0, y: 0 };
-        
-        renderer.domElement.addEventListener('touchstart', (event) => {
-            if (event.touches.length === 1) {
-                touchStartPosition.x = event.touches[0].clientX;
-                touchStartPosition.y = event.touches[0].clientY;
-                isDragging = true;
-            }
-        });
-        
-        renderer.domElement.addEventListener('touchmove', (event) => {
-            if (isDragging && event.touches.length === 1) {
-                // Calculate delta from touch start
-                const deltaX = event.touches[0].clientX - touchStartPosition.x;
-                const deltaY = event.touches[0].clientY - touchStartPosition.y;
-                
-                // Update touch start for continuous movement
-                touchStartPosition.x = event.touches[0].clientX;
-                touchStartPosition.y = event.touches[0].clientY;
-                
-                // Same rotation logic as mouse
-                const rotationSpeed = 0.01;
-                const angleX = deltaX * rotationSpeed;
-                const angleY = deltaY * rotationSpeed;
-                
-                const currentPos = camera.position.clone();
-                
-                const quaternionY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -angleX);
-                currentPos.applyQuaternion(quaternionY);
-                
-                const axisX = new THREE.Vector3().crossVectors(camera.up, currentPos).normalize();
-                const quaternionX = new THREE.Quaternion().setFromAxisAngle(axisX, -angleY);
-                
-                const newPos = currentPos.clone().applyQuaternion(quaternionX);
-                if (newPos.y > -10) {
-                    camera.position.copy(newPos);
-                }
-                
-                camera.lookAt(0, 0, 0);
-                
-                // Prevent default to avoid scrolling the page
-                event.preventDefault();
-            }
-        });
-        
-        renderer.domElement.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-
-        // --- Animation Loop with performance optimization ---
-        function animate(currentTime) {
-            requestAnimationFrame(animate);
-            
-            // Throttle the frame rate when not interacting
-            if (!isScrolling && !isDragging && lowPerformanceMode) {
-                // Skip frames based on frame rate when in low performance mode and not interacting
-                if (currentTime - lastFrameTime < 1000 / requestAnimationFrameRate) {
-                    return;
-                }
-            }
-            
-            lastFrameTime = currentTime;
-
-            // Calculate the total simulated days since the reference date
-            const totalDays = baseTimeOffsetDays + scrollTimeOffsetDays;
-
-            // Update planet and moon positions based on total simulated days
-            planets.forEach(planet => {
-                // Calculate the planet's angle based on the fraction of its orbit completed
-                const planetFractionOfOrbit = totalDays / planet.userData.orbitalPeriodDays;
-                const planetAngle = (planetFractionOfOrbit * 2 * Math.PI);
-
-                // Calculate planet position using polar coordinates (distance and angle) relative to the sun
-                const planetX = planet.userData.distance * Math.cos(planetAngle);
-                const planetZ = planet.userData.distance * Math.sin(planetAngle);
-                const planetY = 0; // Keep planets on the same plane for simplicity
-
-                planet.position.set(planetX, planetY, planetZ);
-
-                // Update moon positions relative to the planet
-                if (planet.userData.moons) {
-                    planet.userData.moons.forEach(moon => {
-                         // Calculate the moon's angle based on the fraction of its orbit around the planet
-                        const moonFractionOfOrbit = totalDays / moon.userData.orbitalPeriodDays;
-                        const moonAngle = (moonFractionOfOrbit * 2 * Math.PI);
-
-                        // Calculate moon position using polar coordinates (distance and angle) relative to the planet
-                        const moonX = moon.userData.distance * Math.cos(moonAngle);
-                        const moonZ = moon.userData.distance * Math.sin(moonAngle);
-                        const moonY = 0; // Keep moons on the same plane relative to the planet for simplicity
-
-                        moon.position.set(moonX, moonY, moonZ);
-                    });
-                }
-            });
-
-            // --- Update Current Time Display ---
-            // Calculate the date based on the reference date and total days
-            const simulatedDate = new Date(referenceDate.getTime() + totalDays * (1000 * 60 * 60 * 24));
-            // Display only the date part
-            currentTimeDisplay.textContent = `Simulated Date: ${simulatedDate.toLocaleDateString()}`;
-
-            renderer.render(scene, camera);
+        // Hover label via raycaster
+        raycaster.setFromCamera(mouse,cam);
+        const hits=raycaster.intersectObjects(planetMeshes);
+        if(hits.length>0){
+            const hit=hits[0].object;
+            label.textContent=hit.userData.name;
+            const proj=hit.position.clone().project(cam);
+            label.style.left=((proj.x+1)/2*innerWidth+12)+'px';
+            label.style.top=((-proj.y+1)/2*innerHeight-12)+'px';
+            label.classList.add('show');
+        }else{
+            label.classList.remove('show');
         }
 
-        // Start the animation loop
-        window.onload = function () {
-             // Set an initial date (e.g., today's date) when the page loads
-             const today = new Date().toISOString().split('T')[0];
-             document.getElementById('dateInput').value = today;
-             setPlanetPositionsByDate(today);
+        // Time display
+        const sd=new Date(ref.getTime()+days*864e5);
+        td.textContent=sd.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
 
-             // Start animation
-             animate();
+        ren.render(scene,cam);
+    }
+    animate(0);
 
-             // Add event listener for burger menu toggle after the DOM is loaded
-             const burger = document.querySelector('.burger');
-             const navLinks = document.querySelector('.nav-links');
-             burger.addEventListener('click', () => {
-                 navLinks.classList.toggle('active');
-             });
-        }
-
-        // --- Handle Window Resize ---
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+    // Resize
+    addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();ren.setSize(innerWidth,innerHeight)});
     </script>
 </body>
 </html>
