@@ -4,3 +4,6 @@ just go to the site: https://fwromano.github.io
 
 also check out kriegspiel chess:
 https://fwromano.github.io/kriegspiel-chess/
+
+THMI Jeep MOTE scenario report for October 13, 2026:
+https://fwromano.github.io/thmi/2026-10-13-jeep-mote/
