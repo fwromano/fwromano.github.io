@@ -1,0 +1,14 @@
+{
+  "source_repository": "https://github.com/fwromano/UCLIP",
+  "source_revision": "f091f87a2f5d1bf83a8c278bafdcfdd675838090",
+  "viewer_url": "https://fwromano.github.io/datasets/sim2-headings/",
+  "files": {
+    "heading_labels.csv": "9b8b12d74bff651d9e392fb59601ec96cbfeb4acb32ead3bbd9444e56bfe4a15",
+    "heading_labels.json": "24464a42f27698519b3d1a231a7bc540278927223d7461863909d80c407a3439",
+    "reviewed_labels.json": "307556ec8583a6309d63558cc2ad3d6fcef8f4a1ad5c658267ef01dc260f119d",
+    "summary.json": "0a5f625e7212ea227c35a36030bd707b468aaebfcba3b76172d1ca63054d8f25",
+    "index.html": "fec84b14a8ae1ebc198a3f25b6a73dd0ace3b5c36368b8aea73549dec9ce846f",
+    "verification.json": "489b924ac183f31580bb756357c72fefb81be59b3ac60f64237ff1ee08433d12",
+    "counter_review.png": "4f9fc3ac12d9f3c5bfe2d51f071cfb10d1868d48cf80beea37bc6296b6c94b95"
+  }
+}
