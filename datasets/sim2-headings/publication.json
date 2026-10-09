@@ -7,7 +7,7 @@
     "heading_labels.json": "24464a42f27698519b3d1a231a7bc540278927223d7461863909d80c407a3439",
     "reviewed_labels.json": "307556ec8583a6309d63558cc2ad3d6fcef8f4a1ad5c658267ef01dc260f119d",
     "summary.json": "0a5f625e7212ea227c35a36030bd707b468aaebfcba3b76172d1ca63054d8f25",
-    "index.html": "7fb9f54043b183e0530b65c0f044b2ab0354b290c8f7a8230ccd250a353eb06a",
+    "index.html": "7960d78a9d3b7350e3e40bf84f756d7181b68ab1fe65c9abb05604dae9be48be",
     "verification.json": "489b924ac183f31580bb756357c72fefb81be59b3ac60f64237ff1ee08433d12",
     "counter_review.png": "4f9fc3ac12d9f3c5bfe2d51f071cfb10d1868d48cf80beea37bc6296b6c94b95"
   },
@@ -19,5 +19,15 @@
       1949,
       512
     ]
+  },
+  "embedding_explorer": {
+    "source_revision": "373d4ab3b31c5d22fafe2d088b89f0e0fbf8d987",
+    "url": "https://fwromano.github.io/datasets/sim2-headings/embedding.html",
+    "files": {
+      "embedding.html": "253fd23e803311678e97df4547ece07b8a733b34796742eb3abc85ef83167ec6",
+      "heading_pca.json": "b6c60f835c17bc00d5eac64eb5f2f6904e6109bac29b302dfdf91e21545bf019",
+      "heading_pca_verification.json": "74009efdf120345c5e24b6234cbd68e59026b44d7ee8c2cf66bd62fabc697b5b",
+      "heading_pca_browser_verification.json": "3e01685034818f503367b02767e78e5289b366259fbe29807d7fb3047c99ade4"
+    }
   }
 }
