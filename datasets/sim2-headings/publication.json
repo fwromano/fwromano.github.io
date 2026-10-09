@@ -7,8 +7,17 @@
     "heading_labels.json": "24464a42f27698519b3d1a231a7bc540278927223d7461863909d80c407a3439",
     "reviewed_labels.json": "307556ec8583a6309d63558cc2ad3d6fcef8f4a1ad5c658267ef01dc260f119d",
     "summary.json": "0a5f625e7212ea227c35a36030bd707b468aaebfcba3b76172d1ca63054d8f25",
-    "index.html": "fec84b14a8ae1ebc198a3f25b6a73dd0ace3b5c36368b8aea73549dec9ce846f",
+    "index.html": "7fb9f54043b183e0530b65c0f044b2ab0354b290c8f7a8230ccd250a353eb06a",
     "verification.json": "489b924ac183f31580bb756357c72fefb81be59b3ac60f64237ff1ee08433d12",
     "counter_review.png": "4f9fc3ac12d9f3c5bfe2d51f071cfb10d1868d48cf80beea37bc6296b6c94b95"
+  },
+  "embedding_cache": {
+    "source_revision": "77dee02fe81b28ba2f2c33e46a9a905e4c7498b5",
+    "url": "https://github.com/fwromano/UCLIP/tree/77dee02fe81b28ba2f2c33e46a9a905e4c7498b5/data/car_sim/clip_embeddings",
+    "model_name": "openai/clip-vit-base-patch16",
+    "shape": [
+      1949,
+      512
+    ]
   }
 }

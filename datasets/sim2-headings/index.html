@@ -10,7 +10,7 @@ select,input,button{font:inherit}input[type=range]{width:240px;vertical-align:mi
 </style><main><h1>Sim2 relative heading labels</h1><p>1,949 labeled vehicle views · 1,404 Jeep views · <a href="https://github.com/fwromano/UCLIP/tree/f091f87a2f5d1bf83a8c278bafdcfdd675838090/data/car_sim">Dataset on GitHub</a></p>
 <p>0° = front facing the camera · 90° = nose toward image right · 180° = rear · 270° = nose toward image left.<br>
 Angles are relative viewing azimuths from the source-video counter. They are not compass headings. Original images retain their filenames.</p>
-<p><a href="heading_labels.csv">CSV labels</a> · <a href="heading_labels.json">JSON labels and provenance</a> · <a href="https://github.com/fwromano/UCLIP/blob/f091f87a2f5d1bf83a8c278bafdcfdd675838090/data/car_sim/heading_labels/README.md">Method and limitations</a></p>
+<p><a href="heading_labels.csv">CSV labels</a> · <a href="https://github.com/fwromano/UCLIP/tree/77dee02fe81b28ba2f2c33e46a9a905e4c7498b5/data/car_sim/clip_embeddings">CLIP B/16 embedding cache</a> · <a href="heading_labels.json">JSON labels and provenance</a> · <a href="https://github.com/fwromano/UCLIP/blob/f091f87a2f5d1bf83a8c278bafdcfdd675838090/data/car_sim/heading_labels/README.md">Method and limitations</a></p>
 <label>Category <select id="category"></select></label><label>Requested heading <input id="angle" type="range" min="0" max="359" value="0"> <output id="target">0°</output></label>
 <button id="previous">Previous image</button> <button id="next">Next image</button>
 <p id="count"></p><section class="focus"><img id="image" alt="Selected Sim2 image"><div class="meta" id="metadata"></div></section>
