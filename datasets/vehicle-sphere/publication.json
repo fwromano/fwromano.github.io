@@ -1,7 +1,7 @@
 {
   "schema": "uclip.pages_publication.v1",
   "source_repository": "https://github.com/fwromano/UCLIP",
-  "source_revision": "5c1be312a3712bc6f4ea7d2c5638991c65f3a9ed",
+  "source_revision": "873ccae5d15432cd387ab276693d8c4b16f59138",
   "source_directory": "docs/vehicle_scans",
   "viewer": "embedding.html",
   "rows": 5268,
@@ -18,5 +18,6 @@
     "elevation_deg": -5
   },
   "color_interpolation": "HSV with globally aligned hue turns",
-  "custom_colors": "Vivid saturation-preserving four-corner blend; native input/change events; shared grid and point mapping"
+  "custom_colors": "Vivid saturation-preserving four-corner blend; native input/change events; shared grid and point mapping",
+  "graph_preview": "Newly checked vehicles set the preview; removing the previewed series selects a visible series; an empty graph clears the preview"
 }
