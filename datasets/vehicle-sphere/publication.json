@@ -1,7 +1,7 @@
 {
   "schema": "uclip.pages_publication.v1",
   "source_repository": "https://github.com/fwromano/UCLIP",
-  "source_revision": "2225988b8494b3bcfc084360d2ddc6eba3a9980f",
+  "source_revision": "f9dc24cf97606aab9b959b189c6668f81716b237",
   "source_directory": "docs/vehicle_scans",
   "viewer": "embedding.html",
   "rows": 5268,
@@ -16,5 +16,7 @@
   "yellow_anchor": {
     "heading_deg": 180,
     "elevation_deg": -5
-  }
+  },
+  "color_interpolation": "Oklab",
+  "custom_colors": "Continuous four-corner blend; native input/change events; shared grid and point mapping"
 }
