@@ -1,0 +1,10 @@
+{
+  "schema": "uclip.pages_publication.v1",
+  "source_repository": "https://github.com/fwromano/UCLIP",
+  "source_revision": "0570515bb9686bf943e43eca3915fdc99f709941",
+  "source_directory": "docs/vehicle_scans",
+  "viewer": "embedding.html",
+  "rows": 5268,
+  "series": 27,
+  "published_date": "2026-10-13"
+}

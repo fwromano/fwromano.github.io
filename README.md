@@ -10,3 +10,6 @@ https://fwromano.github.io/thmi/2026-10-13-jeep-mote/
 
 Sim2 rendered-vehicle heading dataset and interactive viewer:
 https://fwromano.github.io/datasets/sim2-headings/
+
+Vehicle sphere-view embedding explorer with Jeep paint variants:
+https://fwromano.github.io/datasets/vehicle-sphere/embedding.html
