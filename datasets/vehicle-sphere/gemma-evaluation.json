@@ -1,271 +1,471 @@
 {
   "state": "complete",
-  "images": 3527,
-  "series": 21,
-  "config": {
-    "schema": "uclip.vehicle_masks.gemma2.encode.v1",
-    "model": "google/embeddinggemma-2",
-    "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
-    "mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
-    "generator_sha256": "2991cabc951f6d999eabd9ed6488941f853de9176f28ea95be1785f123a1aac9",
-    "model_files": {
-      ".gitattributes": {
-        "sha256": "bcdccfaa66bc1240c7192dbd374cfb39b695bb1d8ff6b7ce0113aa5e9ac21a44",
-        "bytes": 1301
-      },
-      "1_Pooling/config.json": {
-        "sha256": "8759bdf7c77efc7df7723f64856a593c8943b71ee38baf2a88771fbaf78438f9",
-        "bytes": 90
-      },
-      "2_Normalize/config.json": {
-        "sha256": "cdb09dfca347a56aa2d691744e38d5ad3c7cbc2834e7181272b9a15328b82524",
-        "bytes": 97
-      },
-      "README.md": {
-        "sha256": "b677a0ee2818c36f091b65fd3d9b4baea9f04d53b02b49cae916c74bf9682037",
-        "bytes": 21730
-      },
-      "chat_template.jinja": {
-        "sha256": "4b852efc0b9960283e735363331e6f325b33bc74bdbaa076f595bc4e9b94d85e",
-        "bytes": 1016
-      },
-      "config.json": {
-        "sha256": "b8f1e9931b57fbc054acdb445c41765d55b0074c58d145fa82839941ad1b5bb3",
-        "bytes": 4455
-      },
-      "config_sentence_transformers.json": {
-        "sha256": "031e56a498d33c349ab489a21885bcfe25b4fcba841149dc99e1e90d4a7c28f5",
-        "bytes": 1565
-      },
-      "model.safetensors": {
-        "sha256": "197a32965d4b1105faf060417baa899e193fb73cd401f42ec9295234d5553d79",
-        "bytes": 1488915288
-      },
-      "modules.json": {
-        "sha256": "3d02572a0455b832de67fb8e63a54981bc7e8b46e337c95e917bd8122a533bfd",
-        "bytes": 413
-      },
-      "preprocessor_config.json": {
-        "sha256": "ea2ae257e901064abdd98dceb19f2b0da06af600bed15e0f99f5c85c37ee9d78",
-        "bytes": 511
-      },
-      "processor_config.json": {
-        "sha256": "168f6a08522f3ce5dea596d94d003af2fd691742d4f41fe1f9d8cce76bfbf69c",
-        "bytes": 1788
-      },
-      "sentence_bert_config.json": {
-        "sha256": "b1bcd9f2dce3ae863b359e87d0710b5dbc3314a59ecb4e2f97c7778fc8e4b228",
-        "bytes": 747
-      },
-      "tokenizer.json": {
-        "sha256": "4d777ef5bdc1aa36227abdfb77c3e49e7b9c892d16e1b6bda41c393504828be4",
-        "bytes": 32170510
-      },
-      "tokenizer.model": {
-        "sha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
-        "bytes": 4689013
-      },
-      "tokenizer_config.json": {
-        "sha256": "17bd5d6e9364ca49a534e1502076593317c298d4a663623091ed45388f004874",
-        "bytes": 1599
-      }
-    },
-    "device": "cuda",
-    "dtype": "float32",
-    "max_soft_tokens": 70,
-    "batch_size": 8,
-    "threads": 4,
-    "dimensions": [
-      768,
-      512,
-      256,
-      128
-    ],
-    "images": 3527,
-    "pixel_input": "Native tight masked RGB from adopted mask manifest; no manual square padding",
-    "background_rgb": [
-      127,
-      127,
-      127
-    ],
-    "seed": 0,
-    "tf32": false
+  "images": 4931,
+  "series": 25,
+  "model": {
+    "name": "google/embeddinggemma-2",
+    "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b"
   },
-  "excluded_images": [
-    {
-      "source_embedding_row": 407,
-      "series": "truck/black",
-      "reason": "human_nay",
-      "mask_sha256": "7dfa328849ef2792341393468e5ae17cd807b1f28f81495873474c92e98efa0b"
+  "source_encodings": {
+    "sim2": {
+      "state": "complete",
+      "images": 1404,
+      "series": 4,
+      "config": {
+        "schema": "uclip.sim2.gemma2.encode.v1",
+        "model": "google/embeddinggemma-2",
+        "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+        "source_projection_sha256": "03cb5b149386718c795813951207870520625cb9fef6a00500ec80117f8360ca",
+        "generator_sha256": "3aa4c3d96117853024cb26141c491c42688ed171cf1df35494a86e9072210228",
+        "model_files": {
+          ".gitattributes": {
+            "sha256": "bcdccfaa66bc1240c7192dbd374cfb39b695bb1d8ff6b7ce0113aa5e9ac21a44",
+            "bytes": 1301
+          },
+          "1_Pooling/config.json": {
+            "sha256": "8759bdf7c77efc7df7723f64856a593c8943b71ee38baf2a88771fbaf78438f9",
+            "bytes": 90
+          },
+          "2_Normalize/config.json": {
+            "sha256": "cdb09dfca347a56aa2d691744e38d5ad3c7cbc2834e7181272b9a15328b82524",
+            "bytes": 97
+          },
+          "README.md": {
+            "sha256": "b677a0ee2818c36f091b65fd3d9b4baea9f04d53b02b49cae916c74bf9682037",
+            "bytes": 21730
+          },
+          "chat_template.jinja": {
+            "sha256": "4b852efc0b9960283e735363331e6f325b33bc74bdbaa076f595bc4e9b94d85e",
+            "bytes": 1016
+          },
+          "config.json": {
+            "sha256": "b8f1e9931b57fbc054acdb445c41765d55b0074c58d145fa82839941ad1b5bb3",
+            "bytes": 4455
+          },
+          "config_sentence_transformers.json": {
+            "sha256": "031e56a498d33c349ab489a21885bcfe25b4fcba841149dc99e1e90d4a7c28f5",
+            "bytes": 1565
+          },
+          "model.safetensors": {
+            "sha256": "197a32965d4b1105faf060417baa899e193fb73cd401f42ec9295234d5553d79",
+            "bytes": 1488915288
+          },
+          "modules.json": {
+            "sha256": "3d02572a0455b832de67fb8e63a54981bc7e8b46e337c95e917bd8122a533bfd",
+            "bytes": 413
+          },
+          "preprocessor_config.json": {
+            "sha256": "ea2ae257e901064abdd98dceb19f2b0da06af600bed15e0f99f5c85c37ee9d78",
+            "bytes": 511
+          },
+          "processor_config.json": {
+            "sha256": "168f6a08522f3ce5dea596d94d003af2fd691742d4f41fe1f9d8cce76bfbf69c",
+            "bytes": 1788
+          },
+          "sentence_bert_config.json": {
+            "sha256": "b1bcd9f2dce3ae863b359e87d0710b5dbc3314a59ecb4e2f97c7778fc8e4b228",
+            "bytes": 747
+          },
+          "tokenizer.json": {
+            "sha256": "4d777ef5bdc1aa36227abdfb77c3e49e7b9c892d16e1b6bda41c393504828be4",
+            "bytes": 32170510
+          },
+          "tokenizer.model": {
+            "sha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+            "bytes": 4689013
+          },
+          "tokenizer_config.json": {
+            "sha256": "17bd5d6e9364ca49a534e1502076593317c298d4a663623091ed45388f004874",
+            "bytes": 1599
+          }
+        },
+        "device": "cuda",
+        "dtype": "float32",
+        "max_soft_tokens": 70,
+        "batch_size": 8,
+        "threads": 4,
+        "dimensions": [
+          768,
+          512,
+          256,
+          128
+        ],
+        "images": 1404,
+        "pixel_input": "Unchanged original Sim2 crop pixels; no new masks or manual square padding",
+        "seed": 0,
+        "tf32": false
+      },
+      "excluded_images": [],
+      "independent_reencodes": [
+        {
+          "source_embedding_row": 0,
+          "series": "sim2/jeep/indigo",
+          "max_abs_error": 2.2724270820617676e-07
+        },
+        {
+          "source_embedding_row": 357,
+          "series": "sim2/jeep/magenta",
+          "max_abs_error": 5.662441253662109e-07
+        },
+        {
+          "source_embedding_row": 981,
+          "series": "sim2/jeep/white",
+          "max_abs_error": 1.969310687854886e-07
+        },
+        {
+          "source_embedding_row": 1599,
+          "series": "sim2/jeep/yellow",
+          "max_abs_error": 7.729977369308472e-07
+        }
+      ],
+      "native_prefix_equivalence": [
+        {
+          "source_embedding_row": 0,
+          "dimension": 512,
+          "max_abs_error": 2.5331974029541016e-07
+        },
+        {
+          "source_embedding_row": 1599,
+          "dimension": 512,
+          "max_abs_error": 8.735805749893188e-07
+        },
+        {
+          "source_embedding_row": 0,
+          "dimension": 256,
+          "max_abs_error": 3.129243850708008e-07
+        },
+        {
+          "source_embedding_row": 1599,
+          "dimension": 256,
+          "max_abs_error": 1.0710209608078003e-06
+        },
+        {
+          "source_embedding_row": 0,
+          "dimension": 128,
+          "max_abs_error": 2.3096799850463867e-07
+        },
+        {
+          "source_embedding_row": 1599,
+          "dimension": 128,
+          "max_abs_error": 1.2479722499847412e-06
+        }
+      ],
+      "elapsed_sec": 346.30671250703745,
+      "hardware": {
+        "device": "cuda",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU"
+      },
+      "environment": {
+        "python": "3.11.7",
+        "torch": "2.7.0+cu126",
+        "transformers": "5.19.0",
+        "sentence_transformers": "6.1.0"
+      },
+      "artifacts": {
+        "embeddings-128.npy": {
+          "sha256": "8221b58ea7d485bcd8b31418c5c8a724390c558b8b6644a9f38af59e3bc58f04",
+          "bytes": 718976
+        },
+        "embeddings-256.npy": {
+          "sha256": "6bb0341c1d83d8e7e9a4ddc6c909d1b885154ce3befeb5b363496d8b06e10233",
+          "bytes": 1437824
+        },
+        "embeddings-512.npy": {
+          "sha256": "454a67df0a69c91ac89b101a5a84b22d98343f47735e667fb91115fb8da25332",
+          "bytes": 2875520
+        },
+        "embeddings-768.npy": {
+          "sha256": "333b74154a34880c592890a048843d87801f244355ce74197c541959d13bf3bd",
+          "bytes": 4313216
+        }
+      },
+      "index_sha256": "737430c48485747b1b935d5b26db17cab824b1d76863bfb18a2c95caa83deb85"
+    },
+    "scans": {
+      "state": "complete",
+      "images": 3527,
+      "series": 21,
+      "config": {
+        "schema": "uclip.vehicle_masks.gemma2.encode.v1",
+        "model": "google/embeddinggemma-2",
+        "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+        "mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
+        "generator_sha256": "2991cabc951f6d999eabd9ed6488941f853de9176f28ea95be1785f123a1aac9",
+        "model_files": {
+          ".gitattributes": {
+            "sha256": "bcdccfaa66bc1240c7192dbd374cfb39b695bb1d8ff6b7ce0113aa5e9ac21a44",
+            "bytes": 1301
+          },
+          "1_Pooling/config.json": {
+            "sha256": "8759bdf7c77efc7df7723f64856a593c8943b71ee38baf2a88771fbaf78438f9",
+            "bytes": 90
+          },
+          "2_Normalize/config.json": {
+            "sha256": "cdb09dfca347a56aa2d691744e38d5ad3c7cbc2834e7181272b9a15328b82524",
+            "bytes": 97
+          },
+          "README.md": {
+            "sha256": "b677a0ee2818c36f091b65fd3d9b4baea9f04d53b02b49cae916c74bf9682037",
+            "bytes": 21730
+          },
+          "chat_template.jinja": {
+            "sha256": "4b852efc0b9960283e735363331e6f325b33bc74bdbaa076f595bc4e9b94d85e",
+            "bytes": 1016
+          },
+          "config.json": {
+            "sha256": "b8f1e9931b57fbc054acdb445c41765d55b0074c58d145fa82839941ad1b5bb3",
+            "bytes": 4455
+          },
+          "config_sentence_transformers.json": {
+            "sha256": "031e56a498d33c349ab489a21885bcfe25b4fcba841149dc99e1e90d4a7c28f5",
+            "bytes": 1565
+          },
+          "model.safetensors": {
+            "sha256": "197a32965d4b1105faf060417baa899e193fb73cd401f42ec9295234d5553d79",
+            "bytes": 1488915288
+          },
+          "modules.json": {
+            "sha256": "3d02572a0455b832de67fb8e63a54981bc7e8b46e337c95e917bd8122a533bfd",
+            "bytes": 413
+          },
+          "preprocessor_config.json": {
+            "sha256": "ea2ae257e901064abdd98dceb19f2b0da06af600bed15e0f99f5c85c37ee9d78",
+            "bytes": 511
+          },
+          "processor_config.json": {
+            "sha256": "168f6a08522f3ce5dea596d94d003af2fd691742d4f41fe1f9d8cce76bfbf69c",
+            "bytes": 1788
+          },
+          "sentence_bert_config.json": {
+            "sha256": "b1bcd9f2dce3ae863b359e87d0710b5dbc3314a59ecb4e2f97c7778fc8e4b228",
+            "bytes": 747
+          },
+          "tokenizer.json": {
+            "sha256": "4d777ef5bdc1aa36227abdfb77c3e49e7b9c892d16e1b6bda41c393504828be4",
+            "bytes": 32170510
+          },
+          "tokenizer.model": {
+            "sha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+            "bytes": 4689013
+          },
+          "tokenizer_config.json": {
+            "sha256": "17bd5d6e9364ca49a534e1502076593317c298d4a663623091ed45388f004874",
+            "bytes": 1599
+          }
+        },
+        "device": "cuda",
+        "dtype": "float32",
+        "max_soft_tokens": 70,
+        "batch_size": 8,
+        "threads": 4,
+        "dimensions": [
+          768,
+          512,
+          256,
+          128
+        ],
+        "images": 3527,
+        "pixel_input": "Native tight masked RGB from adopted mask manifest; no manual square padding",
+        "background_rgb": [
+          127,
+          127,
+          127
+        ],
+        "seed": 0,
+        "tf32": false
+      },
+      "excluded_images": [
+        {
+          "source_embedding_row": 407,
+          "series": "truck/black",
+          "reason": "human_nay",
+          "mask_sha256": "7dfa328849ef2792341393468e5ae17cd807b1f28f81495873474c92e98efa0b"
+        }
+      ],
+      "independent_reencodes": [
+        {
+          "source_embedding_row": 2184,
+          "series": "jeep/black",
+          "max_abs_error": 1.2153759598731995e-07
+        },
+        {
+          "source_embedding_row": 2352,
+          "series": "jeep/blue",
+          "max_abs_error": 1.4808028936386108e-07
+        },
+        {
+          "source_embedding_row": 2520,
+          "series": "jeep/gray",
+          "max_abs_error": 9.592622518539429e-08
+        },
+        {
+          "source_embedding_row": 2688,
+          "series": "jeep/green",
+          "max_abs_error": 4.516914486885071e-07
+        },
+        {
+          "source_embedding_row": 2856,
+          "series": "jeep/indigo",
+          "max_abs_error": 1.3783574104309082e-07
+        },
+        {
+          "source_embedding_row": 3024,
+          "series": "jeep/orange",
+          "max_abs_error": 1.7881393432617188e-07
+        },
+        {
+          "source_embedding_row": 0,
+          "series": "jeep/original",
+          "max_abs_error": 6.016343832015991e-07
+        },
+        {
+          "source_embedding_row": 3192,
+          "series": "jeep/red",
+          "max_abs_error": 1.94646418094635e-07
+        },
+        {
+          "source_embedding_row": 3360,
+          "series": "jeep/violet",
+          "max_abs_error": 2.980232238769531e-07
+        },
+        {
+          "source_embedding_row": 3528,
+          "series": "jeep/white",
+          "max_abs_error": 1.7136335372924805e-07
+        },
+        {
+          "source_embedding_row": 3696,
+          "series": "jeep/yellow",
+          "max_abs_error": 7.7858567237854e-07
+        },
+        {
+          "source_embedding_row": 336,
+          "series": "truck/black",
+          "max_abs_error": 2.882443368434906e-07
+        },
+        {
+          "source_embedding_row": 504,
+          "series": "truck/blue",
+          "max_abs_error": 2.5704503059387207e-07
+        },
+        {
+          "source_embedding_row": 672,
+          "series": "truck/gray",
+          "max_abs_error": 2.7008354663848877e-07
+        },
+        {
+          "source_embedding_row": 840,
+          "series": "truck/green",
+          "max_abs_error": 2.7567148208618164e-07
+        },
+        {
+          "source_embedding_row": 1008,
+          "series": "truck/indigo",
+          "max_abs_error": 1.564621925354004e-07
+        },
+        {
+          "source_embedding_row": 1176,
+          "series": "truck/orange",
+          "max_abs_error": 1.7881393432617188e-07
+        },
+        {
+          "source_embedding_row": 1344,
+          "series": "truck/red",
+          "max_abs_error": 4.0605664253234863e-07
+        },
+        {
+          "source_embedding_row": 1512,
+          "series": "truck/violet",
+          "max_abs_error": 2.3469328880310059e-07
+        },
+        {
+          "source_embedding_row": 1680,
+          "series": "truck/white",
+          "max_abs_error": 2.3096799850463867e-07
+        },
+        {
+          "source_embedding_row": 1848,
+          "series": "truck/yellow",
+          "max_abs_error": 9.238719940185547e-07
+        }
+      ],
+      "native_prefix_equivalence": [
+        {
+          "source_embedding_row": 2184,
+          "dimension": 512,
+          "max_abs_error": 1.3737007975578308e-07
+        },
+        {
+          "source_embedding_row": 1848,
+          "dimension": 512,
+          "max_abs_error": 1.0728836059570312e-06
+        },
+        {
+          "source_embedding_row": 2184,
+          "dimension": 256,
+          "max_abs_error": 1.671724021434784e-07
+        },
+        {
+          "source_embedding_row": 1848,
+          "dimension": 256,
+          "max_abs_error": 1.2218952178955078e-06
+        },
+        {
+          "source_embedding_row": 2184,
+          "dimension": 128,
+          "max_abs_error": 1.932494342327118e-07
+        },
+        {
+          "source_embedding_row": 1848,
+          "dimension": 128,
+          "max_abs_error": 1.3113021850585938e-06
+        }
+      ],
+      "elapsed_sec": 828.2813798949937,
+      "hardware": {
+        "device": "cuda",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU"
+      },
+      "environment": {
+        "python": "3.11.7",
+        "torch": "2.7.0+cu126",
+        "transformers": "5.19.0",
+        "sentence_transformers": "6.1.0"
+      },
+      "artifacts": {
+        "embeddings-128.npy": {
+          "sha256": "c1ac5af8a83ccfec253e74ee3999951d0972df29078c9d9fd7b05587e8012477",
+          "bytes": 1805952
+        },
+        "embeddings-256.npy": {
+          "sha256": "b160cdbb9212c59901b651f358912efe4c4b8e93f0da719de0d210f648e6bc8f",
+          "bytes": 3611776
+        },
+        "embeddings-512.npy": {
+          "sha256": "5dad7928d8f40db3a94a329df5ad760d0af244d36869ec28ac2c5af34baeb7d9",
+          "bytes": 7223424
+        },
+        "embeddings-768.npy": {
+          "sha256": "3cd4d3ed09a1f96cff9c2091c59ae1e910576c6f97a859ba135a4d37aa9f97a6",
+          "bytes": 10835072
+        }
+      },
+      "index_sha256": "6c9f1c92e6224adb9c8c227f4052ddc958b6a25aa7ff807e15faf36f259324f8"
     }
-  ],
-  "independent_reencodes": [
-    {
-      "source_embedding_row": 2184,
-      "series": "jeep/black",
-      "max_abs_error": 1.2153759598731995e-07
-    },
-    {
-      "source_embedding_row": 2352,
-      "series": "jeep/blue",
-      "max_abs_error": 1.4808028936386108e-07
-    },
-    {
-      "source_embedding_row": 2520,
-      "series": "jeep/gray",
-      "max_abs_error": 9.592622518539429e-08
-    },
-    {
-      "source_embedding_row": 2688,
-      "series": "jeep/green",
-      "max_abs_error": 4.516914486885071e-07
-    },
-    {
-      "source_embedding_row": 2856,
-      "series": "jeep/indigo",
-      "max_abs_error": 1.3783574104309082e-07
-    },
-    {
-      "source_embedding_row": 3024,
-      "series": "jeep/orange",
-      "max_abs_error": 1.7881393432617188e-07
-    },
-    {
-      "source_embedding_row": 0,
-      "series": "jeep/original",
-      "max_abs_error": 6.016343832015991e-07
-    },
-    {
-      "source_embedding_row": 3192,
-      "series": "jeep/red",
-      "max_abs_error": 1.94646418094635e-07
-    },
-    {
-      "source_embedding_row": 3360,
-      "series": "jeep/violet",
-      "max_abs_error": 2.980232238769531e-07
-    },
-    {
-      "source_embedding_row": 3528,
-      "series": "jeep/white",
-      "max_abs_error": 1.7136335372924805e-07
-    },
-    {
-      "source_embedding_row": 3696,
-      "series": "jeep/yellow",
-      "max_abs_error": 7.7858567237854e-07
-    },
-    {
-      "source_embedding_row": 336,
-      "series": "truck/black",
-      "max_abs_error": 2.882443368434906e-07
-    },
-    {
-      "source_embedding_row": 504,
-      "series": "truck/blue",
-      "max_abs_error": 2.5704503059387207e-07
-    },
-    {
-      "source_embedding_row": 672,
-      "series": "truck/gray",
-      "max_abs_error": 2.7008354663848877e-07
-    },
-    {
-      "source_embedding_row": 840,
-      "series": "truck/green",
-      "max_abs_error": 2.7567148208618164e-07
-    },
-    {
-      "source_embedding_row": 1008,
-      "series": "truck/indigo",
-      "max_abs_error": 1.564621925354004e-07
-    },
-    {
-      "source_embedding_row": 1176,
-      "series": "truck/orange",
-      "max_abs_error": 1.7881393432617188e-07
-    },
-    {
-      "source_embedding_row": 1344,
-      "series": "truck/red",
-      "max_abs_error": 4.0605664253234863e-07
-    },
-    {
-      "source_embedding_row": 1512,
-      "series": "truck/violet",
-      "max_abs_error": 2.3469328880310059e-07
-    },
-    {
-      "source_embedding_row": 1680,
-      "series": "truck/white",
-      "max_abs_error": 2.3096799850463867e-07
-    },
-    {
-      "source_embedding_row": 1848,
-      "series": "truck/yellow",
-      "max_abs_error": 9.238719940185547e-07
-    }
-  ],
-  "native_prefix_equivalence": [
-    {
-      "source_embedding_row": 2184,
-      "dimension": 512,
-      "max_abs_error": 1.3737007975578308e-07
-    },
-    {
-      "source_embedding_row": 1848,
-      "dimension": 512,
-      "max_abs_error": 1.0728836059570312e-06
-    },
-    {
-      "source_embedding_row": 2184,
-      "dimension": 256,
-      "max_abs_error": 1.671724021434784e-07
-    },
-    {
-      "source_embedding_row": 1848,
-      "dimension": 256,
-      "max_abs_error": 1.2218952178955078e-06
-    },
-    {
-      "source_embedding_row": 2184,
-      "dimension": 128,
-      "max_abs_error": 1.932494342327118e-07
-    },
-    {
-      "source_embedding_row": 1848,
-      "dimension": 128,
-      "max_abs_error": 1.3113021850585938e-06
-    }
-  ],
-  "elapsed_sec": 828.2813798949937,
-  "hardware": {
-    "device": "cuda",
-    "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU"
   },
-  "environment": {
-    "python": "3.11.7",
-    "torch": "2.7.0+cu126",
-    "transformers": "5.19.0",
-    "sentence_transformers": "6.1.0"
-  },
+  "index_sha256": "5dffec302bac20adcb8fd5f6bbdd6068f12ba4074a831711f4f78e764bcaa84f",
   "artifacts": {
-    "embeddings-128.npy": {
-      "sha256": "c1ac5af8a83ccfec253e74ee3999951d0972df29078c9d9fd7b05587e8012477",
-      "bytes": 1805952
+    "gemma-embeddings-768.npy": {
+      "sha256": "8e917ba8b7cb6d9d603f27cefe6575bc8d32c8e4a3085d455878064f3201de46"
     },
-    "embeddings-256.npy": {
-      "sha256": "b160cdbb9212c59901b651f358912efe4c4b8e93f0da719de0d210f648e6bc8f",
-      "bytes": 3611776
+    "gemma-embeddings-512.npy": {
+      "sha256": "896d8febe33c0eb06a8624b5eed72fa805031b21a9b0da7c04fc15db04d05644"
     },
-    "embeddings-512.npy": {
-      "sha256": "5dad7928d8f40db3a94a329df5ad760d0af244d36869ec28ac2c5af34baeb7d9",
-      "bytes": 7223424
+    "gemma-embeddings-256.npy": {
+      "sha256": "81bbaefc6717e56e78ba693e5b1cb9c0c8c816b6f4ef37dc447a501e7ae4d8dc"
     },
-    "embeddings-768.npy": {
-      "sha256": "3cd4d3ed09a1f96cff9c2091c59ae1e910576c6f97a859ba135a4d37aa9f97a6",
-      "bytes": 10835072
+    "gemma-embeddings-128.npy": {
+      "sha256": "50ef6b2fcfa896e1481d4be5022f3965672b052918af29ad7f68c4cf77cdd278"
     }
-  },
-  "index_sha256": "6c9f1c92e6224adb9c8c227f4052ddc958b6a25aa7ff807e15faf36f259324f8"
+  }
 }

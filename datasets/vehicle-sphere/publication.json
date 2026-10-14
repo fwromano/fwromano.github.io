@@ -3,12 +3,15 @@
   "source_repository": "https://github.com/fwromano/UCLIP",
   "source_revision": "a048bb5425e2fe92c46da05128682d2d3cc19670",
   "source_worktree_changes": true,
-  "source_render_sha256": "5b9ffc9d752e3690b7c9665059e6cd39dcfc79eccdfc69b102423f9fe762b8e5",
+  "source_render_sha256": "ad227c2aa3230eea88a49b06e8560361e2668b09d372fb53778fa6a9354e904a",
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "viewer": "embedding.html",
   "published_date": "2026-10-14",
   "clip_rows": 4931,
   "masked_scan_rows": 3527,
+  "gemma_rows": 4931,
+  "gemma_sim2_rows": 1404,
+  "cutout_heading_drag": true,
   "gemma_dimensions": [
     768,
     512,
@@ -20,22 +23,23 @@
   "native_cutouts": 3527,
   "preview_sheets": 87,
   "model_files_published": false,
+  "gemma_index": "gemma-index.json",
   "artifacts": {
     "embedding.html": {
-      "sha256": "3d08d69ee5701d86d5a2b5a9af2f37be3da292f7d88917221ab228a033a903c9",
-      "bytes": 16025942
+      "sha256": "f22c6187d7d2b6445e62ab31c3766a0e9e1456ae3156dad49c7f01dcbaee66f2",
+      "bytes": 20038172
     },
     "embedding_offline.html": {
-      "sha256": "c71ee85ca5343137add38ed77be9abfca5e92b2bd4ea6c2a0ff68ad3820d9ae6",
-      "bytes": 54498635
+      "sha256": "86d4ae49bafc192daa365861385633d31c85b8c068c9d4ebdf63fd8273c91eb3",
+      "bytes": 58510865
     },
     "orbit-data.json": {
-      "sha256": "a10b8fa55cb2470883cd113a9a0e05bf85608692f3ddd344e6d80c9875a9cb22",
-      "bytes": 21312191
+      "sha256": "e8120510feb75fb29b38beca7eb4bdeb87e1c4a3c4261a9a8c01a8f5bb9daed7",
+      "bytes": 27052781
     },
     "manifest.json": {
-      "sha256": "743ed6b7fd863036e4921e5c33e9cc74c23dc95f90246e8f0ebc0b00035a0ee6",
-      "bytes": 1595
+      "sha256": "9ab88b4b657d9f315b737b5b0b9eba3db6504dd05c1ae56032c1a3f38298ab41",
+      "bytes": 1695
     },
     "index.json": {
       "sha256": "d74df61b4c2a601c49994d378794357324242fd85dca104ea83216565a79b6c5",
@@ -58,39 +62,52 @@
       "bytes": 4059
     },
     "gemma-evaluation.json": {
-      "sha256": "eeb89c96a716a5d7cb488c98054b518eba22d140a6e909d81ae5657bc0a46e55",
-      "bytes": 7643
+      "sha256": "aebb100454352334897feb45ca76316f2094ab83f8ce7ad5c8edf1f332941c12",
+      "bytes": 15510
+    },
+    "gemma-index.json": {
+      "sha256": "5dffec302bac20adcb8fd5f6bbdd6068f12ba4074a831711f4f78e764bcaa84f",
+      "bytes": 4229281
     },
     "gemma-projection.json": {
-      "sha256": "d8a4704268b9dd15edb528bbba733fa43247dd3b7dff80691a1c6951e25d4192",
-      "bytes": 817301
+      "sha256": "2fbd4b4200d96fcbf9061da0f05e8bb43decb398a9d22ca2b6c75fbfbff2e457",
+      "bytes": 1435593
     },
     "gemma-projection-512.json": {
-      "sha256": "5f6eae4e87892e86756de4c213af196f8d47eb7ccf5b958cd4cb3c64edc8414b",
-      "bytes": 796379
+      "sha256": "9a144fa4dd6a66ba6dcd09c0d6b9103a48f2c29c8afddd6187be71f9a7829472",
+      "bytes": 1415247
     },
     "gemma-projection-256.json": {
-      "sha256": "c1fead57201bbec089c8c8f5bfef4e5a6d82e981a49c0967db584f362474e2ef",
-      "bytes": 775588
+      "sha256": "e1a460b597009f72ccf71a883ad72f68755dbf6c606365c8af4a8c18b9cee700",
+      "bytes": 1394430
     },
     "gemma-projection-128.json": {
-      "sha256": "8f4b14a24edc77b491f30c282cad9934d3ec5d5d7841b7503dd4a1642b458ec2",
-      "bytes": 767989
+      "sha256": "827b98c0a4390efaa0c37a33a08347f3fd1568d50f87eef40c56571cf57599d5",
+      "bytes": 1388550
     },
     "gemma-dimension-verification.json": {
-      "sha256": "6ef090ccfc5c42431265ab4ecb72b3791f0853992d9dc274acc8681977495cf9",
-      "bytes": 971
+      "sha256": "7c5547f56d1161353210282378a3f4440b83214879b19fbffb639e0cca7aa76e",
+      "bytes": 1033
     },
     "graph-matryoshka-verification.json": {
-      "sha256": "c9dcd5fa9d4a23c4921bcb614bee9ec89385b1d9b5a7f3f3d6bebccb3ce40b66",
-      "bytes": 3671
+      "sha256": "a354787c85a9411f737cd41014e9deeb562aa1392be20aa3ee4a4b314b7f34b8",
+      "bytes": 643
+    },
+    "gemma-embeddings-768.npy": {
+      "sha256": "8e917ba8b7cb6d9d603f27cefe6575bc8d32c8e4a3085d455878064f3201de46",
+      "bytes": 15148160
+    },
+    "gemma-embeddings-512.npy": {
+      "sha256": "896d8febe33c0eb06a8624b5eed72fa805031b21a9b0da7c04fc15db04d05644",
+      "bytes": 10098816
+    },
+    "gemma-embeddings-256.npy": {
+      "sha256": "81bbaefc6717e56e78ba693e5b1cb9c0c8c816b6f4ef37dc447a501e7ae4d8dc",
+      "bytes": 5049472
+    },
+    "gemma-embeddings-128.npy": {
+      "sha256": "50ef6b2fcfa896e1481d4be5022f3965672b052918af29ad7f68c4cf77cdd278",
+      "bytes": 2524800
     }
-  },
-  "comparison_checks": {
-    "single_heading_all_elevations": 147,
-    "single_heading_single_elevation": 21,
-    "yellow_jeep_truck_front_rear_at_18_deg": 4,
-    "empty_selection_clears_preview": true,
-    "staged_native_cutout_http_status": 200
   }
 }

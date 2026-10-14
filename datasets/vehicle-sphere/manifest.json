@@ -16,35 +16,36 @@
   ],
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "study_evaluation_sha256": "acbf3cc47e86a6f9d64e890e72c60ac064a0a0e39f1178b14b93113d53cfb284",
-  "generator_sha256": "8505072d5300d4981a7f3820071d1189a31381a76dc0458cc408fc2c4998c2a0",
-  "template_sha256": "8ed2ea2626ee6c2e226f8d3d2b0a9e04fa18d0e7c4a30170c144977057f538fb",
-  "javascript_sha256": "dddc70fa0642a31c908714e9601fd83f2368ef92df92774a9e6e740291ab02ae",
+  "generator_sha256": "03c0550525fb90a528c659ec055b54ce289dbf1611006850f1f8c55f266c1b76",
+  "template_sha256": "a7b024d5f5889640db5da4b7c25a8818dd6f22105e94d627865439493a29b989",
+  "javascript_sha256": "0d95fb4bd81fd81f6c69dd11d0f97e3f17dc694a4f7cd8ea9f8d5b074f78bcf3",
   "embedding_spaces": {
     "clip": {
       "rows": 4931,
       "dimensions": 512
     },
     "gemma2": {
-      "rows": 3527,
+      "rows": 4931,
       "dimensions": 768,
       "basis_dimensions": 768
     },
     "gemma2-512": {
-      "rows": 3527,
+      "rows": 4931,
       "dimensions": 512,
       "basis_dimensions": 768
     },
     "gemma2-256": {
-      "rows": 3527,
+      "rows": 4931,
       "dimensions": 256,
       "basis_dimensions": 768
     },
     "gemma2-128": {
-      "rows": 3527,
+      "rows": 4931,
       "dimensions": 128,
       "basis_dimensions": 768
     }
   },
   "gemma_encoding_sha256": "eeb89c96a716a5d7cb488c98054b518eba22d140a6e909d81ae5657bc0a46e55",
-  "embedding_space_generator_sha256": "cede96aaa1ba8d050d42958ec7ac66c2b19ea1b53ad5765cd8c324e9a631f086"
+  "embedding_space_generator_sha256": "4d088537424aa6a47404130eca3f7c7011efbcef6fef23821761dac6ee729821",
+  "gemma_sim2_encoding_sha256": "ea783665be59234702bd2f1d673fec43fea1d5b6b6f49402f8ae1ce46c39e186"
 }

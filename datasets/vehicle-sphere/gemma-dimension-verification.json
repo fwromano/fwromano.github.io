@@ -1,31 +1,31 @@
 {
   "passed": true,
-  "rows_checked": 14108,
+  "rows_checked": 19724,
   "dimensions": [
     {
       "dimensions": 768,
-      "rows": 3527,
+      "rows": 4931,
       "max_cosine_error": 1.8692623660054863e-07,
       "same_reference_pca_and_bounds": true,
       "mask_and_source_alignment": true
     },
     {
       "dimensions": 512,
-      "rows": 3527,
+      "rows": 4931,
       "max_cosine_error": 1.8265753498614146e-07,
       "same_reference_pca_and_bounds": true,
       "mask_and_source_alignment": true
     },
     {
       "dimensions": 256,
-      "rows": 3527,
+      "rows": 4931,
       "max_cosine_error": 1.5703281786016987e-07,
       "same_reference_pca_and_bounds": true,
       "mask_and_source_alignment": true
     },
     {
       "dimensions": 128,
-      "rows": 3527,
+      "rows": 4931,
       "max_cosine_error": 1.4473865816988507e-07,
       "same_reference_pca_and_bounds": true,
       "mask_and_source_alignment": true
@@ -33,5 +33,9 @@
   ],
   "basis": "shared 768D Gemma reference; zero-padded normalized prefixes",
   "reference_pca_dimensions": 768,
-  "clip_rows": 4931
+  "clip_rows": 4931,
+  "gemma_cohorts": {
+    "sim2": 1404,
+    "scans": 3527
+  }
 }

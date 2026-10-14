@@ -1,176 +1,30 @@
 {
   "passed": true,
-  "grouping": {
-    "families": [
-      "Jeep",
-      "Truck",
-      "Sim2 references"
-    ],
-    "truckOnlyRows": 1679,
-    "partialTruckRows": 1512,
-    "partialGroupIndeterminate": true,
-    "restoreAllTruck": true
+  "cohorts": {
+    "sim2": 1404,
+    "scans": 3527
   },
-  "dimensionBrowser": [
-    {
-      "dimension": 768,
-      "basis": 768,
-      "points": 1512,
-      "source": "http://127.0.0.1:8795/crops/rgba/1897.png",
-      "coords": [
-        -0.229624899900374,
-        0.14280511096516324,
-        -0.009995138294632132
-      ],
-      "cosine": "0.8955",
-      "camera": {
-        "yaw": 0.3,
-        "pitch": 0.2,
-        "zoom": 1.2
-      },
-      "ranges": [
-        [
-          -0.2681933523546573,
-          0.36592066182876737
-        ],
-        [
-          -0.31033547456101496,
-          0.31283314191278877
-        ],
-        [
-          -0.21253906636581937,
-          0.26132383823705824
-        ]
-      ],
-      "selected": 1728
-    },
-    {
-      "dimension": 512,
-      "basis": 768,
-      "points": 1512,
-      "source": "http://127.0.0.1:8795/crops/rgba/1897.png",
-      "coords": [
-        -0.19592823672480575,
-        0.13534175109247026,
-        -0.026766664282415455
-      ],
-      "cosine": "0.8976",
-      "camera": {
-        "yaw": 0.3,
-        "pitch": 0.2,
-        "zoom": 1.2
-      },
-      "ranges": [
-        [
-          -0.2681933523546573,
-          0.36592066182876737
-        ],
-        [
-          -0.31033547456101496,
-          0.31283314191278877
-        ],
-        [
-          -0.21253906636581937,
-          0.26132383823705824
-        ]
-      ],
-      "selected": 1728
-    },
-    {
-      "dimension": 256,
-      "basis": 768,
-      "points": 1512,
-      "source": "http://127.0.0.1:8795/crops/rgba/1897.png",
-      "coords": [
-        -0.1607648999251324,
-        0.09870361831402483,
-        -0.019461752962604627
-      ],
-      "cosine": "0.9079",
-      "camera": {
-        "yaw": 0.3,
-        "pitch": 0.2,
-        "zoom": 1.2
-      },
-      "ranges": [
-        [
-          -0.2681933523546573,
-          0.36592066182876737
-        ],
-        [
-          -0.31033547456101496,
-          0.31283314191278877
-        ],
-        [
-          -0.21253906636581937,
-          0.26132383823705824
-        ]
-      ],
-      "selected": 1728
-    },
-    {
-      "dimension": 128,
-      "basis": 768,
-      "points": 1512,
-      "source": "http://127.0.0.1:8795/crops/rgba/1897.png",
-      "coords": [
-        -0.06496243540690652,
-        0.01730063906276364,
-        -0.04171688169794743
-      ],
-      "cosine": "0.9316",
-      "camera": {
-        "yaw": 0.3,
-        "pitch": 0.2,
-        "zoom": 1.2
-      },
-      "ranges": [
-        [
-          -0.2681933523546573,
-          0.36592066182876737
-        ],
-        [
-          -0.31033547456101496,
-          0.31283314191278877
-        ],
-        [
-          -0.21253906636581937,
-          0.26132383823705824
-        ]
-      ],
-      "selected": 1728
-    }
+  "gemma_rows": 4931,
+  "gemma_sizes": [
+    768,
+    512,
+    256,
+    128
   ],
-  "clip": {
-    "model": "clip",
-    "dimensions": 512,
-    "groups": [
-      "Jeep",
-      "Truck",
-      "Sim2 references"
-    ],
-    "gemmaSizeControlHidden": true
+  "shared_pca_and_bounds": true,
+  "sim2_128d_browser": {
+    "initial_heading": 345,
+    "dragged_heading": 75,
+    "recorded_heading": 75,
+    "image_row": 1114,
+    "marker_row": 1114,
+    "selected_row_on_plot": true,
+    "elevation": null,
+    "tag": "SIM2 CROP / GEMMA 2 128D"
   },
-  "offline": {
-    "dimensions": 128,
-    "rows": 3527,
-    "inlineAtlases": true
+  "repository_tests": {
+    "passed": 36,
+    "elapsed_sec": 43.212
   },
-  "console": {
-    "onlineErrors": 0,
-    "onlineWarnings": 0,
-    "offlineErrors": 0,
-    "offlineWarnings": 0
-  },
-  "numericRowsAudited": 14108,
-  "referencePcaDimensions": 768,
-  "sharedBounds": true,
-  "sourceImagePreserved": true,
-  "screenshot": "/tmp/output/playwright/vehicle-graph-dolls.png",
-  "unittest": {
-    "command": "/tmp/uclip-gemma2-venv/bin/python -B -m unittest discover -s tests",
-    "passed": true,
-    "tests": 36,
-    "elapsed_sec": 58.993
-  }
+  "scope": "Local rebuilt viewer and full numerical feature-to-preview audit; public deployment verification is separate."
 }
