@@ -1,0 +1,132 @@
+{
+  "state": "complete",
+  "images": 6335,
+  "reference_fit_rows": 4931,
+  "model": {
+    "name": "openai/clip-vit-base-patch16",
+    "revision": "57c216476eefef5ab752ec549e440a49ae4ae5f3"
+  },
+  "sim2_sam31_encoding": {
+    "state": "complete",
+    "model": {
+      "name": "openai/clip-vit-base-patch16",
+      "revision": "57c216476eefef5ab752ec549e440a49ae4ae5f3"
+    },
+    "images": 1404,
+    "series": 4,
+    "config": {
+      "schema": "uclip.sim2.sam31.encoding.v1",
+      "model": "openai/clip-vit-base-patch16",
+      "revision": "57c216476eefef5ab752ec549e440a49ae4ae5f3",
+      "mask_manifest_sha256": "28dd7106dcf666fcc7d10219ddbb17560439b58d2355e6a775a90be82c55e179",
+      "generator_sha256": "fda56d7ef23c7956e8c7d3ec27c603f9762b2cd2353ed08838c5d4187c909e1f",
+      "device": "cuda",
+      "dtype": "float32",
+      "max_soft_tokens": null,
+      "batch_size": 8,
+      "threads": 4,
+      "dimensions": [
+        512
+      ],
+      "images": 1404,
+      "pixel_input": "native tight gray-127 RGB -> symmetric gray-127 square -> pinned CLIP processor",
+      "seed": 0,
+      "tf32": false,
+      "model_files": {
+        "config.json": {
+          "sha256": "eaf1c9089a8553c913d27ea66407f8bfc2be9989c80c9f331ddb3d63d4c5e8ad",
+          "bytes": 4104
+        },
+        "preprocessor_config.json": {
+          "sha256": "910e70b3956ac9879ebc90b22fb3bc8a75b6a0677814500101a4c072bd7857bd",
+          "bytes": 316
+        },
+        "pytorch_model.bin": {
+          "sha256": "ec89c7b09c749a60aae3c9cd910516f24b58214a7df060b48962d14c469cfbf0",
+          "bytes": 598641023
+        }
+      }
+    },
+    "independent_reencodes": [
+      {
+        "source_embedding_row": 0,
+        "series": "sim2_sam31/jeep/indigo",
+        "max_abs_error": 2.2165477275848389e-07
+      },
+      {
+        "source_embedding_row": 357,
+        "series": "sim2_sam31/jeep/magenta",
+        "max_abs_error": 1.94646418094635e-07
+      },
+      {
+        "source_embedding_row": 981,
+        "series": "sim2_sam31/jeep/white",
+        "max_abs_error": 1.4156103134155273e-07
+      },
+      {
+        "source_embedding_row": 1599,
+        "series": "sim2_sam31/jeep/yellow",
+        "max_abs_error": 1.94646418094635e-07
+      }
+    ],
+    "native_prefix_equivalence": [],
+    "excluded_images": [],
+    "index_sha256": "92039876dd4343d27f8267166d3ab73a8955387a6f8defd991bb7a2e4644ff2c",
+    "artifacts": {
+      "embeddings-512.npy": {
+        "sha256": "740050451df6ea1c34b8f380e65cbb1c04ea1c1e957fa9c22b99b976e1f62865",
+        "bytes": 2875520
+      }
+    },
+    "elapsed_sec": 136.4909423729987,
+    "hardware": {
+      "device": "cuda",
+      "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU"
+    },
+    "environment": {
+      "python": "3.11.7",
+      "torch": "2.7.0+cu126",
+      "transformers": "4.51.3"
+    },
+    "processor": {
+      "_processor_class": null,
+      "do_resize": true,
+      "size": {
+        "shortest_edge": 224
+      },
+      "resample": 3,
+      "do_center_crop": true,
+      "crop_size": {
+        "height": 224,
+        "width": 224
+      },
+      "do_rescale": true,
+      "rescale_factor": 0.00392156862745098,
+      "do_normalize": true,
+      "image_mean": [
+        0.48145466,
+        0.4578275,
+        0.40821073
+      ],
+      "image_std": [
+        0.26862954,
+        0.26130258,
+        0.27577711
+      ],
+      "do_convert_rgb": true,
+      "image_processor_type": "CLIPImageProcessor"
+    }
+  },
+  "reference_projection_sha256": "03cb5b149386718c795813951207870520625cb9fef6a00500ec80117f8360ca",
+  "artifacts": {
+    "clip-embeddings.npy": {
+      "sha256": "70945d94c6e3ebb4abe392f4a2a2cc512415d5de3b8a5128bf3f9b279cbcfbcb"
+    },
+    "clip-combined-index.json": {
+      "sha256": "a4d3f1838df1e57d6a57daf91255d0e4dc98097acd16772cb3f79e10a303f025"
+    },
+    "projection.json": {
+      "sha256": "e9bf0325f73149fa77dd11fe7a4acfa0fa53e7e1cbb130663c1aaebcce633278"
+    }
+  }
+}

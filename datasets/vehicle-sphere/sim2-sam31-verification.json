@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "original_rows": 4931,
+  "added_sim2_sam31_rows": 1404,
+  "total_rows": 6335,
+  "native_pixel_alignment": true,
+  "source_and_heading_pairing": true,
+  "spaces": [
+    {
+      "space": "clip",
+      "dimensions": 512,
+      "rows": 6335,
+      "added_rows": 1404,
+      "original_vectors_and_rows_exactly_preserved": true,
+      "pca_mean_and_axes_exactly_preserved": true
+    },
+    {
+      "space": "gemma2",
+      "dimensions": 768,
+      "rows": 6335,
+      "added_rows": 1404,
+      "original_vectors_and_rows_exactly_preserved": true,
+      "pca_mean_and_axes_exactly_preserved": true
+    },
+    {
+      "space": "gemma2-512",
+      "dimensions": 512,
+      "rows": 6335,
+      "added_rows": 1404,
+      "original_vectors_and_rows_exactly_preserved": true,
+      "pca_mean_and_axes_exactly_preserved": true
+    },
+    {
+      "space": "gemma2-256",
+      "dimensions": 256,
+      "rows": 6335,
+      "added_rows": 1404,
+      "original_vectors_and_rows_exactly_preserved": true,
+      "pca_mean_and_axes_exactly_preserved": true
+    },
+    {
+      "space": "gemma2-128",
+      "dimensions": 128,
+      "rows": 6335,
+      "added_rows": 1404,
+      "original_vectors_and_rows_exactly_preserved": true,
+      "pca_mean_and_axes_exactly_preserved": true
+    }
+  ],
+  "mask_manifest_sha256": "28dd7106dcf666fcc7d10219ddbb17560439b58d2355e6a775a90be82c55e179",
+  "scope": "full separate cohort"
+}

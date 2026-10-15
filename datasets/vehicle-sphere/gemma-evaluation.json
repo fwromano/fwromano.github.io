@@ -1,7 +1,7 @@
 {
   "state": "complete",
-  "images": 4931,
-  "series": 25,
+  "images": 6335,
+  "series": 29,
   "model": {
     "name": "google/embeddinggemma-2",
     "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b"
@@ -451,21 +451,215 @@
         }
       },
       "index_sha256": "6c9f1c92e6224adb9c8c227f4052ddc958b6a25aa7ff807e15faf36f259324f8"
+    },
+    "sim2_sam31": {
+      "state": "complete",
+      "model": {
+        "name": "google/embeddinggemma-2",
+        "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b"
+      },
+      "images": 1404,
+      "series": 4,
+      "config": {
+        "schema": "uclip.sim2.sam31.encoding.v1",
+        "model": "google/embeddinggemma-2",
+        "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+        "mask_manifest_sha256": "28dd7106dcf666fcc7d10219ddbb17560439b58d2355e6a775a90be82c55e179",
+        "generator_sha256": "fb78d3475e464cd5c6662d5d5151f6633e8e434f4936d7d0e30ed031d2158a22",
+        "device": "cuda",
+        "dtype": "float32",
+        "max_soft_tokens": 70,
+        "batch_size": 8,
+        "threads": 4,
+        "dimensions": [
+          768,
+          512,
+          256,
+          128
+        ],
+        "images": 1404,
+        "pixel_input": "native tight masked RGB on gray-127; no manual square padding",
+        "seed": 0,
+        "tf32": false,
+        "model_files": {
+          ".gitattributes": {
+            "sha256": "bcdccfaa66bc1240c7192dbd374cfb39b695bb1d8ff6b7ce0113aa5e9ac21a44",
+            "bytes": 1301
+          },
+          "1_Pooling/config.json": {
+            "sha256": "8759bdf7c77efc7df7723f64856a593c8943b71ee38baf2a88771fbaf78438f9",
+            "bytes": 90
+          },
+          "2_Normalize/config.json": {
+            "sha256": "cdb09dfca347a56aa2d691744e38d5ad3c7cbc2834e7181272b9a15328b82524",
+            "bytes": 97
+          },
+          "README.md": {
+            "sha256": "b677a0ee2818c36f091b65fd3d9b4baea9f04d53b02b49cae916c74bf9682037",
+            "bytes": 21730
+          },
+          "chat_template.jinja": {
+            "sha256": "4b852efc0b9960283e735363331e6f325b33bc74bdbaa076f595bc4e9b94d85e",
+            "bytes": 1016
+          },
+          "config.json": {
+            "sha256": "b8f1e9931b57fbc054acdb445c41765d55b0074c58d145fa82839941ad1b5bb3",
+            "bytes": 4455
+          },
+          "config_sentence_transformers.json": {
+            "sha256": "031e56a498d33c349ab489a21885bcfe25b4fcba841149dc99e1e90d4a7c28f5",
+            "bytes": 1565
+          },
+          "model.safetensors": {
+            "sha256": "197a32965d4b1105faf060417baa899e193fb73cd401f42ec9295234d5553d79",
+            "bytes": 1488915288
+          },
+          "modules.json": {
+            "sha256": "3d02572a0455b832de67fb8e63a54981bc7e8b46e337c95e917bd8122a533bfd",
+            "bytes": 413
+          },
+          "preprocessor_config.json": {
+            "sha256": "ea2ae257e901064abdd98dceb19f2b0da06af600bed15e0f99f5c85c37ee9d78",
+            "bytes": 511
+          },
+          "processor_config.json": {
+            "sha256": "168f6a08522f3ce5dea596d94d003af2fd691742d4f41fe1f9d8cce76bfbf69c",
+            "bytes": 1788
+          },
+          "sentence_bert_config.json": {
+            "sha256": "b1bcd9f2dce3ae863b359e87d0710b5dbc3314a59ecb4e2f97c7778fc8e4b228",
+            "bytes": 747
+          },
+          "tokenizer.json": {
+            "sha256": "4d777ef5bdc1aa36227abdfb77c3e49e7b9c892d16e1b6bda41c393504828be4",
+            "bytes": 32170510
+          },
+          "tokenizer.model": {
+            "sha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+            "bytes": 4689013
+          },
+          "tokenizer_config.json": {
+            "sha256": "17bd5d6e9364ca49a534e1502076593317c298d4a663623091ed45388f004874",
+            "bytes": 1599
+          }
+        },
+        "compatible_verification_fix": {
+          "prior_config_sha256": "8d7550047793250f78912b3d297bff80f6f85468edc38b8c6900fb4cef626160",
+          "prior_generator_sha256": "fda56d7ef23c7956e8c7d3ec27c603f9762b2cd2353ed08838c5d4187c909e1f",
+          "reason": "Compare native prefix truncation to a fresh single-image full vector; batch-to-single re-encoding is checked independently. Pixels, model and all cached 768D vectors unchanged."
+        }
+      },
+      "independent_reencodes": [
+        {
+          "source_embedding_row": 0,
+          "series": "sim2_sam31/jeep/indigo",
+          "max_abs_error": 4.3585896492004395e-07
+        },
+        {
+          "source_embedding_row": 357,
+          "series": "sim2_sam31/jeep/magenta",
+          "max_abs_error": 5.653128027915955e-07
+        },
+        {
+          "source_embedding_row": 981,
+          "series": "sim2_sam31/jeep/white",
+          "max_abs_error": 1.6391277313232422e-07
+        },
+        {
+          "source_embedding_row": 1599,
+          "series": "sim2_sam31/jeep/yellow",
+          "max_abs_error": 6.271526217460632e-06
+        }
+      ],
+      "native_prefix_equivalence": [
+        {
+          "dimension": 512,
+          "source_embedding_row": 0,
+          "max_abs_error": 2.9802322387695312e-08,
+          "cached_batch_prefix_difference": 4.917383193969727e-07
+        },
+        {
+          "dimension": 512,
+          "source_embedding_row": 1599,
+          "max_abs_error": 0.0,
+          "cached_batch_prefix_difference": 7.131136953830719e-06
+        },
+        {
+          "dimension": 256,
+          "source_embedding_row": 0,
+          "max_abs_error": 2.9802322387695312e-08,
+          "cached_batch_prefix_difference": 6.034970283508301e-07
+        },
+        {
+          "dimension": 256,
+          "source_embedding_row": 1599,
+          "max_abs_error": 0.0,
+          "cached_batch_prefix_difference": 8.32974910736084e-06
+        },
+        {
+          "dimension": 128,
+          "source_embedding_row": 0,
+          "max_abs_error": 5.960464477539063e-08,
+          "cached_batch_prefix_difference": 7.152557373046875e-07
+        },
+        {
+          "dimension": 128,
+          "source_embedding_row": 1599,
+          "max_abs_error": 0.0,
+          "cached_batch_prefix_difference": 9.18656587600708e-06
+        }
+      ],
+      "excluded_images": [],
+      "index_sha256": "e978785f50929f585755bff33bf3164bbd8a7ac88bdbc33b6b1315f7c92bed16",
+      "artifacts": {
+        "embeddings-128.npy": {
+          "sha256": "30d6874804881883cd8fe17cd79465a8a8115276c68e67ba446e54f80ed819c0",
+          "bytes": 718976
+        },
+        "embeddings-256.npy": {
+          "sha256": "d5c0dcf270f10ba70d654e5b3efd67f8a4571ae7ba8b123901a8f9006f52c10e",
+          "bytes": 1437824
+        },
+        "embeddings-512.npy": {
+          "sha256": "bee4e3f1380789fe1d81c67962f333571e61ee90b78b3d2b25b1a886723e71ad",
+          "bytes": 2875520
+        },
+        "embeddings-768.npy": {
+          "sha256": "4bcd11b4a526124dc09298a90397982549e4068eea2f041b491d6f685247da0c",
+          "bytes": 4313216
+        }
+      },
+      "elapsed_sec": 3.442772848997265,
+      "hardware": {
+        "device": "cuda",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU"
+      },
+      "environment": {
+        "python": "3.11.7",
+        "torch": "2.7.0+cu126",
+        "transformers": "5.19.0",
+        "sentence_transformers": "6.1.0"
+      }
     }
   },
-  "index_sha256": "5dffec302bac20adcb8fd5f6bbdd6068f12ba4074a831711f4f78e764bcaa84f",
+  "index_sha256": "5befede8a828c7465be831796068ed8ef86b8caebc49f761b9b93885ad0794b6",
   "artifacts": {
     "gemma-embeddings-768.npy": {
-      "sha256": "8e917ba8b7cb6d9d603f27cefe6575bc8d32c8e4a3085d455878064f3201de46"
+      "sha256": "4544fb9f2f807844bc4266c49f43a448d188afdd585c69310a44f7746b546ff4",
+      "bytes": 19461248
     },
     "gemma-embeddings-512.npy": {
-      "sha256": "896d8febe33c0eb06a8624b5eed72fa805031b21a9b0da7c04fc15db04d05644"
+      "sha256": "ec1710d6be169c65e51ac234d396af33b6e5b00d16c21be1249baa5f63b2ca8f",
+      "bytes": 12974208
     },
     "gemma-embeddings-256.npy": {
-      "sha256": "81bbaefc6717e56e78ba693e5b1cb9c0c8c816b6f4ef37dc447a501e7ae4d8dc"
+      "sha256": "029c87beb813712ef95d4b508d0b95876025d71e359c03d0056e056df8da6781",
+      "bytes": 6487168
     },
     "gemma-embeddings-128.npy": {
-      "sha256": "50ef6b2fcfa896e1481d4be5022f3965672b052918af29ad7f68c4cf77cdd278"
+      "sha256": "46ca89f45acfd48788f2acd0445b36bd18e5d54c089bd1b5e836afb00d95730d",
+      "bytes": 3243648
     }
-  }
+  },
+  "native_index_sha256": "3e2bf732ca18386d6d04b4ab9268787e6a899e01f6a75c1eb0506c691aa141f2"
 }

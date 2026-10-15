@@ -1,30 +1,68 @@
 {
   "passed": true,
+  "scope": "Full Sim2 SAM 3.1 cohort",
+  "rows": 6335,
+  "series": 29,
   "cohorts": {
+    "scans": 3527,
     "sim2": 1404,
-    "scans": 3527
+    "sim2_sam31": 1404
   },
-  "gemma_rows": 4931,
-  "gemma_sizes": [
+  "candidate": {
+    "rows": 6335,
+    "series": 29,
+    "cohorts": {
+      "sim2": 1404,
+      "scans": 3527,
+      "sim2_sam31": 1404
+    },
+    "model": "gemma2",
+    "dimensions": 128,
+    "color": "Sim2 SAM 3.1 \u00b7 Jeep / Yellow",
+    "heading": 90,
+    "image": 6060,
+    "marker": 6060,
+    "onPlot": true,
+    "elevationDisabled": true,
+    "status": "",
+    "tag": "SIM2 / SAM 3.1 / GEMMA 2 128D",
+    "panel": {
+      "x": 891,
+      "y": 379.15625,
+      "width": 336,
+      "height": 250,
+      "top": 379.15625,
+      "right": 1227,
+      "bottom": 629.15625,
+      "left": 891
+    }
+  },
+  "drag": {
+    "heading": 180,
+    "recorded": 180,
+    "imageRow": 6146,
+    "markerRow": 6146,
+    "onPlot": true
+  },
+  "modelSwitch": {
+    "model": "clip",
+    "imageRow": 6146,
+    "markerRow": 6146,
+    "maskedTag": "SIM2 / SAM 3.1 / CLIP B/16"
+  },
+  "originalRowsExactlyPreserved": 4931,
+  "pcaMeanAndAxesExactlyPreserved": true,
+  "gemmaDimensions": [
     768,
     512,
     256,
     128
   ],
-  "shared_pca_and_bounds": true,
-  "sim2_128d_browser": {
-    "initial_heading": 345,
-    "dragged_heading": 75,
-    "recorded_heading": 75,
-    "image_row": 1114,
-    "marker_row": 1114,
-    "selected_row_on_plot": true,
-    "elevation": null,
-    "tag": "SIM2 CROP / GEMMA 2 128D"
-  },
-  "repository_tests": {
+  "gemmaNumericRowsChecked": 25340,
+  "consoleErrors": 0,
+  "consoleWarnings": 0,
+  "repositoryTests": {
     "passed": 36,
-    "elapsed_sec": 43.212
-  },
-  "scope": "Local rebuilt viewer and full numerical feature-to-preview audit; public deployment verification is separate."
+    "elapsedSec": 37.883
+  }
 }

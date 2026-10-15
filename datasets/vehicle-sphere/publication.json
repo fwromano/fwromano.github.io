@@ -3,13 +3,17 @@
   "source_repository": "https://github.com/fwromano/UCLIP",
   "source_revision": "a048bb5425e2fe92c46da05128682d2d3cc19670",
   "source_worktree_changes": true,
-  "source_render_sha256": "ad227c2aa3230eea88a49b06e8560361e2668b09d372fb53778fa6a9354e904a",
+  "source_render_sha256": "c495084fe5b321cbbcd6843a2ca65d2aa6ef6891165706ca2b4e6abbb702c5b2",
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "viewer": "embedding.html",
   "published_date": "2026-10-14",
-  "clip_rows": 4931,
+  "clip_rows": 6335,
+  "sim2_sam31_rows": 1404,
+  "original_views_preserved": true,
+  "pca_refit_for_new_masks": false,
+  "reference_pca_fit_rows": 4931,
   "masked_scan_rows": 3527,
-  "gemma_rows": 4931,
+  "gemma_rows": 6335,
   "gemma_sim2_rows": 1404,
   "cutout_heading_drag": true,
   "gemma_dimensions": [
@@ -21,25 +25,28 @@
   "gemma_pca_basis": "shared 768D reference",
   "heading_elevation_filters": true,
   "native_cutouts": 3527,
-  "preview_sheets": 87,
+  "sim2_sam31_cutouts": 1404,
+  "preview_sheets": 111,
+  "public_sim2_cutout_format": "lossless-webp",
+  "public_sim2_rgba_pixels_exact": true,
   "model_files_published": false,
   "gemma_index": "gemma-index.json",
   "artifacts": {
     "embedding.html": {
-      "sha256": "f22c6187d7d2b6445e62ab31c3766a0e9e1456ae3156dad49c7f01dcbaee66f2",
-      "bytes": 20038172
+      "sha256": "109c15aa0251f89a1b5bb3646f7db43e5cacb53454515853cf467b38cd51e547",
+      "bytes": 28584263
     },
     "embedding_offline.html": {
-      "sha256": "86d4ae49bafc192daa365861385633d31c85b8c068c9d4ebdf63fd8273c91eb3",
-      "bytes": 58510865
+      "sha256": "320d4e1f422985c25f0dfe6dfe733d98b6ceefaa08851d4c5649edf5b637d07c",
+      "bytes": 80889220
     },
     "orbit-data.json": {
-      "sha256": "e8120510feb75fb29b38beca7eb4bdeb87e1c4a3c4261a9a8c01a8f5bb9daed7",
-      "bytes": 27052781
+      "sha256": "8dba5b2e81ec5bcd208bb0c849b91e3711e1c935e6a2928c9068704c70cbc30a",
+      "bytes": 38088304
     },
     "manifest.json": {
-      "sha256": "9ab88b4b657d9f315b737b5b0b9eba3db6504dd05c1ae56032c1a3f38298ab41",
-      "bytes": 1695
+      "sha256": "9b1212fc71886a564e5700d63a8be7354c83a5cfd27c99c474df5c50103ddcd8",
+      "bytes": 1900
     },
     "index.json": {
       "sha256": "d74df61b4c2a601c49994d378794357324242fd85dca104ea83216565a79b6c5",
@@ -50,64 +57,84 @@
       "bytes": 7223424
     },
     "projection.json": {
-      "sha256": "03cb5b149386718c795813951207870520625cb9fef6a00500ec80117f8360ca",
-      "bytes": 11414804
+      "sha256": "e9bf0325f73149fa77dd11fe7a4acfa0fa53e7e1cbb130663c1aaebcce633278",
+      "bytes": 13479797
     },
     "evaluation.json": {
       "sha256": "acbf3cc47e86a6f9d64e890e72c60ac064a0a0e39f1178b14b93113d53cfb284",
       "bytes": 2520
     },
     "review.html": {
-      "sha256": "bc2829478ab99ddf3c9ad2a02545b6294222270533e51dc468a2d0b3a497044d",
-      "bytes": 4059
+      "sha256": "7bb734db84a88737d31737a866d615b08170a28a953d93f2b12fe0f57758adc7",
+      "bytes": 4891
     },
     "gemma-evaluation.json": {
-      "sha256": "aebb100454352334897feb45ca76316f2094ab83f8ce7ad5c8edf1f332941c12",
-      "bytes": 15510
+      "sha256": "b82dc2a74889cb4f5e01d4b4aa1e7601c167f993feee3e0c676da4ef445692d5",
+      "bytes": 22613
     },
     "gemma-index.json": {
-      "sha256": "5dffec302bac20adcb8fd5f6bbdd6068f12ba4074a831711f4f78e764bcaa84f",
-      "bytes": 4229281
+      "sha256": "5befede8a828c7465be831796068ed8ef86b8caebc49f761b9b93885ad0794b6",
+      "bytes": 6070229
     },
     "gemma-projection.json": {
-      "sha256": "2fbd4b4200d96fcbf9061da0f05e8bb43decb398a9d22ca2b6c75fbfbff2e457",
-      "bytes": 1435593
+      "sha256": "f3a88193a75effa714638aa1a8622847e2581b477561e938233584d44ee7adaa",
+      "bytes": 1822687
     },
     "gemma-projection-512.json": {
-      "sha256": "9a144fa4dd6a66ba6dcd09c0d6b9103a48f2c29c8afddd6187be71f9a7829472",
-      "bytes": 1415247
+      "sha256": "09e58382061338f407dc2d362b6145c3a191e673cbe546b6a038280de0bd24cc",
+      "bytes": 1802554
     },
     "gemma-projection-256.json": {
-      "sha256": "e1a460b597009f72ccf71a883ad72f68755dbf6c606365c8af4a8c18b9cee700",
-      "bytes": 1394430
+      "sha256": "9019795d71bbb8288ca56bf8214cd07104fcb3ffeeea3cbadf67c4b38b2021d8",
+      "bytes": 1781861
     },
     "gemma-projection-128.json": {
-      "sha256": "827b98c0a4390efaa0c37a33a08347f3fd1568d50f87eef40c56571cf57599d5",
-      "bytes": 1388550
+      "sha256": "5f51e463bd9e0bce7286d5ebbf79b9eddcf25f07f778cb8095f9d926e234132b",
+      "bytes": 1777974
     },
     "gemma-dimension-verification.json": {
-      "sha256": "7c5547f56d1161353210282378a3f4440b83214879b19fbffb639e0cca7aa76e",
-      "bytes": 1033
+      "sha256": "2703b936f81114e17d7711c997506c7e1938b1dfa25651f33ca9da673300bd71",
+      "bytes": 1057
     },
     "graph-matryoshka-verification.json": {
-      "sha256": "a354787c85a9411f737cd41014e9deeb562aa1392be20aa3ee4a4b314b7f34b8",
-      "bytes": 643
+      "sha256": "d5ff176bce44c43c35193237353359854f0dbe23cf8244785aaa8f87de236c98",
+      "bytes": 1333
+    },
+    "clip-embeddings.npy": {
+      "sha256": "70945d94c6e3ebb4abe392f4a2a2cc512415d5de3b8a5128bf3f9b279cbcfbcb",
+      "bytes": 12974208
+    },
+    "clip-combined-index.json": {
+      "sha256": "a4d3f1838df1e57d6a57daf91255d0e4dc98097acd16772cb3f79e10a303f025",
+      "bytes": 6038519
+    },
+    "clip-combined-evaluation.json": {
+      "sha256": "17d6114454fb086d6e6446e947fb97f67df10cdd1ea531f5556aa0fe8a9245b3",
+      "bytes": 3919
+    },
+    "sim2-sam31-verification.json": {
+      "sha256": "3f1aa7a0457b9aff418e1c524232d8de9daa05a57a90a9d85632021a29a87f05",
+      "bytes": 1420
+    },
+    "public-cutout-verification.json": {
+      "sha256": "a295a79d417d53afee4955eb1f843e7178884ac139afdc6ba27947dae77c8153",
+      "bytes": 809619
     },
     "gemma-embeddings-768.npy": {
-      "sha256": "8e917ba8b7cb6d9d603f27cefe6575bc8d32c8e4a3085d455878064f3201de46",
-      "bytes": 15148160
+      "sha256": "4544fb9f2f807844bc4266c49f43a448d188afdd585c69310a44f7746b546ff4",
+      "bytes": 19461248
     },
     "gemma-embeddings-512.npy": {
-      "sha256": "896d8febe33c0eb06a8624b5eed72fa805031b21a9b0da7c04fc15db04d05644",
-      "bytes": 10098816
+      "sha256": "ec1710d6be169c65e51ac234d396af33b6e5b00d16c21be1249baa5f63b2ca8f",
+      "bytes": 12974208
     },
     "gemma-embeddings-256.npy": {
-      "sha256": "81bbaefc6717e56e78ba693e5b1cb9c0c8c816b6f4ef37dc447a501e7ae4d8dc",
-      "bytes": 5049472
+      "sha256": "029c87beb813712ef95d4b508d0b95876025d71e359c03d0056e056df8da6781",
+      "bytes": 6487168
     },
     "gemma-embeddings-128.npy": {
-      "sha256": "50ef6b2fcfa896e1481d4be5022f3965672b052918af29ad7f68c4cf77cdd278",
-      "bytes": 2524800
+      "sha256": "46ca89f45acfd48788f2acd0445b36bd18e5d54c089bd1b5e836afb00d95730d",
+      "bytes": 3243648
     }
   }
 }

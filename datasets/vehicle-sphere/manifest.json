@@ -1,8 +1,8 @@
 {
   "schema": "uclip.vehicle_mask_view.v1",
-  "rows": 4931,
+  "rows": 6335,
   "masked_scan_rows": 3527,
-  "series": 25,
+  "series": 29,
   "model_label": "SAM 3.1",
   "image_prefix": "cutouts/",
   "atlas_namespace": "sam31-83573105ac6b",
@@ -16,36 +16,38 @@
   ],
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "study_evaluation_sha256": "acbf3cc47e86a6f9d64e890e72c60ac064a0a0e39f1178b14b93113d53cfb284",
-  "generator_sha256": "03c0550525fb90a528c659ec055b54ce289dbf1611006850f1f8c55f266c1b76",
+  "generator_sha256": "92a200d44ed615ab4b3611249456cf989728e64dd7cb5765a3844feaedaf2850",
   "template_sha256": "a7b024d5f5889640db5da4b7c25a8818dd6f22105e94d627865439493a29b989",
-  "javascript_sha256": "0d95fb4bd81fd81f6c69dd11d0f97e3f17dc694a4f7cd8ea9f8d5b074f78bcf3",
+  "javascript_sha256": "70af03c252de48d3f1c9ec722e7dece5ef7f0925b73d10d5c6801e7314046b7a",
   "embedding_spaces": {
     "clip": {
-      "rows": 4931,
+      "rows": 6335,
       "dimensions": 512
     },
     "gemma2": {
-      "rows": 4931,
+      "rows": 6335,
       "dimensions": 768,
       "basis_dimensions": 768
     },
     "gemma2-512": {
-      "rows": 4931,
+      "rows": 6335,
       "dimensions": 512,
       "basis_dimensions": 768
     },
     "gemma2-256": {
-      "rows": 4931,
+      "rows": 6335,
       "dimensions": 256,
       "basis_dimensions": 768
     },
     "gemma2-128": {
-      "rows": 4931,
+      "rows": 6335,
       "dimensions": 128,
       "basis_dimensions": 768
     }
   },
   "gemma_encoding_sha256": "eeb89c96a716a5d7cb488c98054b518eba22d140a6e909d81ae5657bc0a46e55",
-  "embedding_space_generator_sha256": "4d088537424aa6a47404130eca3f7c7011efbcef6fef23821761dac6ee729821",
-  "gemma_sim2_encoding_sha256": "ea783665be59234702bd2f1d673fec43fea1d5b6b6f49402f8ae1ce46c39e186"
+  "embedding_space_generator_sha256": "489531704b1a813c9c9b50288ae61c2d7aff87eb53eabec1444173a4d068f7fd",
+  "gemma_sim2_encoding_sha256": "ea783665be59234702bd2f1d673fec43fea1d5b6b6f49402f8ae1ce46c39e186",
+  "sim2_sam31_manifest_sha256": "28dd7106dcf666fcc7d10219ddbb17560439b58d2355e6a775a90be82c55e179",
+  "sim2_extension_generator_sha256": "22af83fdc97bb27ce73533cc3a13c47b381b9fb82fe56e469489783ce4bfe229"
 }
