@@ -1,0 +1,189 @@
+{
+  "state": "passed",
+  "fits": [
+    {
+      "space": "clip",
+      "fit": "original",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.3887063479453556,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "clip",
+      "fit": "masked",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.44639739401390993,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "clip",
+      "fit": "paired",
+      "fit_rows": 2808,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.4679447986036021,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "clip",
+      "fit": "all",
+      "fit_rows": 6335,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.49582724722164356,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2",
+      "fit": "original",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 768,
+      "variance3": 0.5043692373332197,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2",
+      "fit": "masked",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 768,
+      "variance3": 0.5467990598489785,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2",
+      "fit": "paired",
+      "fit_rows": 2808,
+      "projected_rows": 6335,
+      "dimensions": 768,
+      "variance3": 0.48601060438663635,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2",
+      "fit": "all",
+      "fit_rows": 6335,
+      "projected_rows": 6335,
+      "dimensions": 768,
+      "variance3": 0.5352248218979112,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-512",
+      "fit": "original",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.5066160379469494,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-512",
+      "fit": "masked",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.5475356080641125,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-512",
+      "fit": "paired",
+      "fit_rows": 2808,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.48894464810640376,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-512",
+      "fit": "all",
+      "fit_rows": 6335,
+      "projected_rows": 6335,
+      "dimensions": 512,
+      "variance3": 0.5329120876876523,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-256",
+      "fit": "original",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 256,
+      "variance3": 0.5257815862654388,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-256",
+      "fit": "masked",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 256,
+      "variance3": 0.5691767994880323,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-256",
+      "fit": "paired",
+      "fit_rows": 2808,
+      "projected_rows": 6335,
+      "dimensions": 256,
+      "variance3": 0.5096389588205643,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-256",
+      "fit": "all",
+      "fit_rows": 6335,
+      "projected_rows": 6335,
+      "dimensions": 256,
+      "variance3": 0.5387569509125136,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-128",
+      "fit": "original",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 128,
+      "variance3": 0.5137311680232193,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-128",
+      "fit": "masked",
+      "fit_rows": 1404,
+      "projected_rows": 6335,
+      "dimensions": 128,
+      "variance3": 0.5614501108952767,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-128",
+      "fit": "paired",
+      "fit_rows": 2808,
+      "projected_rows": 6335,
+      "dimensions": 128,
+      "variance3": 0.5011061695247299,
+      "covariance_eigencheck": true
+    },
+    {
+      "space": "gemma2-128",
+      "fit": "all",
+      "fit_rows": 6335,
+      "projected_rows": 6335,
+      "dimensions": 128,
+      "variance3": 0.5509157412545661,
+      "covariance_eigencheck": true
+    }
+  ],
+  "total_projected_rows": 126700,
+  "feature_banks_unchanged": true,
+  "reference_rows_unchanged": true,
+  "elapsed_sec": 5.62909669696819
+}

@@ -16,38 +16,48 @@
   ],
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "study_evaluation_sha256": "acbf3cc47e86a6f9d64e890e72c60ac064a0a0e39f1178b14b93113d53cfb284",
-  "generator_sha256": "92a200d44ed615ab4b3611249456cf989728e64dd7cb5765a3844feaedaf2850",
-  "template_sha256": "a7b024d5f5889640db5da4b7c25a8818dd6f22105e94d627865439493a29b989",
-  "javascript_sha256": "70af03c252de48d3f1c9ec722e7dece5ef7f0925b73d10d5c6801e7314046b7a",
+  "generator_sha256": "3ae4600f9ee167b6868acf4433cf5a0af6bbffef103df1e57e06773cc01079e6",
+  "template_sha256": "375d4a633e59879a6fc888a2733979afc2dd88a91f0788620cabf46070f2faee",
+  "javascript_sha256": "91af6e76e363d739f86c4f4e370c9a931a8be07cb15c2aa0df658f45d782b00a",
   "embedding_spaces": {
     "clip": {
       "rows": 6335,
-      "dimensions": 512
+      "dimensions": 512,
+      "reference_basis_dimensions": 512,
+      "basis_dimensions": 512
     },
     "gemma2": {
       "rows": 6335,
       "dimensions": 768,
-      "basis_dimensions": 768
+      "basis_dimensions": 768,
+      "reference_basis_dimensions": 768
     },
     "gemma2-512": {
       "rows": 6335,
       "dimensions": 512,
-      "basis_dimensions": 768
+      "basis_dimensions": 512,
+      "reference_basis_dimensions": 768
     },
     "gemma2-256": {
       "rows": 6335,
       "dimensions": 256,
-      "basis_dimensions": 768
+      "basis_dimensions": 256,
+      "reference_basis_dimensions": 768
     },
     "gemma2-128": {
       "rows": 6335,
       "dimensions": 128,
-      "basis_dimensions": 768
+      "basis_dimensions": 128,
+      "reference_basis_dimensions": 768
     }
   },
   "gemma_encoding_sha256": "eeb89c96a716a5d7cb488c98054b518eba22d140a6e909d81ae5657bc0a46e55",
   "embedding_space_generator_sha256": "489531704b1a813c9c9b50288ae61c2d7aff87eb53eabec1444173a4d068f7fd",
   "gemma_sim2_encoding_sha256": "ea783665be59234702bd2f1d673fec43fea1d5b6b6f49402f8ae1ce46c39e186",
   "sim2_sam31_manifest_sha256": "28dd7106dcf666fcc7d10219ddbb17560439b58d2355e6a775a90be82c55e179",
-  "sim2_extension_generator_sha256": "22af83fdc97bb27ce73533cc3a13c47b381b9fb82fe56e469489783ce4bfe229"
+  "sim2_extension_generator_sha256": "22af83fdc97bb27ce73533cc3a13c47b381b9fb82fe56e469489783ce4bfe229",
+  "pca_fits_sha256": "0b55384cc65d22b382537313be44fd232063f788eb4ed853a74fd53a03573e45",
+  "pca_fit_generator_sha256": "476fea154ed3ea3c4dca239084576a10af1ff706809589d14efc392b2d054777",
+  "pca_fit_mode": "independent per cohort and actual feature dimension",
+  "default_pca_fit": "all"
 }

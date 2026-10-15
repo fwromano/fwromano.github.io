@@ -3,14 +3,25 @@
   "source_repository": "https://github.com/fwromano/UCLIP",
   "source_revision": "a048bb5425e2fe92c46da05128682d2d3cc19670",
   "source_worktree_changes": true,
-  "source_render_sha256": "c495084fe5b321cbbcd6843a2ca65d2aa6ef6891165706ca2b4e6abbb702c5b2",
+  "source_render_sha256": "2f499980c287ffe37e205021c63c67f4b9b46fa86f6bf8dd451b4c25c19eed10",
   "source_mask_manifest_sha256": "83573105ac6b1f7cc8b93ec01c7d3232fd8af205d5dcd08b4f2365f6dee6558b",
   "viewer": "embedding.html",
-  "published_date": "2026-10-14",
+  "published_date": "2026-10-15",
   "clip_rows": 6335,
   "sim2_sam31_rows": 1404,
   "original_views_preserved": true,
-  "pca_refit_for_new_masks": false,
+  "pca_refit_for_new_masks": true,
+  "reference_projections_preserved": true,
+  "pca_fit_options": [
+    "original",
+    "masked",
+    "paired",
+    "all"
+  ],
+  "independent_pca_fit_count": 20,
+  "pca_default": "all",
+  "zoom_max": 128,
+  "pan_supported": true,
   "reference_pca_fit_rows": 4931,
   "masked_scan_rows": 3527,
   "gemma_rows": 6335,
@@ -22,7 +33,7 @@
     256,
     128
   ],
-  "gemma_pca_basis": "shared 768D reference",
+  "gemma_pca_basis": "independent centered PCA per cohort and actual feature dimension",
   "heading_elevation_filters": true,
   "native_cutouts": 3527,
   "sim2_sam31_cutouts": 1404,
@@ -33,20 +44,20 @@
   "gemma_index": "gemma-index.json",
   "artifacts": {
     "embedding.html": {
-      "sha256": "109c15aa0251f89a1b5bb3646f7db43e5cacb53454515853cf467b38cd51e547",
-      "bytes": 28584263
+      "sha256": "5e0e34ca5959861bff54f2ec29a1722779cf5ffb16b9f8c7c4b021a0ef93d431",
+      "bytes": 36717289
     },
     "embedding_offline.html": {
-      "sha256": "320d4e1f422985c25f0dfe6dfe733d98b6ceefaa08851d4c5649edf5b637d07c",
-      "bytes": 80889220
+      "sha256": "8d471c275bf75e98fee53e466465a76d35e1203cfa1295834bcf59c603f048f2",
+      "bytes": 89022246
     },
     "orbit-data.json": {
-      "sha256": "8dba5b2e81ec5bcd208bb0c849b91e3711e1c935e6a2928c9068704c70cbc30a",
-      "bytes": 38088304
+      "sha256": "d9cfecf20182bb7adbf7d78e009944e373fc8bdd88ffb63788ac64ca21196ade",
+      "bytes": 36635281
     },
     "manifest.json": {
-      "sha256": "9b1212fc71886a564e5700d63a8be7354c83a5cfd27c99c474df5c50103ddcd8",
-      "bytes": 1900
+      "sha256": "d7b6d0627c14682ac337284b3aee3383b77c3658a7d90e02b7bdc8f0d8fdbd93",
+      "bytes": 2424
     },
     "index.json": {
       "sha256": "d74df61b4c2a601c49994d378794357324242fd85dca104ea83216565a79b6c5",
@@ -97,8 +108,16 @@
       "bytes": 1057
     },
     "graph-matryoshka-verification.json": {
-      "sha256": "d5ff176bce44c43c35193237353359854f0dbe23cf8244785aaa8f87de236c98",
-      "bytes": 1333
+      "sha256": "5c916d83eaacfb0a54809c11c2148910cc859cb3615170c51bda5ff216a69504",
+      "bytes": 26947
+    },
+    "pca-fits.json": {
+      "sha256": "0b55384cc65d22b382537313be44fd232063f788eb4ed853a74fd53a03573e45",
+      "bytes": 8099
+    },
+    "pca-fit-verification.json": {
+      "sha256": "870de7dfe6d056dcd6da4e59213fa82accace430cebf22db7e826d79c8b13a99",
+      "bytes": 4519
     },
     "clip-embeddings.npy": {
       "sha256": "70945d94c6e3ebb4abe392f4a2a2cc512415d5de3b8a5128bf3f9b279cbcfbcb",
@@ -119,6 +138,86 @@
     "public-cutout-verification.json": {
       "sha256": "a295a79d417d53afee4955eb1f843e7178884ac139afdc6ba27947dae77c8153",
       "bytes": 809619
+    },
+    "pca/clip-all.json": {
+      "sha256": "d233db21ce445dbe94ef2c280359dda5c2b965c380a1bec03698f74d1c66574a",
+      "bytes": 996889
+    },
+    "pca/clip-masked.json": {
+      "sha256": "6ee1b8211a3ee29501bff619faa4df410affef3bca72c906b655c01ca93882e1",
+      "bytes": 975065
+    },
+    "pca/clip-original.json": {
+      "sha256": "de990d25ffb5631cb98de144710ddc69cb1c022c58f0015afc63b4a1c4257f93",
+      "bytes": 975778
+    },
+    "pca/clip-paired.json": {
+      "sha256": "08d58697a175614904366f7505e164e82b450a252edbc818df906c7e1fba3e26",
+      "bytes": 978032
+    },
+    "pca/gemma2-128-all.json": {
+      "sha256": "227691f05125d7c8ed4eb53148a7eb940e2db02474b98899c958d133f43bee44",
+      "bytes": 968900
+    },
+    "pca/gemma2-128-masked.json": {
+      "sha256": "92b592160da25945e29d74d10c0b46c40de0364b1c1fc1eabef7d56879acd6ea",
+      "bytes": 949642
+    },
+    "pca/gemma2-128-original.json": {
+      "sha256": "5c55f5fe64698f118d04b7f82b701732c1b8dd46974cd8d9c49d5bc2099ec0b4",
+      "bytes": 949595
+    },
+    "pca/gemma2-128-paired.json": {
+      "sha256": "cf03ab6fc10056455363447d56514f234ed4ff223924609857a53aff5414bac6",
+      "bytes": 955738
+    },
+    "pca/gemma2-256-all.json": {
+      "sha256": "444f4b1b7e379b4b04b65e04d3d1cbb42b772b67f741e69d1fa2f302f724982b",
+      "bytes": 979453
+    },
+    "pca/gemma2-256-masked.json": {
+      "sha256": "a4cb3084b8cc658c5a0cfeda08bb7e226c27afae8d0c85b65124bc52d99bb477",
+      "bytes": 958116
+    },
+    "pca/gemma2-256-original.json": {
+      "sha256": "898566e9bbcc3d88bfe71e4f94a986eb4a83c5be66f0f205bae65df25112f06b",
+      "bytes": 958752
+    },
+    "pca/gemma2-256-paired.json": {
+      "sha256": "0cfdb48d81ea6a3e392cc5c789df618a2dd9f116dfe92408f4266bc5201c2e2b",
+      "bytes": 964930
+    },
+    "pca/gemma2-512-all.json": {
+      "sha256": "6883ba9352abaeb354b4da843f6e807fa513de5684095d7d99255f2a27279068",
+      "bytes": 1000054
+    },
+    "pca/gemma2-512-masked.json": {
+      "sha256": "603b1bc9ecf378229c5d44989bfedfd0a50d563ba0d4cde70877175d236f79e2",
+      "bytes": 981986
+    },
+    "pca/gemma2-512-original.json": {
+      "sha256": "f607be891363a3f994c98eaeab183705361ec04f0c9d71320f121425ade9b004",
+      "bytes": 981547
+    },
+    "pca/gemma2-512-paired.json": {
+      "sha256": "b442da23c2ae7566dc8e6e3632eede22b2ce14e1120aa33e8ea9f9af09be811e",
+      "bytes": 987376
+    },
+    "pca/gemma2-all.json": {
+      "sha256": "1e15f2f4f14f7d9dcada580d467fce929a926c9e7145f96484812a4349cfebd8",
+      "bytes": 1022029
+    },
+    "pca/gemma2-masked.json": {
+      "sha256": "324a80a72fb9bce25ef446d73d2dd0d75c3ab99ec7981bfc204f909eaf37de7e",
+      "bytes": 1004018
+    },
+    "pca/gemma2-original.json": {
+      "sha256": "752d13e29cb599f1381338fb8379e0613aa96e6a66568d51ae09fa7bcc05b654",
+      "bytes": 1003395
+    },
+    "pca/gemma2-paired.json": {
+      "sha256": "bd2394259000ed50fde266c58bfed8e94acc92ef24d948104a8a950284eeb919",
+      "bytes": 1009253
     },
     "gemma-embeddings-768.npy": {
       "sha256": "4544fb9f2f807844bc4266c49f43a448d188afdd585c69310a44f7746b546ff4",

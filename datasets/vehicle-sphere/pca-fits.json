@@ -1,0 +1,245 @@
+{
+  "schema": "uclip.vehicle_pca_fits.v1",
+  "state": "complete",
+  "generator_sha256": "476fea154ed3ea3c4dca239084576a10af1ff706809589d14efc392b2d054777",
+  "method": "centered PCA / full SVD / no whitening",
+  "default_fit": "all",
+  "independent_feature_dimensions": true,
+  "spaces": {
+    "clip": {
+      "dimensions": 512,
+      "rows": 6335,
+      "source_features_sha256": "70945d94c6e3ebb4abe392f4a2a2cc512415d5de3b8a5128bf3f9b279cbcfbcb",
+      "fits": {
+        "original": {
+          "url": "pca/clip-original.json",
+          "sha256": "de990d25ffb5631cb98de144710ddc69cb1c022c58f0015afc63b4a1c4257f93",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.17073941629759903,
+            0.11238990423801229,
+            0.10557702740974421
+          ]
+        },
+        "masked": {
+          "url": "pca/clip-masked.json",
+          "sha256": "6ee1b8211a3ee29501bff619faa4df410affef3bca72c906b655c01ca93882e1",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.2184391597213897,
+            0.12512912703845505,
+            0.10282910725406519
+          ]
+        },
+        "paired": {
+          "url": "pca/clip-paired.json",
+          "sha256": "08d58697a175614904366f7505e164e82b450a252edbc818df906c7e1fba3e26",
+          "fit_count": 2808,
+          "explained_variance_ratio": [
+            0.3154593810319862,
+            0.08330366964964214,
+            0.06918174792197378
+          ]
+        },
+        "all": {
+          "url": "pca/clip-all.json",
+          "sha256": "d233db21ce445dbe94ef2c280359dda5c2b965c380a1bec03698f74d1c66574a",
+          "fit_count": 6335,
+          "explained_variance_ratio": [
+            0.29200539505364326,
+            0.13957595670144685,
+            0.06424589546655347
+          ]
+        }
+      }
+    },
+    "gemma2": {
+      "dimensions": 768,
+      "rows": 6335,
+      "source_features_sha256": "4544fb9f2f807844bc4266c49f43a448d188afdd585c69310a44f7746b546ff4",
+      "fits": {
+        "original": {
+          "url": "pca/gemma2-original.json",
+          "sha256": "752d13e29cb599f1381338fb8379e0613aa96e6a66568d51ae09fa7bcc05b654",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.22709563641244124,
+            0.15580849294488822,
+            0.1214651079758903
+          ]
+        },
+        "masked": {
+          "url": "pca/gemma2-masked.json",
+          "sha256": "324a80a72fb9bce25ef446d73d2dd0d75c3ab99ec7981bfc204f909eaf37de7e",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.25806184642320007,
+            0.15668660724426645,
+            0.13205060618151196
+          ]
+        },
+        "paired": {
+          "url": "pca/gemma2-paired.json",
+          "sha256": "bd2394259000ed50fde266c58bfed8e94acc92ef24d948104a8a950284eeb919",
+          "fit_count": 2808,
+          "explained_variance_ratio": [
+            0.22343026444349068,
+            0.14450909637574885,
+            0.11807124356739684
+          ]
+        },
+        "all": {
+          "url": "pca/gemma2-all.json",
+          "sha256": "1e15f2f4f14f7d9dcada580d467fce929a926c9e7145f96484812a4349cfebd8",
+          "fit_count": 6335,
+          "explained_variance_ratio": [
+            0.3489869527400219,
+            0.10622722095699624,
+            0.08001064820089315
+          ]
+        }
+      }
+    },
+    "gemma2-512": {
+      "dimensions": 512,
+      "rows": 6335,
+      "source_features_sha256": "ec1710d6be169c65e51ac234d396af33b6e5b00d16c21be1249baa5f63b2ca8f",
+      "fits": {
+        "original": {
+          "url": "pca/gemma2-512-original.json",
+          "sha256": "f607be891363a3f994c98eaeab183705361ec04f0c9d71320f121425ade9b004",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.22765340073749377,
+            0.15775730194771265,
+            0.12120533526174307
+          ]
+        },
+        "masked": {
+          "url": "pca/gemma2-512-masked.json",
+          "sha256": "603b1bc9ecf378229c5d44989bfedfd0a50d563ba0d4cde70877175d236f79e2",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.25752466264097185,
+            0.15803993697374977,
+            0.13197100844939094
+          ]
+        },
+        "paired": {
+          "url": "pca/gemma2-512-paired.json",
+          "sha256": "b442da23c2ae7566dc8e6e3632eede22b2ce14e1120aa33e8ea9f9af09be811e",
+          "fit_count": 2808,
+          "explained_variance_ratio": [
+            0.2237076215262973,
+            0.14629078148362826,
+            0.11894624509647818
+          ]
+        },
+        "all": {
+          "url": "pca/gemma2-512-all.json",
+          "sha256": "6883ba9352abaeb354b4da843f6e807fa513de5684095d7d99255f2a27279068",
+          "fit_count": 6335,
+          "explained_variance_ratio": [
+            0.34711327433277805,
+            0.10499329477965552,
+            0.08080551857521871
+          ]
+        }
+      }
+    },
+    "gemma2-256": {
+      "dimensions": 256,
+      "rows": 6335,
+      "source_features_sha256": "029c87beb813712ef95d4b508d0b95876025d71e359c03d0056e056df8da6781",
+      "fits": {
+        "original": {
+          "url": "pca/gemma2-256-original.json",
+          "sha256": "898566e9bbcc3d88bfe71e4f94a986eb4a83c5be66f0f205bae65df25112f06b",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.23980124445008177,
+            0.1616922423761288,
+            0.12428809943922828
+          ]
+        },
+        "masked": {
+          "url": "pca/gemma2-256-masked.json",
+          "sha256": "a4cb3084b8cc658c5a0cfeda08bb7e226c27afae8d0c85b65124bc52d99bb477",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.2672729186472294,
+            0.16592942135157257,
+            0.13597445948923043
+          ]
+        },
+        "paired": {
+          "url": "pca/gemma2-256-paired.json",
+          "sha256": "0cfdb48d81ea6a3e392cc5c789df618a2dd9f116dfe92408f4266bc5201c2e2b",
+          "fit_count": 2808,
+          "explained_variance_ratio": [
+            0.23481719876770904,
+            0.1529011440784609,
+            0.12192061597439446
+          ]
+        },
+        "all": {
+          "url": "pca/gemma2-256-all.json",
+          "sha256": "444f4b1b7e379b4b04b65e04d3d1cbb42b772b67f741e69d1fa2f302f724982b",
+          "fit_count": 6335,
+          "explained_variance_ratio": [
+            0.3530649553960226,
+            0.10010635138132051,
+            0.08558564413517056
+          ]
+        }
+      }
+    },
+    "gemma2-128": {
+      "dimensions": 128,
+      "rows": 6335,
+      "source_features_sha256": "46ca89f45acfd48788f2acd0445b36bd18e5d54c089bd1b5e836afb00d95730d",
+      "fits": {
+        "original": {
+          "url": "pca/gemma2-128-original.json",
+          "sha256": "5c55f5fe64698f118d04b7f82b701732c1b8dd46974cd8d9c49d5bc2099ec0b4",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.24420030899770712,
+            0.14816267876638006,
+            0.12136818025913208
+          ]
+        },
+        "masked": {
+          "url": "pca/gemma2-128-masked.json",
+          "sha256": "92b592160da25945e29d74d10c0b46c40de0364b1c1fc1eabef7d56879acd6ea",
+          "fit_count": 1404,
+          "explained_variance_ratio": [
+            0.2690470650742196,
+            0.16051877697253628,
+            0.13188426884852095
+          ]
+        },
+        "paired": {
+          "url": "pca/gemma2-128-paired.json",
+          "sha256": "cf03ab6fc10056455363447d56514f234ed4ff223924609857a53aff5414bac6",
+          "fit_count": 2808,
+          "explained_variance_ratio": [
+            0.23931538361118337,
+            0.14383076706941605,
+            0.11796001884413038
+          ]
+        },
+        "all": {
+          "url": "pca/gemma2-128-all.json",
+          "sha256": "227691f05125d7c8ed4eb53148a7eb940e2db02474b98899c958d133f43bee44",
+          "fit_count": 6335,
+          "explained_variance_ratio": [
+            0.3653661807893032,
+            0.10046470664102466,
+            0.08508485382423826
+          ]
+        }
+      }
+    }
+  }
+}

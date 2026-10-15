@@ -1,68 +1,1041 @@
 {
   "passed": true,
-  "scope": "Full Sim2 SAM 3.1 cohort",
+  "scope": "Selectable actual cohort PCA fits and deep zoom, 2026-10-15",
   "rows": 6335,
   "series": 29,
   "cohorts": {
-    "scans": 3527,
     "sim2": 1404,
+    "scans": 3527,
     "sim2_sam31": 1404
   },
-  "candidate": {
-    "rows": 6335,
-    "series": 29,
-    "cohorts": {
-      "sim2": 1404,
-      "scans": 3527,
-      "sim2_sam31": 1404
+  "pca_fit_checks": 20,
+  "independent_pca_per_dimension": true,
+  "browser": {
+    "state": "passed",
+    "fits": [
+      {
+        "model": "gemma2",
+        "dimensions": 768,
+        "basisDimensions": 768,
+        "fit": "original",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.07611218305112673,
+          -0.058523335655932554,
+          0.15973397772309567
+        ],
+        "expected": [
+          -0.07611218305112673,
+          -0.058523335655932554,
+          0.15973397772309567
+        ],
+        "ratio": [
+          0.22709563641244124,
+          0.15580849294488822,
+          0.1214651079758903
+        ],
+        "expectedRatio": [
+          0.22709563641244124,
+          0.15580849294488822,
+          0.1214651079758903
+        ],
+        "url": "pca/gemma2-original.json",
+        "expectedUrl": "pca/gemma2-original.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 354.07821008410525,
+          "y": 90.15061596150201,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 768,
+        "basisDimensions": 768,
+        "fit": "masked",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.07269550959951383,
+          -0.10148073903955099,
+          -0.1768931040013837
+        ],
+        "expected": [
+          -0.07269550959951383,
+          -0.10148073903955099,
+          -0.1768931040013837
+        ],
+        "ratio": [
+          0.25806184642320007,
+          0.15668660724426645,
+          0.13205060618151196
+        ],
+        "expectedRatio": [
+          0.25806184642320007,
+          0.15668660724426645,
+          0.13205060618151196
+        ],
+        "url": "pca/gemma2-masked.json",
+        "expectedUrl": "pca/gemma2-masked.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 351.83321208303715,
+          "y": 164.82211096921972,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 768,
+        "basisDimensions": 768,
+        "fit": "paired",
+        "fitRows": 2808,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.0728059721888534,
+          -0.07230115776141138,
+          0.17061151738299715
+        ],
+        "expected": [
+          -0.0728059721888534,
+          -0.07230115776141138,
+          0.17061151738299715
+        ],
+        "ratio": [
+          0.22343026444349068,
+          0.14450909637574885,
+          0.11807124356739684
+        ],
+        "expectedRatio": [
+          0.22343026444349068,
+          0.14450909637574885,
+          0.11807124356739684
+        ],
+        "url": "pca/gemma2-paired.json",
+        "expectedUrl": "pca/gemma2-paired.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 348.56567838739005,
+          "y": 87.42519018020585,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 768,
+        "basisDimensions": 768,
+        "fit": "all",
+        "fitRows": 6335,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.3141430889592117,
+          -0.12288597779728806,
+          -0.08507530634620125
+        ],
+        "expected": [
+          0.3141430889592117,
+          -0.12288597779728806,
+          -0.08507530634620125
+        ],
+        "ratio": [
+          0.3489869527400219,
+          0.10622722095699624,
+          0.08001064820089315
+        ],
+        "expectedRatio": [
+          0.3489869527400219,
+          0.10622722095699624,
+          0.08001064820089315
+        ],
+        "url": "pca/gemma2-all.json",
+        "expectedUrl": "pca/gemma2-all.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 434.7846406832671,
+          "y": 169.75553077054815,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "original",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.08129065402694736,
+          -0.056448174795961745,
+          0.16421122679381753
+        ],
+        "expected": [
+          -0.08129065402694736,
+          -0.056448174795961745,
+          0.16421122679381753
+        ],
+        "ratio": [
+          0.22765340073749377,
+          0.15775730194771265,
+          0.12120533526174307
+        ],
+        "expectedRatio": [
+          0.22765340073749377,
+          0.15775730194771265,
+          0.12120533526174307
+        ],
+        "url": "pca/gemma2-512-original.json",
+        "expectedUrl": "pca/gemma2-512-original.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 352.47503694587124,
+          "y": 87.62883758959765,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "masked",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.08271023934997355,
+          -0.10319816309033862,
+          -0.18427296182162145
+        ],
+        "expected": [
+          -0.08271023934997355,
+          -0.10319816309033862,
+          -0.18427296182162145
+        ],
+        "ratio": [
+          0.25752466264097185,
+          0.15803993697374977,
+          0.13197100844939094
+        ],
+        "expectedRatio": [
+          0.25752466264097185,
+          0.15803993697374977,
+          0.13197100844939094
+        ],
+        "url": "pca/gemma2-512-masked.json",
+        "expectedUrl": "pca/gemma2-512-masked.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 348.48094491460245,
+          "y": 165.300526763232,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "paired",
+        "fitRows": 2808,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.07984840235233917,
+          -0.07184089636081442,
+          0.17143757562575088
+        ],
+        "expected": [
+          -0.07984840235233917,
+          -0.07184089636081442,
+          0.17143757562575088
+        ],
+        "ratio": [
+          0.2237076215262973,
+          0.14629078148362826,
+          0.11894624509647818
+        ],
+        "expectedRatio": [
+          0.2237076215262973,
+          0.14629078148362826,
+          0.11894624509647818
+        ],
+        "url": "pca/gemma2-512-paired.json",
+        "expectedUrl": "pca/gemma2-512-paired.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 347.1813237774499,
+          "y": 86.46788576707306,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "all",
+        "fitRows": 6335,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.30920245436808114,
+          -0.11345800122514399,
+          -0.09523187154900381
+        ],
+        "expected": [
+          0.30920245436808114,
+          -0.11345800122514399,
+          -0.09523187154900381
+        ],
+        "ratio": [
+          0.34711327433277805,
+          0.10499329477965552,
+          0.08080551857521871
+        ],
+        "expectedRatio": [
+          0.34711327433277805,
+          0.10499329477965552,
+          0.08080551857521871
+        ],
+        "url": "pca/gemma2-512-all.json",
+        "expectedUrl": "pca/gemma2-512-all.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 435.7861131574302,
+          "y": 168.78713464260517,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 256,
+        "basisDimensions": 256,
+        "fit": "original",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.09117671671203373,
+          -0.050759517972692764,
+          0.19148807093301928
+        ],
+        "expected": [
+          -0.09117671671203373,
+          -0.050759517972692764,
+          0.19148807093301928
+        ],
+        "ratio": [
+          0.23980124445008177,
+          0.1616922423761288,
+          0.12428809943922828
+        ],
+        "expectedRatio": [
+          0.23980124445008177,
+          0.1616922423761288,
+          0.12428809943922828
+        ],
+        "url": "pca/gemma2-256-original.json",
+        "expectedUrl": "pca/gemma2-256-original.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 353.3194761269103,
+          "y": 85.49684510963695,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 256,
+        "basisDimensions": 256,
+        "fit": "masked",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.0892141566606688,
+          -0.09534973862164864,
+          0.18928209652516076
+        ],
+        "expected": [
+          -0.0892141566606688,
+          -0.09534973862164864,
+          0.18928209652516076
+        ],
+        "ratio": [
+          0.2672729186472294,
+          0.16592942135157257,
+          0.13597445948923043
+        ],
+        "expectedRatio": [
+          0.2672729186472294,
+          0.16592942135157257,
+          0.13597445948923043
+        ],
+        "url": "pca/gemma2-256-masked.json",
+        "expectedUrl": "pca/gemma2-256-masked.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 353.1696279423758,
+          "y": 85.80136317676383,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 256,
+        "basisDimensions": 256,
+        "fit": "paired",
+        "fitRows": 2808,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.08950277975801224,
+          -0.06686125861796187,
+          0.18435938707206054
+        ],
+        "expected": [
+          -0.08950277975801224,
+          -0.06686125861796187,
+          0.18435938707206054
+        ],
+        "ratio": [
+          0.23481719876770904,
+          0.1529011440784609,
+          0.12192061597439446
+        ],
+        "expectedRatio": [
+          0.23481719876770904,
+          0.1529011440784609,
+          0.12192061597439446
+        ],
+        "url": "pca/gemma2-256-paired.json",
+        "expectedUrl": "pca/gemma2-256-paired.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 352.8803370711986,
+          "y": 85.35909761032016,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 256,
+        "basisDimensions": 256,
+        "fit": "all",
+        "fitRows": 6335,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.3110302649431611,
+          0.11710489379147382,
+          -0.07897052122765583
+        ],
+        "expected": [
+          0.3110302649431611,
+          0.11710489379147382,
+          -0.07897052122765583
+        ],
+        "ratio": [
+          0.3530649553960226,
+          0.10010635138132051,
+          0.08558564413517056
+        ],
+        "expectedRatio": [
+          0.3530649553960226,
+          0.10010635138132051,
+          0.08558564413517056
+        ],
+        "url": "pca/gemma2-256-all.json",
+        "expectedUrl": "pca/gemma2-256-all.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 464.85182191155474,
+          "y": 148.27185818437937,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 128,
+        "basisDimensions": 128,
+        "fit": "original",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.09064333350390771,
+          -0.12591106278156464,
+          -0.07118786553904322
+        ],
+        "expected": [
+          -0.09064333350390771,
+          -0.12591106278156464,
+          -0.07118786553904322
+        ],
+        "ratio": [
+          0.24420030899770712,
+          0.14816267876638006,
+          0.12136818025913208
+        ],
+        "expectedRatio": [
+          0.24420030899770712,
+          0.14816267876638006,
+          0.12136818025913208
+        ],
+        "url": "pca/gemma2-128-original.json",
+        "expectedUrl": "pca/gemma2-128-original.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 343.4350492094144,
+          "y": 149.54136137072385,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 128,
+        "basisDimensions": 128,
+        "fit": "masked",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.08492902888858035,
+          0.1360837402179972,
+          -0.05193930069068744
+        ],
+        "expected": [
+          -0.08492902888858035,
+          0.1360837402179972,
+          -0.05193930069068744
+        ],
+        "ratio": [
+          0.2690470650742196,
+          0.16051877697253628,
+          0.13188426884852095
+        ],
+        "expectedRatio": [
+          0.2690470650742196,
+          0.16051877697253628,
+          0.13188426884852095
+        ],
+        "url": "pca/gemma2-128-masked.json",
+        "expectedUrl": "pca/gemma2-128-masked.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 403.68675922625795,
+          "y": 107.61655979108701,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 128,
+        "basisDimensions": 128,
+        "fit": "paired",
+        "fitRows": 2808,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.08846998600212842,
+          -0.13047260717489068,
+          -0.060042579256172846
+        ],
+        "expected": [
+          -0.08846998600212842,
+          -0.13047260717489068,
+          -0.060042579256172846
+        ],
+        "ratio": [
+          0.23931538361118337,
+          0.14383076706941605,
+          0.11796001884413038
+        ],
+        "expectedRatio": [
+          0.23931538361118337,
+          0.14383076706941605,
+          0.11796001884413038
+        ],
+        "url": "pca/gemma2-128-paired.json",
+        "expectedUrl": "pca/gemma2-128-paired.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 344.85200728549876,
+          "y": 148.26039350887518,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "gemma2",
+        "dimensions": 128,
+        "basisDimensions": 128,
+        "fit": "all",
+        "fitRows": 6335,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.2538328534831811,
+          0.0621156516092142,
+          -0.0640425273150919
+        ],
+        "expected": [
+          0.2538328534831811,
+          0.0621156516092142,
+          -0.0640425273150919
+        ],
+        "ratio": [
+          0.3653661807893032,
+          0.10046470664102466,
+          0.08508485382423826
+        ],
+        "expectedRatio": [
+          0.3653661807893032,
+          0.10046470664102466,
+          0.08508485382423826
+        ],
+        "url": "pca/gemma2-128-all.json",
+        "expectedUrl": "pca/gemma2-128-all.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 454.3260352155834,
+          "y": 152.07848685482713,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "clip",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "original",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.14970356488485884,
+          -0.01308897074358081,
+          0.09056336692526004
+        ],
+        "expected": [
+          0.14970356488485884,
+          -0.01308897074358081,
+          0.09056336692526004
+        ],
+        "ratio": [
+          0.17073941629759903,
+          0.11238990423801229,
+          0.10557702740974421
+        ],
+        "expectedRatio": [
+          0.17073941629759903,
+          0.11238990423801229,
+          0.10557702740974421
+        ],
+        "url": "pca/clip-original.json",
+        "expectedUrl": "pca/clip-original.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 418.58860418025165,
+          "y": 126.63739982309004,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "clip",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "masked",
+        "fitRows": 1404,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.17351857141266958,
+          0.10181759939226648,
+          0.13964752259594143
+        ],
+        "expected": [
+          0.17351857141266958,
+          0.10181759939226648,
+          0.13964752259594143
+        ],
+        "ratio": [
+          0.2184391597213897,
+          0.12512912703845505,
+          0.10282910725406519
+        ],
+        "expectedRatio": [
+          0.2184391597213897,
+          0.12512912703845505,
+          0.10282910725406519
+        ],
+        "url": "pca/clip-masked.json",
+        "expectedUrl": "pca/clip-masked.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 428.37163239188305,
+          "y": 103.0347569361607,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "clip",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "paired",
+        "fitRows": 2808,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          0.08552370677871356,
+          0.04010581095968822,
+          0.2551758487175386
+        ],
+        "expected": [
+          0.08552370677871356,
+          0.04010581095968822,
+          0.2551758487175386
+        ],
+        "ratio": [
+          0.3154593810319862,
+          0.08330366964964214,
+          0.06918174792197378
+        ],
+        "expectedRatio": [
+          0.3154593810319862,
+          0.08330366964964214,
+          0.06918174792197378
+        ],
+        "url": "pca/clip-paired.json",
+        "expectedUrl": "pca/clip-paired.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 422.0375605651406,
+          "y": 88.28871181665632,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      },
+      {
+        "model": "clip",
+        "dimensions": 512,
+        "basisDimensions": 512,
+        "fit": "all",
+        "fitRows": 6335,
+        "row": 3192,
+        "imageRow": 3192,
+        "markerRow": 3192,
+        "cosine": "1.0000",
+        "coords": [
+          -0.2904179327092529,
+          0.15624077170120138,
+          -0.08621202444194029
+        ],
+        "expected": [
+          -0.2904179327092529,
+          0.15624077170120138,
+          -0.08621202444194029
+        ],
+        "ratio": [
+          0.29200539505364326,
+          0.13957595670144685,
+          0.06424589546655347
+        ],
+        "expectedRatio": [
+          0.29200539505364326,
+          0.13957595670144685,
+          0.06424589546655347
+        ],
+        "url": "pca/clip-all.json",
+        "expectedUrl": "pca/clip-all.json",
+        "rows": 6335,
+        "status": "",
+        "camera": {
+          "yaw": -0.65,
+          "pitch": 0.55,
+          "zoom": 1,
+          "panX": 0,
+          "panY": 0
+        },
+        "mode": "3d",
+        "point": {
+          "x": 380.8347716555262,
+          "y": 114.08878062605505,
+          "row": 3192,
+          "fill": "rgb(11 200 191)"
+        }
+      }
+    ],
+    "zoom3d": {
+      "yaw": -0.65,
+      "pitch": 0.55,
+      "zoom": 15.1875,
+      "panX": 0.5229332585350817,
+      "panY": 0.37406935100745287
     },
-    "model": "gemma2",
-    "dimensions": 128,
-    "color": "Sim2 SAM 3.1 \u00b7 Jeep / Yellow",
-    "heading": 90,
-    "image": 6060,
-    "marker": 6060,
-    "onPlot": true,
-    "elevationDisabled": true,
-    "status": "",
-    "tag": "SIM2 / SAM 3.1 / GEMMA 2 128D",
-    "panel": {
-      "x": 891,
-      "y": 379.15625,
-      "width": 336,
-      "height": 250,
-      "top": 379.15625,
-      "right": 1227,
-      "bottom": 629.15625,
-      "left": 891
-    }
+    "panned": {
+      "yaw": -0.65,
+      "pitch": 0.55,
+      "zoom": 15.1875,
+      "panX": 0.5840579529116098,
+      "panY": 0.49906935100745287
+    },
+    "zoom2d": {
+      "yaw": -0.65,
+      "pitch": 0.55,
+      "zoom": 22.657087595426795,
+      "panX": 0.8412494446771903,
+      "panY": 0.6833660948344198
+    },
+    "saved_url": "http://127.0.0.1:8898/viewer/embedding.html?color=Scans+%C2%B7+truck%2Fyellow&heading=0&elevation=54&projection=01&elevations=all&paths=0&colorBy=viewpoint&palette=red-blue-green-yellow&embedding=clip&dimensions=128&yaw=-0.65&pitch=0.55&zoom=22.657087595426795&panX=0.8412494446771903&panY=0.6833660948344198&pca=all&show=Sim2+%C2%B7+Jeep+%2F+Indigo&show=Sim2+%C2%B7+Jeep+%2F+Magenta&show=Sim2+%C2%B7+Jeep+%2F+White&show=Sim2+%C2%B7+Jeep+%2F+Yellow&show=Scans+%C2%B7+jeep%2Foriginal&show=Scans+%C2%B7+truck%2Fblack&show=Scans+%C2%B7+truck%2Fblue&show=Scans+%C2%B7+truck%2Fgray&show=Scans+%C2%B7+truck%2Fgreen&show=Scans+%C2%B7+truck%2Findigo&show=Scans+%C2%B7+truck%2Forange&show=Scans+%C2%B7+truck%2Fred&show=Scans+%C2%B7+truck%2Fviolet&show=Scans+%C2%B7+truck%2Fwhite&show=Scans+%C2%B7+truck%2Fyellow&show=Scans+%C2%B7+jeep%2Fblack&show=Scans+%C2%B7+jeep%2Fblue&show=Scans+%C2%B7+jeep%2Fgray&show=Scans+%C2%B7+jeep%2Fgreen&show=Scans+%C2%B7+jeep%2Findigo&show=Scans+%C2%B7+jeep%2Forange&show=Scans+%C2%B7+jeep%2Fred&show=Scans+%C2%B7+jeep%2Fviolet&show=Scans+%C2%B7+jeep%2Fwhite&show=Scans+%C2%B7+jeep%2Fyellow&show=Sim2+SAM+3.1+%C2%B7+Jeep+%2F+Indigo&show=Sim2+SAM+3.1+%C2%B7+Jeep+%2F+Magenta&show=Sim2+SAM+3.1+%C2%B7+Jeep+%2F+White&show=Sim2+SAM+3.1+%C2%B7+Jeep+%2F+Yellow&headings=all",
+    "reloaded_camera": {
+      "yaw": -0.65,
+      "pitch": 0.55,
+      "zoom": 22.657087595426795,
+      "panX": 0.8412494446771903,
+      "panY": 0.6833660948344198
+    },
+    "reset": {
+      "yaw": -0.65,
+      "pitch": 0.55,
+      "zoom": 1,
+      "panX": 0,
+      "panY": 0
+    },
+    "console": "### Result\nTotal messages: 0 (Errors: 0, Warnings: 0)\n\n"
   },
-  "drag": {
-    "heading": 180,
-    "recorded": 180,
-    "imageRow": 6146,
-    "markerRow": 6146,
-    "onPlot": true
-  },
-  "modelSwitch": {
-    "model": "clip",
-    "imageRow": 6146,
-    "markerRow": 6146,
-    "maskedTag": "SIM2 / SAM 3.1 / CLIP B/16"
-  },
-  "originalRowsExactlyPreserved": 4931,
-  "pcaMeanAndAxesExactlyPreserved": true,
-  "gemmaDimensions": [
-    768,
-    512,
-    256,
-    128
-  ],
-  "gemmaNumericRowsChecked": 25340,
-  "consoleErrors": 0,
-  "consoleWarnings": 0,
   "repositoryTests": {
-    "passed": 36,
-    "elapsedSec": 37.883
-  }
+    "passed": 38,
+    "elapsedSec": 32.09
+  },
+  "covariance_verification": "pca-fit-verification.json",
+  "legacy_reference_pca_preserved": true
 }
