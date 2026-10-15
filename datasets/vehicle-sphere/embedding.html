@@ -302,7 +302,7 @@ function staticPlot(){
  if(visibleSeries.has(color)){const front=byRow.get(D.references[color]);if(allElevations||front.elevation===null||front.elevation===elevation){const f=project(front.coords);ctx.fillStyle='#a4b3c9';ctx.fillRect(f.x-3,f.y-3,6,6)}}
  window.orbitPlotState={series:categories.filter(c=>visibleSeries.has(c)),counts,elevations:plottedElevations,rows:screenPoints.length,rowIds:screenPoints.map(p=>p.row.embedding_row),allElevations,allHeadings,elevationMode,headingMode,selectedHeadings:[...selectedHeadings],selectedElevations:[...selectedElevations],showPaths,colorBy,palette};
  $('visible-count').textContent=`· ${visibleSeries.size} selected · ${screenPoints.length.toLocaleString()} views`;
- for(const [c,entry] of seriesCheckboxes){entry.count.textContent=comparisonPoints(c).length;entry.label.dataset.inspected=String(c===color)}
+ for(const [c,entry] of seriesCheckboxes){entry.count.textContent=VehicleAdditions.count(c,comparisonPoints(c).length,D);entry.label.dataset.inspected=String(c===color)}
  $('color-key').textContent=colorBy==='viewpoint'?'PCA dots match the HSV grid: 0° → 180° → 360°; 360° repeats 0°. Edit the four swatches below.':'PCA dots show vehicle paint; the matrix still shows viewpoint colors.';drawMarker();
 }
 function scheduleStatic(){if(!staticFrame)staticFrame=requestAnimationFrame(staticPlot)}
@@ -440,7 +440,7 @@ for(const name of groupNames){
 for(const category of displayCategories){
  const name=selectionGroup(category),paint=category.split('/').at(-1).trim(),shortName=D.seriesMeta[category].displayLabel||paint[0].toUpperCase()+paint.slice(1);
  seriesOptions.get(name).append(new Option(shortName,category));const label=document.createElement('label'),input=document.createElement('input'),dot=document.createElement('span'),count=document.createElement('span');
- input.type='checkbox';input.setAttribute('aria-label','Show '+category);input.checked=visibleSeries.has(category);dot.className='dot';dot.style.background=D.colors[category];count.className='sample-count';count.textContent=fullGroups[category].length;
+ input.type='checkbox';input.setAttribute('aria-label','Show '+category);input.checked=visibleSeries.has(category);dot.className='dot';dot.style.background=D.colors[category];count.className='sample-count';count.textContent=VehicleAdditions.count(category,fullGroups[category].length,D);
  label.title=category;label.append(input,dot,document.createTextNode(shortName),count);selectionGroups.get(name).paints.append(label);seriesCheckboxes.set(category,{input,label,count});
  input.onchange=()=>{const next=new Set(visibleSeries);if(input.checked)next.add(category);else next.delete(category);setVisible(next,{previewSeries:input.checked?category:null})};
 }
