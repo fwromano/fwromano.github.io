@@ -41,12 +41,12 @@ window.VehicleAdditions = (() => {
     if(!pack)return;
     const section=document.createElement('section');section.id='new-data-banner';section.className='new-data-banner';
     const title=document.createElement('strong');title.textContent=pack.observerCount?'New scans and simulated observer views':'Extended scans · Jeep and truck';
-    const note=document.createElement('p');note.textContent=pack.observerCount?`Published snapshot ${pack.generatedUtc.slice(0,10)}: ${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} extended scans embedded, ${pack.observerCount} observer captures.`:`${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} new scan embeddings published (${pack.generatedUtc.replace('T',' ').replace('Z',' UTC')}). Each configuration has 2,520 source views. The graph contains completed embeddings; all source views are available below. Counts beside each color show displayed embeddings / total source views.`;
+    const note=document.createElement('p');note.textContent=pack.observerCount?`Published snapshot ${pack.generatedUtc.slice(0,10)}: ${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} extended scans embedded, ${pack.observerCount} observer captures.`:`${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} new scan embeddings in this build (${pack.generatedUtc.replace('T',' ').replace('Z',' UTC')}). Each configuration has 2,520 source views. The graph contains completed embeddings; all source views are available below. Counts beside each color show displayed embeddings / total source views.`;
     const actions=document.createElement('div');actions.className='new-data-actions';
-    for(const [text,prefix]of (pack.observerCount?[['Show observer captures','Observer'],['Show new scans','Extended']]:[['Show extended Jeeps','Extended · jeep/'],['Show extended trucks','Extended · truck/']])){
+    for(const [text,prefix]of (pack.observerCount?[['Show observer captures','Observer'],['Show new scans','Extended']]:[['Show all extended views','Extended · '],['Show extended Jeeps','Extended · jeep/'],['Show extended trucks','Extended · truck/']])){
       const a=document.createElement('a');const q=new URLSearchParams(location.search);
       q.set('embedding','gemma2');q.set('processing',processing);q.set('elevations','all');q.set('headings','all');q.delete('show');
-      const cats=Object.keys(pack.spaces.gemma2.colors).filter(c=>c.startsWith(prefix));
+      const cats=Object.keys((pack.spaceMetadata||pack.spaces).gemma2.colors).filter(c=>c.startsWith(prefix));
       for(const c of cats)q.append('show',c);q.set('color',cats[0]);
       a.href='?'+q;a.textContent=text;actions.append(a);
     }
@@ -77,14 +77,14 @@ window.VehicleAdditions = (() => {
     }
     const isObserver=row.dataset==='observer';
     panel.querySelector('.new-before-after').hidden=!isObserver;
-    document.getElementById('new-original').src=row.original_url;
-    document.getElementById('new-processed').src=row.cutout_url;
+    if(isObserver){document.getElementById('new-original').src=row.original_url;
+    document.getElementById('new-processed').src=row.cutout_url;}
     document.getElementById('new-processing-name').textContent=names[row.processing];
     document.getElementById('selected-view').textContent=`${label(row.category,D)} · ${row.heading.toFixed(1)}° / ${row.elevation.toFixed(1)}°`;
     document.getElementById('image-name').textContent='Source notes: '+row.category;
     document.querySelector('.image-tag').textContent=(isObserver?'SIMULATED OBSERVER / ':'EXTENDED SCAN / ')+(isObserver?names[row.processing]:'SAM 3.1');
-    document.getElementById('original').textContent='Open exact RGB encoder input ↗';
-    document.getElementById('view-note').textContent=isObserver?'Actual simulated viewing angle; nearest available capture, no interpolation.':'New scan collection; only completed, verified image/vector pairs are published.';
+    document.getElementById('original').textContent=row.preview_only?'Open source and processed previews ↗':'Open exact RGB encoder input ↗';
+    document.getElementById('view-note').textContent=isObserver?'Actual simulated viewing angle; nearest available capture, no interpolation.':'New scan collection; only completed, verified image/vector pairs are shown.';
     const details=isObserver?(row.rectification?'Jeep size: 4.0 × 1.9 × 2.0 m (declared simulator dimensions). Same-view camera-warp correction cannot recover hidden surfaces or missing detail.':'Original simulated crop. This asset has no rectification comparison.'):'Same frozen image encoder and reference PCA as the historical catalog; new observations do not refit the axes.';
     document.getElementById('new-view-detail').textContent=details;
     if(!isObserver&&!pack.observerCount){const a=document.createElement('a');a.href='source-browser.html?'+new URLSearchParams({series:row.source_series,heading:row.heading,elevation:row.elevation});a.textContent='Browse all 2,520 source views for this configuration ↗';document.getElementById('new-view-detail').append(document.createElement('br'),a);}

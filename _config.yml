@@ -1,0 +1,4 @@
+exclude:
+  - datasets/vehicle-sphere/new-data/previews
+  - datasets/vehicle-sphere/orbit-data.json
+  - datasets/vehicle-sphere/embedding_offline.html
