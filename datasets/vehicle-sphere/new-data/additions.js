@@ -33,9 +33,18 @@ window.VehicleAdditions = (() => {
       }
       space.plotRanges=extra.ranges.all;
     }
+    // Compact presentation names only; catalog labels and source IDs are retained.
+    for(const space of [data,...Object.values(data.embeddingSpaces||{})]) {
+      const totals={};for(const row of space.rows||[])totals[row.category]=(totals[row.category]||0)+1;
+      for(const [category,meta] of Object.entries(space.seriesMeta||{})) {
+        if(meta.displayLabel)meta.displayLabel=meta.displayLabel.replace(/\bpickup truck\b/gi,'truck');
+        if(meta.totalViews==null)meta.totalViews=totals[category]||0;
+      }
+    }
   }
   function label(category,D){return D.seriesMeta[category]?.displayLabel||category;}
   function count(category,n,D){const total=D.seriesMeta[category]?.totalViews;return total?`${n.toLocaleString()} / ${total.toLocaleString()}`:n;}
+  function nameNode(name){const span=document.createElement('span');span.className='vehicle-name';span.textContent=name;return span;}
   function angle(value){return value==null?'?':Number(value).toFixed(1).replace(/\.0$/,'');}
   function mount(D,embeddingKey){
     if(!pack)return;
@@ -98,5 +107,5 @@ window.VehicleAdditions = (() => {
     const evidence=document.createElement('p');evidence.className='small';evidence.textContent='Cosine is a matching score, not calibrated identity confidence. Text descriptions can be wrong.';document.getElementById('new-text').append(evidence);
   }
   function clear(){const p=document.getElementById('new-observation-details');if(p)p.hidden=true;}
-  return {extend,mount,show,clear,label,count,angle,processing,names};
+  return {extend,mount,show,clear,label,count,nameNode,angle,processing,names};
 })();
