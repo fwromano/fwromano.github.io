@@ -1,4 +1,4 @@
-/* Static GitHub Pages adapter. New rows use existing, frozen PCA fits. */
+/* Static GitHub Pages adapter. Current scan catalog and fitted projection display. */
 'use strict';
 window.VehicleAdditions = (() => {
   const names={original:'Original crop',sam31:'SAM 3.1',rectified:'Rectification',rectified_sam31:'Rectification + SAM 3.1'};
@@ -29,7 +29,7 @@ window.VehicleAdditions = (() => {
       Object.assign(space.references,extra.references);
       for(const [fitName,fit] of Object.entries(space.pcaFits)){
         fit.plotRanges=extra.ranges[fitName];
-        if(fitName==='all')fit.label='All historical references';
+        if(fitName==='all'&&!pack.currentCatalog)fit.label='All historical references';
       }
       space.plotRanges=extra.ranges.all;
     }
@@ -40,10 +40,10 @@ window.VehicleAdditions = (() => {
   function mount(D,embeddingKey){
     if(!pack)return;
     const section=document.createElement('section');section.id='new-data-banner';section.className='new-data-banner';
-    const title=document.createElement('strong');title.textContent=pack.observerCount?'New scans and simulated observer views':'Extended scans · Jeep and truck';
-    const note=document.createElement('p');note.textContent=pack.observerCount?`Published snapshot ${pack.generatedUtc.slice(0,10)}: ${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} extended scans embedded, ${pack.observerCount} observer captures.`:`${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} new scan embeddings in this build (${pack.generatedUtc.replace('T',' ').replace('Z',' UTC')}). Each configuration has 2,520 source views. The graph contains completed embeddings; all source views are available below. Counts beside each color show displayed embeddings / total source views.`;
+    const title=document.createElement('strong');title.textContent=pack.observerCount?'New scans and simulated observer views':'Vehicle scans · Jeep and truck';
+    const note=document.createElement('p');note.textContent=pack.observerCount?`Published snapshot ${pack.generatedUtc.slice(0,10)}: ${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} scans embedded, ${pack.observerCount} observer captures.`:`${pack.extendedCount.toLocaleString()} / ${pack.extendedTotal.toLocaleString()} scan embeddings in this build (${pack.generatedUtc.replace('T',' ').replace('Z',' UTC')}). Each configuration has 2,520 source views. The graph contains completed embeddings; all source views are available below. Counts beside each color show displayed embeddings / total source views.`;
     const actions=document.createElement('div');actions.className='new-data-actions';
-    for(const [text,prefix]of (pack.observerCount?[['Show observer captures','Observer'],['Show new scans','Extended']]:[['Show all extended views','Extended · '],['Show extended Jeeps','Extended · jeep/'],['Show extended trucks','Extended · truck/']])){
+    for(const [text,prefix]of (pack.observerCount?[['Show observer captures','Observer'],['Show new scans','Extended']]:[['Show all scan views','Scans · '],['Show Jeeps','Scans · jeep/'],['Show trucks','Scans · truck/']])){
       const a=document.createElement('a');const q=new URLSearchParams(location.search);
       q.set('embedding','gemma2');q.set('processing',processing);q.set('elevations','all');q.set('headings','all');q.delete('show');
       const cats=Object.keys((pack.spaceMetadata||pack.spaces).gemma2.colors).filter(c=>c.startsWith(prefix));
@@ -82,13 +82,13 @@ window.VehicleAdditions = (() => {
     document.getElementById('new-processing-name').textContent=names[row.processing];
     document.getElementById('selected-view').textContent=`${label(row.category,D)} · ${row.heading.toFixed(1)}° / ${row.elevation.toFixed(1)}°`;
     document.getElementById('image-name').textContent='Source notes: '+row.category;
-    document.querySelector('.image-tag').textContent=(isObserver?'SIMULATED OBSERVER / ':'EXTENDED SCAN / ')+(isObserver?names[row.processing]:'SAM 3.1');
+    document.querySelector('.image-tag').textContent=(isObserver?'SIMULATED OBSERVER / ':'SCAN / ')+(isObserver?names[row.processing]:'SAM 3.1');
     document.getElementById('original').textContent=row.preview_only?'Open source and processed previews ↗':'Open exact RGB encoder input ↗';
     document.getElementById('view-note').textContent=isObserver?'Actual simulated viewing angle; nearest available capture, no interpolation.':'New scan collection; only completed, verified image/vector pairs are shown.';
-    const details=isObserver?(row.rectification?'Jeep size: 4.0 × 1.9 × 2.0 m (declared simulator dimensions). Same-view camera-warp correction cannot recover hidden surfaces or missing detail.':'Original simulated crop. This asset has no rectification comparison.'):'Same frozen image encoder and reference PCA as the historical catalog; new observations do not refit the axes.';
+    const details=isObserver?(row.rectification?'Jeep size: 4.0 × 1.9 × 2.0 m (declared simulator dimensions). Same-view camera-warp correction cannot recover hidden surfaces or missing detail.':'Original simulated crop. This asset has no rectification comparison.'):'Current PCA and PLS fits use the dense scan collection. These display projections are not identity-confidence estimates.';
     document.getElementById('new-view-detail').textContent=details;
     if(!isObserver&&!pack.observerCount){const a=document.createElement('a');a.href='source-browser.html?'+new URLSearchParams({series:row.source_series,heading:row.heading,elevation:row.elevation});a.textContent='Browse all 2,520 source views for this configuration ↗';document.getElementById('new-view-detail').append(document.createElement('br'),a);}
-    for(const [id,title,items]of [['new-neighbors','Closest catalog appearances',row.neighbors],['new-text','Closest vehicle descriptions',row.text]]){
+    for(const [id,title,items]of [['new-neighbors','Closest historical reference appearances',row.neighbors],['new-text','Closest vehicle descriptions',row.text]]){
       const div=document.getElementById(id);div.replaceChildren();const h=document.createElement('strong');h.textContent=title+' · cosine';div.append(h);
       for(const item of (items||[]).slice(0,3)){
         const p=document.createElement('p');p.textContent=`${pack.labels[item.series]||item.text||item.series} · ${item.score.toFixed(3)}`;

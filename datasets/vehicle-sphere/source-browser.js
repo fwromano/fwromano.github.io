@@ -20,7 +20,7 @@
     $('coverage').textContent=`${Object.keys(s.completed).length.toLocaleString()} / ${s.total.toLocaleString()} views embedded for this configuration. All ${s.total.toLocaleString()} source views are browsable. Blue marks: embeddings in this build.`;
     $('status').textContent=`Build ${data.generatedUtc.replace('T',' ').replace('Z',' UTC')} · ${data.encoded.toLocaleString()} / ${data.total.toLocaleString()} embeddings overall.`;
     $('ready').hidden=!completed;$('pending').hidden=!!completed;
-    if(completed){$('encoded').dataset.ready='false';if(completed.input)$('encoded').src=completed.input;const p=new URLSearchParams({embedding:'gemma2',color:'Extended · '+series,show:'Extended · '+series,heading,elevation,elevations:'all',headings:'all'});$('plot').href='embedding.html?'+p;}
+    if(completed){$('encoded').dataset.ready='false';if(completed.input)$('encoded').src=completed.input;const p=new URLSearchParams({embedding:'gemma2',color:'Scans · '+series,show:'Scans · '+series,heading,elevation,elevations:'all',headings:'all'});$('plot').href='embedding.html?'+p;}
     history.replaceState(null,'','?'+new URLSearchParams({series,heading,elevation}));drawPad();
     window.sourceViewState={series,heading,elevation,sourceCount:2520,totalSourceCount:data.total,encoded:!!completed,sourceRow:completed?.source_row??null,previewReady:false};
     const image=await atlas(s.atlases[elevation]);if(version!==generation)return;
