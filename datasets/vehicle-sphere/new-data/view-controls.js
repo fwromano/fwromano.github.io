@@ -2,6 +2,17 @@
 'use strict';
 window.VehicleViewControls=(()=>{
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function cameraBasis(yaw,pitch){
+    const co=Math.cos(yaw),si=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    const right=[co,-si,0],up=[sp*si,sp*co,cp];
+    // In a right-handed camera, right cross up points toward the eye.
+    const towardCamera=[right[1]*up[2],-right[0]*up[2],right[0]*up[1]-right[1]*up[0]];
+    return {right,up,towardCamera};
+  }
+  function backPlanes(ranges,yaw,pitch){
+    const {towardCamera}=cameraBasis(yaw,pitch);
+    return {towardCamera,corner:ranges.map((r,i)=>r[towardCamera[i]>=0?0:1]),opposite:ranges.map((r,i)=>r[towardCamera[i]>=0?1:0])};
+  }
   function projector(ranges,mode,yaw,pitch,zoom,panX,panY,width,height){
     const mx=(ranges[0][0]+ranges[0][1])/2,my=(ranges[1][0]+ranges[1][1])/2,mz=(ranges[2][0]+ranges[2][1])/2;
     const cx=width*(.5+panX),cy=height*(.5+panY);
@@ -9,9 +20,9 @@ window.VehicleViewControls=(()=>{
       const a=+mode[0],b=+mode[1],mid=[mx,my,mz],s=Math.min((width-104)/(ranges[a][1]-ranges[a][0]),(height-104)/(ranges[b][1]-ranges[b][0]))*zoom;
       return v=>({x:cx+(v[a]-mid[a])*s,y:cy-(v[b]-mid[b])*s,depth:0});
     }
-    const co=Math.cos(yaw),si=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    const {right:r,up:u,towardCamera:n}=cameraBasis(yaw,pitch);
     const s=Math.min(width*.56,height*.60)*zoom/Math.max(...ranges.map(r=>r[1]-r[0]));
-    return v=>{const x=v[0]-mx,y=v[1]-my,z=v[2]-mz,ry=si*x+co*y;return{x:cx+(co*x-si*y)*s,y:cy-(sp*ry+cp*z)*s,depth:cp*ry-sp*z};};
+    return v=>{const x=v[0]-mx,y=v[1]-my,z=v[2]-mz;return{x:cx+(r[0]*x+r[1]*y)*s,y:cy-(u[0]*x+u[1]*y+u[2]*z)*s,depth:n[0]*x+n[1]*y+n[2]*z};};
   }
   function orderPoints(points,mode){
     // Positive camera depth is nearer. Stable source-ID ties remove group-order bias.
@@ -23,78 +34,203 @@ window.VehicleViewControls=(()=>{
     ctx.globalAlpha=1;
     for(const p of points){ctx.fillStyle=p.fill;ctx.beginPath();ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);ctx.fill();}
   }
+  const colorCache=new Map();
+  function rgb(fill){
+    if(colorCache.has(fill))return colorCache.get(fill);
+    if(colorCache.size>8192)colorCache.clear();
+    const value=fill.startsWith('#')?[1,3,5].map(k=>parseInt(fill.slice(k,k+2),16)):(fill.match(/[\d.]+/g)||[255,255,255]).slice(0,3).map(Number);
+    colorCache.set(fill,value);return value;
+  }
+  function pathColor(fill){return `rgb(${rgb(fill).map((v,i)=>Math.round(v*.6+[16,25,40][i]*.4)).join(' ')})`;}
+  function lineSample(s,x,y){
+    const dx=s.b.x-s.a.x,dy=s.b.y-s.a.y,length2=dx*dx+dy*dy;
+    if(length2<1e-16)return null;
+    const t=((x-s.a.x)*dx+(y-s.a.y)*dy)/length2;
+    if(t<0||t>1||(s.dashed&&t*Math.sqrt(length2)%9>=4))return null;
+    const distance=((x-s.a.x)*dy-(y-s.a.y)*dx)**2/length2;
+    return distance<=(s.width||1)**2/4?s.a.depth+t*(s.b.depth-s.a.depth):null;
+  }
+  function closest(points,x,y,segments=[]){
+    // The same opaque discs and butt-ended/dashed segments as the scene renderer.
+    let hit=null;
+    for(let i=points.length-1;i>=0;i--){const p=points[i];if((p.x-x)**2+(p.y-y)**2<=p.radius**2){hit=p;break;}}
+    if(!hit)return null;
+    for(const s of segments){const d=lineSample(s,x,y);if(d!==null&&d>hit.depth)return null;}
+    return hit.row;
+  }
+  function rasterScene(points,segments,width,height,scaleX,scaleY,storage){
+    // CPU fallback uses the same per-pixel depth law as WebGL; no painter-order
+    // approximation for crossing segments. Buffers are retained between frames.
+    if(!storage.image||storage.image.width!==width||storage.image.height!==height){
+      storage.image=new ImageData(width,height);storage.depth=new Float64Array(width*height);
+    }
+    const image=storage.image,bytes=image.data,z=storage.depth;
+    bytes.fill(0);z.fill(-Infinity);
+    const write=(x,y,d,color)=>{
+      const k=y*width+x;if(d<z[k])return;z[k]=d;
+      const q=k*4;bytes[q]=color[0];bytes[q+1]=color[1];bytes[q+2]=color[2];bytes[q+3]=255;
+    };
+    for(const s of segments){
+      const dx=s.b.x-s.a.x,dy=s.b.y-s.a.y,r=(s.width||1)/2,color=rgb(s.fill);
+      if(dx*dx+dy*dy<1e-16)continue;
+      // Traverse a narrow strip along the major axis, not a diagonal's entire box.
+      const horizontal=Math.abs(dx*scaleX)>=Math.abs(dy*scaleY);
+      const a=horizontal?s.a.x:s.a.y,b=horizontal?s.b.x:s.b.y;
+      const majorScale=horizontal?scaleX:scaleY,minorScale=horizontal?scaleY:scaleX;
+      const majorSize=horizontal?width:height,minorSize=horizontal?height:width;
+      const start=Math.max(0,Math.floor((Math.min(a,b)-r)*majorScale)),end=Math.min(majorSize-1,Math.ceil((Math.max(a,b)+r)*majorScale));
+      const slope=horizontal?dy/dx:dx/dy,pad=r*(1+Math.abs(slope));
+      for(let i=start;i<=end;i++){
+        const major=(i+.5)/majorScale,center=(horizontal?s.a.y:s.a.x)+(major-a)*slope;
+        const lo=Math.max(0,Math.floor((center-pad)*minorScale)),hi=Math.min(minorSize-1,Math.ceil((center+pad)*minorScale));
+        for(let j=lo;j<=hi;j++){
+          const x=horizontal?i:j,y=horizontal?j:i,d=lineSample(s,(x+.5)/scaleX,(y+.5)/scaleY);
+          if(d!==null)write(x,y,d,color);
+        }
+      }
+    }
+    for(const p of points){
+      const color=rgb(p.fill),r2=p.radius*p.radius;
+      const x0=Math.max(0,Math.floor((p.x-p.radius)*scaleX)),x1=Math.min(width-1,Math.ceil((p.x+p.radius)*scaleX));
+      const y0=Math.max(0,Math.floor((p.y-p.radius)*scaleY)),y1=Math.min(height-1,Math.ceil((p.y+p.radius)*scaleY));
+      for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)
+        if(((x+.5)/scaleX-p.x)**2+((y+.5)/scaleY-p.y)**2<=r2)write(x,y,p.depth,color);
+    }
+    return image;
+  }
   function renderer(canvas,preference='auto'){
-    let gl=null,program=null,failed=false,buffer=null,capacity=0,array=new Float32Array(0);const colors=new Map();
+    let gl=null,pipes=null,failed=false,frame=null;
+    const cpu=document.createElement('canvas'),cpuCtx=cpu.getContext('2d'),storage={};
     canvas.style.pointerEvents='none';canvas.style.zIndex='1';
     canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();failed=true;canvas.style.display='none';});
-    canvas.addEventListener('webglcontextrestored',()=>{failed=false;gl=null;program=null;capacity=0;});
+    canvas.addEventListener('webglcontextrestored',()=>{failed=false;gl=null;pipes=null;});
     function init(){
-      if(failed)return false;if(program)return true;
+      if(failed)return false;if(pipes)return true;
       try{
-        gl=canvas.getContext('webgl2',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});if(!gl){failed=true;return false;}
+        gl=canvas.getContext('webgl2',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});
+        if(!gl){failed=true;return false;}
         const shader=(type,source)=>{const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
-        const vertex=shader(gl.VERTEX_SHADER,`#version 300 es
-          in vec3 position;in vec4 appearance;uniform vec4 viewport;out vec3 rgb;
-          void main(){gl_Position=vec4(position.x/viewport.x*2.-1.,1.-position.y/viewport.y*2.,position.z,1.);gl_PointSize=appearance.w*viewport.z;rgb=appearance.xyz;}`);
-        const fragment=shader(gl.FRAGMENT_SHADER,`#version 300 es
-          precision highp float;in vec3 rgb;out vec4 pixel;
-          void main(){if(length(gl_PointCoord-vec2(.5))>.5)discard;pixel=vec4(rgb,1.);}`);
-        program=gl.createProgram();gl.attachShader(program,vertex);gl.attachShader(program,fragment);gl.linkProgram(program);gl.deleteShader(vertex);gl.deleteShader(fragment);
-        if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
-        gl.useProgram(program);buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
-        for(const [name,size,offset]of [['position',3,0],['appearance',4,12]]){const a=gl.getAttribLocation(program,name);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,size,gl.FLOAT,false,28,offset);}
-        gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.clearColor(0,0,0,0);return true;
-      }catch(error){failed=true;program=null;return false;}
+        const common=`#version 300 es
+          precision highp float;uniform vec4 viewport;
+          vec4 clip(vec2 p,float z){return vec4(p.x/viewport.x*2.-1.,1.-p.y/viewport.y*2.,z,1.);}
+        `;
+        const pointVertex=common+`
+          layout(location=0) in vec3 position;layout(location=1) in vec4 appearance;
+          flat out vec2 center;flat out vec3 color;flat out float radius;
+          const vec2 corners[6]=vec2[6](vec2(-1,-1),vec2(1,-1),vec2(1,1),vec2(-1,-1),vec2(1,1),vec2(-1,1));
+          void main(){center=position.xy;color=appearance.xyz;radius=appearance.w;gl_Position=clip(center+corners[gl_VertexID]*(radius+1.),position.z);}
+        `;
+        const pointFragment=`#version 300 es
+          precision highp float;uniform vec4 viewport;flat in vec2 center;flat in vec3 color;flat in float radius;out vec4 pixel;
+          void main(){vec2 p=vec2(gl_FragCoord.x,viewport.w-gl_FragCoord.y)*viewport.xy/viewport.zw;
+            if(distance(p,center)>radius)discard;pixel=vec4(color,1.);}
+        `;
+        const lineVertex=common+`
+          layout(location=0) in vec3 start;layout(location=1) in vec3 end;
+          layout(location=2) in vec4 appearance;layout(location=3) in float dash;
+          flat out vec2 a;flat out vec2 b;flat out vec3 color;flat out float dashed;flat out float width;
+          const vec2 corners[6]=vec2[6](vec2(0,-1),vec2(1,-1),vec2(1,1),vec2(0,-1),vec2(1,1),vec2(0,1));
+          void main(){a=start.xy;b=end.xy;color=appearance.xyz;dashed=dash;width=appearance.w;
+            vec2 delta=b-a,normal=vec2(-delta.y,delta.x)/max(length(delta),.000001),c=corners[gl_VertexID];
+            float t=c.x+(c.x*2.-1.)/max(length(delta),.000001);
+            gl_Position=clip(mix(a,b,t)+normal*c.y*(width*.5+1.),mix(start.z,end.z,t));}
+        `;
+        const lineFragment=`#version 300 es
+          precision highp float;uniform vec4 viewport;flat in vec2 a;flat in vec2 b;flat in vec3 color;flat in float dashed;flat in float width;out vec4 pixel;
+          void main(){vec2 p=vec2(gl_FragCoord.x,viewport.w-gl_FragCoord.y)*viewport.xy/viewport.zw,delta=b-a;
+            float t=dot(p-a,delta)/max(dot(delta,delta),.000001);
+            if(t<0.||t>1.||distance(p,a+t*delta)>width*.5||dot(delta,delta)<.000001)discard;
+            if(dashed>.5&&mod(t*length(delta),9.)>=4.)discard;pixel=vec4(color,1.);}
+        `;
+        function pipe(vertex,fragment,stride,attributes){
+          const vs=shader(gl.VERTEX_SHADER,vertex),fs=shader(gl.FRAGMENT_SHADER,fragment),program=gl.createProgram();
+          gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);gl.deleteShader(vs);gl.deleteShader(fs);
+          if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
+          const vao=gl.createVertexArray(),buffer=gl.createBuffer();gl.bindVertexArray(vao);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
+          let offset=0;attributes.forEach((size,i)=>{gl.enableVertexAttribArray(i);gl.vertexAttribPointer(i,size,gl.FLOAT,false,stride*4,offset*4);gl.vertexAttribDivisor(i,1);offset+=size;});
+          return {program,vao,buffer,stride,viewport:gl.getUniformLocation(program,'viewport'),array:new Float32Array(0),capacity:0};
+        }
+        pipes={points:pipe(pointVertex,pointFragment,7,[3,4]),lines:pipe(lineVertex,lineFragment,11,[3,3,4,1])};
+        gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.BLEND);gl.disable(gl.DITHER);gl.clearColor(0,0,0,0);return true;
+      }catch(error){failed=true;pipes=null;return false;}
     }
-    return {draw(ctx,points,mode,width,height){
-      // Measured crossover is checked by the retained full-catalog benchmark.
+    function upload(pipe,n,width,height,w,h){
+      gl.useProgram(pipe.program);gl.bindVertexArray(pipe.vao);gl.bindBuffer(gl.ARRAY_BUFFER,pipe.buffer);
+      if(pipe.capacity<pipe.array.byteLength){gl.bufferData(gl.ARRAY_BUFFER,pipe.array.byteLength,gl.DYNAMIC_DRAW);pipe.capacity=pipe.array.byteLength;}
+      gl.bufferSubData(gl.ARRAY_BUFFER,0,pipe.array.subarray(0,n*pipe.stride));
+      gl.uniform4f(pipe.viewport,width,height,w,h);gl.drawArraysInstanced(gl.TRIANGLES,0,6,n);
+    }
+    return {draw(ctx,points,mode,width,height,segments=[]){
+      orderPoints(points,mode);
+      const dpr=globalThis.devicePixelRatio||1,w=Math.max(1,Math.round(width*dpr)),h=Math.max(1,Math.round(height*dpr));
+      frame={points,segments,scaleX:w/width,scaleY:h/height};
+      // GPU is optional: the CPU path also handles crossings with a depth buffer.
       const gpu=points.length>0&&preference!=='canvas'&&(preference==='webgl'||points.length>=10000)&&init();
       canvas.style.display=gpu?'':'none';
-      if(!gpu){drawPoints(ctx,points,mode);return failed?'canvas fallback':'depth-sorted canvas';}
-      orderPoints(points,mode);
-      const dpr=devicePixelRatio||1,w=Math.round(width*dpr),h=Math.round(height*dpr);
-      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);
-      if(array.length<points.length*7)array=new Float32Array(points.length*7);if(colors.size>8192)colors.clear();
-      for(let i=0;i<points.length;i++){
-        const p=points[i];let rgb=colors.get(p.fill);
-        if(!rgb){rgb=p.fill.startsWith('#')?[1,3,5].map(k=>parseInt(p.fill.slice(k,k+2),16)/255):(p.fill.match(/[\d.]+/g)||[1,1,1]).slice(0,3).map(v=>Number(v)/255);colors.set(p.fill,rgb);}
-        // Only glyph order matters for this point layer. Encode its double-precision
-        // sort rank, avoiding cancellation/float32 reversals for nearly tied depths.
-        const j=i*7;array[j]=p.x;array[j+1]=p.y;array[j+2]=.9-1.8*i/Math.max(1,points.length-1);array[j+3]=rgb[0];array[j+4]=rgb[1];array[j+5]=rgb[2];array[j+6]=p.radius*2;
+      if(!gpu){
+        if(cpu.width!==w||cpu.height!==h){cpu.width=w;cpu.height=h;}
+        cpuCtx.putImageData(rasterScene(points,segments,w,h,w/width,h/height,storage),0,0);
+        ctx.drawImage(cpu,0,0,width,height);return failed?'canvas depth fallback':'canvas depth buffer';
       }
-      gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);if(capacity<array.byteLength){gl.bufferData(gl.ARRAY_BUFFER,array.byteLength,gl.DYNAMIC_DRAW);capacity=array.byteLength;}
-      gl.bufferSubData(gl.ARRAY_BUFFER,0,array.subarray(0,points.length*7));gl.uniform4f(gl.getUniformLocation(program,'viewport'),width,height,dpr,0);
-      gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,points.length);return 'WebGL2 depth buffer';
+      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);
+      let min=Infinity,max=-Infinity;
+      for(const p of points){min=Math.min(min,p.depth);max=Math.max(max,p.depth);}
+      for(const s of segments){min=Math.min(min,s.a.depth,s.b.depth);max=Math.max(max,s.a.depth,s.b.depth);}
+      const clip=d=>.9-1.8*(d-min)/Math.max(1e-12,max-min);
+      // Normalize in JS double precision before upload. The affine map is shared
+      // by points/segments; ordinal point ranks cannot interpolate crossing paths.
+      const pointPipe=pipes.points,linePipe=pipes.lines;
+      if(pointPipe.array.length<points.length*7)pointPipe.array=new Float32Array(points.length*7);
+      for(let i=0;i<points.length;i++){
+        const p=points[i],c=rgb(p.fill),j=i*7,a=pointPipe.array;
+        a[j]=p.x;a[j+1]=p.y;a[j+2]=clip(p.depth);a[j+3]=c[0]/255;a[j+4]=c[1]/255;a[j+5]=c[2]/255;a[j+6]=p.radius;
+      }
+      if(linePipe.array.length<segments.length*11)linePipe.array=new Float32Array(segments.length*11);
+      for(let i=0;i<segments.length;i++){
+        const s=segments[i],c=rgb(s.fill),j=i*11,a=linePipe.array;
+        a[j]=s.a.x;a[j+1]=s.a.y;a[j+2]=clip(s.a.depth);a[j+3]=s.b.x;a[j+4]=s.b.y;a[j+5]=clip(s.b.depth);
+        a[j+6]=c[0]/255;a[j+7]=c[1]/255;a[j+8]=c[2]/255;a[j+9]=s.width||1;a[j+10]=s.dashed?1:0;
+      }
+      gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+      if(segments.length)upload(linePipe,segments.length,width,height,w,h);
+      upload(pointPipe,points.length,width,height,w,h);
+      return 'WebGL2 depth buffer';
+    },pick(x,y){
+      if(!frame)return null;
+      const {points,segments,scaleX,scaleY}=frame;
+      return closest(points,(Math.floor(x*scaleX)+.5)/scaleX,(Math.floor(y*scaleY)+.5)/scaleY,segments);
     },get graphics(){return gl;}};
   }
-  function closest(points,x,y){
-    // Hit the visible disc, not an inflated invisible target over neighboring dots.
-    for(let i=points.length-1;i>=0;i--){const p=points[i];if((p.x-x)**2+(p.y-y)**2<=p.radius**2)return p.row;}
-    return null;
-  }
-  function selection(ctx,points,row){
-    const index=points.findIndex(p=>p.row.embedding_row===row.embedding_row);
-    if(index<0)return null;
-    const p=points[index],occluded=closest(points,p.x,p.y)?.embedding_row!==row.embedding_row;
-    // A locator is an annotation, never a replacement colored disc. Hidden centers
-    // receive a textual status; visible outlines are clipped by foreground glyphs.
+  function selection(ctx,points,row,segments=[]){
+    const index=points.findIndex(p=>p.row.embedding_row===row.embedding_row);if(index<0)return null;
+    const p=points[index],occluded=closest(points,p.x,p.y,segments)?.embedding_row!==row.embedding_row;
     if(!occluded){
       const radius=p.radius+4;
       ctx.save();ctx.globalAlpha=1;ctx.lineWidth=1.5;ctx.strokeStyle='#fff';
       ctx.beginPath();ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.stroke();
       ctx.globalCompositeOperation='destination-out';ctx.fillStyle='#000';
       for(let i=index+1;i<points.length;i++){
-        const q=points[i];
-        if((q.x-p.x)**2+(q.y-p.y)**2>(radius+q.radius+1)**2)continue;
+        const q=points[i];if((q.x-p.x)**2+(q.y-p.y)**2>(radius+q.radius+1)**2)continue;
         ctx.beginPath();ctx.arc(q.x,q.y,q.radius+.5,0,Math.PI*2);ctx.fill();
+      }
+      ctx.strokeStyle='#000';
+      for(const s of segments){
+        if(Math.max(s.a.depth,s.b.depth)<=p.depth)continue;
+        if(p.x+radius<Math.min(s.a.x,s.b.x)-2||p.x-radius>Math.max(s.a.x,s.b.x)+2||p.y+radius<Math.min(s.a.y,s.b.y)-2||p.y-radius>Math.max(s.a.y,s.b.y)+2)continue;
+        let start=0,end=1;
+        if(s.a.depth<=p.depth)start=(p.depth-s.a.depth)/(s.b.depth-s.a.depth);
+        if(s.b.depth<=p.depth)end=(p.depth-s.a.depth)/(s.b.depth-s.a.depth);
+        const dx=s.b.x-s.a.x,dy=s.b.y-s.a.y;
+        ctx.setLineDash(s.dashed?[4,5]:[]);ctx.lineDashOffset=start*Math.hypot(dx,dy);ctx.lineWidth=(s.width||1)+1;
+        ctx.beginPath();ctx.moveTo(s.a.x+start*dx,s.a.y+start*dy);ctx.lineTo(s.a.x+end*dx,s.a.y+end*dy);ctx.stroke();
       }
       ctx.restore();
     }
     return {x:p.x,y:p.y,row:row.embedding_row,fill:p.fill,occluded,highlight:'depth-clipped outline'};
   }
   function orientation(ctx,width,height,yaw,pitch,caption){
-    const co=Math.cos(yaw),si=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),cx=width-53,cy=height-43;
-    const axes=[[co,-sp*si],[ -si,-sp*co],[0,-cp]],colors=['#ed8686','#7dd7b3','#8facff'];
+    const {right,up}=cameraBasis(yaw,pitch),cx=width-53,cy=height-43;
+    const axes=right.map((r,i)=>[r,-up[i]]),colors=['#ed8686','#7dd7b3','#8facff'];
     ctx.save();ctx.font='10px system-ui';ctx.lineWidth=1.5;ctx.textAlign='center';
     axes.forEach(([x,y],i)=>{ctx.strokeStyle=colors[i];ctx.fillStyle=colors[i];ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+x*27,cy+y*27);ctx.stroke();ctx.fillText(caption(i).split(' · ')[0],cx+x*37,cy+y*37+3);});ctx.restore();
   }
@@ -165,5 +301,5 @@ window.VehicleViewControls=(()=>{
     pad.addEventListener('pointerup',e=>{if(active){move(e);active=null;}},true);pad.addEventListener('pointercancel',()=>active=null);
     panel.addEventListener('toggle',()=>{if(!panel.open&&api.editing)toggle.click();});new ResizeObserver(sync).observe(pad);sync();return api;
   }
-  return {projector,orderPoints,drawPoints,renderer,closest,selection,orientation,positions,prepareHsv,color,mountAnchors};
+  return {cameraBasis,backPlanes,projector,orderPoints,drawPoints,renderer,closest,selection,rasterScene,lineSample,pathColor,orientation,positions,prepareHsv,color,mountAnchors};
 })();

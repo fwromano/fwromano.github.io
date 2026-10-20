@@ -46,7 +46,7 @@
 <script id="orbit-data" type="application/json">{}</script>
 <script src="new-data/compact-loader.js"></script>
 <script src="new-data/additions.js?v=c339329b96abce80"></script>
-<script data-interaction-version="3" src="new-data/view-controls.js?v=6f15eb0689ff3dfe"></script>
+<script data-interaction-version="4" src="new-data/view-controls.js?v=c5c61d1c32a17a05"></script>
 <script>
 'use strict';
 (async()=>{
@@ -249,11 +249,11 @@ let mode=['3d','01','02','12'].includes(params.get('projection'))?params.get('pr
 let pointRadius=Math.max(1,Math.min(5,Number(params.get('pointSize'))||2));
 let selected=null,playing=false,continuous=angle,lastFrame=0,lastUpdate=0,urlTimer=0;
 function cameraParameter(key,fallback,lo=-Infinity,hi=Infinity){const value=Number(params.get(key)??fallback);return Number.isFinite(value)?Math.max(lo,Math.min(hi,value)):fallback}
-let yaw=cameraParameter('yaw',-.65),pitch=cameraParameter('pitch',.55,-1.3,1.3),zoom=cameraParameter('zoom',1,.05,128),panX=cameraParameter('panX',0,-1000,1000),panY=cameraParameter('panY',0,-1000,1000),plotWidth=0,plotHeight=0,screenPoints=[],staticFrame=0;
+let yaw=cameraParameter('yaw',-.65),pitch=cameraParameter('pitch',.55,-1.3,1.3),zoom=cameraParameter('zoom',1,.05,128),panX=cameraParameter('panX',0,-1000,1000),panY=cameraParameter('panY',0,-1000,1000),plotWidth=0,plotHeight=0,screenPoints=[],screenSegments=[],staticFrame=0;
 let pendingRow=null,displayBusy=false,prefetchBusy=false,activeSheet=null;
 const sheets=new Map(),loading=new Map(),MAX_SHEETS=3;
 const plot=$('plot'),base=document.createElement('canvas'),overlay=document.createElement('canvas'),tooltip=document.createElement('div');
-base.setAttribute('aria-hidden','true');overlay.setAttribute('role','img');overlay.setAttribute('aria-label','PCA projection; drag to rotate and click a measured view');tooltip.className='plot-tooltip';const pointLayer=document.createElement('canvas');overlay.style.zIndex='2';plot.append(base,pointLayer,overlay,tooltip);const scatterRenderer=VehicleViewControls.renderer(pointLayer,params.get('renderer')||'auto');
+base.setAttribute('aria-hidden','true');overlay.setAttribute('role','img');overlay.setAttribute('aria-label','PCA projection; drag to rotate and click a measured view');tooltip.className='plot-tooltip';const pointLayer=document.createElement('canvas');overlay.style.zIndex='2';plot.append(base,pointLayer,overlay,tooltip);const scatterRenderer=VehicleViewControls.renderer(pointLayer,params.get('renderer')||'auto');pointLayer.addEventListener('webglcontextlost',()=>scheduleStatic());pointLayer.addEventListener('webglcontextrestored',()=>scheduleStatic());
 const ctx=base.getContext('2d'),marker=overlay.getContext('2d'),preview=$('jeep-preview').getContext('2d');
 const coordinateValues=[];
 for(let i=0;i<3;i++){const e=document.createElement('div');e.className='coordinate';const b=document.createElement('b');b.textContent=`PC${i+1}`;const span=document.createElement('span');e.append(b,span);$('coordinates').append(e);coordinateValues.push(span);}
@@ -264,15 +264,7 @@ async function loadSheet(path){if(sheets.has(path)){const img=sheets.get(path);s
  const job=(async()=>{const img=new Image();img.src=D.atlases?.[path]||path;await img.decode();sheets.set(path,img);evict();return img})();loading.set(path,job);try{return await job}finally{loading.delete(path)}}
 function prefetch(){if(!playing||prefetchBusy||!selected)return;const next=lookup[color][(angle+15)%360];if(!next)return;if(next.preview_sheet===selected.preview_sheet||sheets.has(next.preview_sheet))return;prefetchBusy=true;loadSheet(next.preview_sheet).catch(()=>{}).finally(()=>{prefetchBusy=false})}
 function planarScale(){const ax=[+mode[0],+mode[1]];return Math.min((plotWidth-104)/(ranges[ax[0]][1]-ranges[ax[0]][0]),(plotHeight-104)/(ranges[ax[1]][1]-ranges[ax[1]][0]))*zoom}
-function project(coords){
- const centerX=plotWidth*(.5+panX),centerY=plotHeight*(.5+panY),mid=ranges.map(r=>(r[0]+r[1])/2);
- if(mode!=='3d'){const ax=[+mode[0],+mode[1]],scale=planarScale();return{x:centerX+(coords[ax[0]]-mid[ax[0]])*scale,y:centerY-(coords[ax[1]]-mid[ax[1]])*scale,depth:0}}
- // One scale for all PCs preserves Euclidean geometry in the displayed subspace.
- const n=coords.map((v,i)=>v-mid[i]),x=Math.cos(yaw)*n[0]-Math.sin(yaw)*n[1],y=Math.sin(yaw)*n[0]+Math.cos(yaw)*n[1];
- const z=Math.sin(pitch)*y+Math.cos(pitch)*n[2],depth=Math.cos(pitch)*y-Math.sin(pitch)*n[2];
- const scale=Math.min(plotWidth*.56,plotHeight*.60)*zoom/Math.max(...ranges.map(r=>r[1]-r[0]));
- return{x:centerX+x*scale,y:centerY-z*scale,depth};
-}
+function project(coords){return VehicleViewControls.projector(ranges,mode,yaw,pitch,zoom,panX,panY,plotWidth,plotHeight)(coords)}
 function zoomAt(factor,x=plotWidth/2,y=plotHeight/2){
  const before=zoom;zoom=Math.max(.05,Math.min(128,zoom*factor));const ratio=zoom/before;
  panX=(x-(x-plotWidth*(.5+panX))*ratio)/plotWidth-.5;
@@ -282,8 +274,8 @@ function zoomAt(factor,x=plotWidth/2,y=plotHeight/2){
 function syncZoom(){if($('zoom-level'))$('zoom-level').textContent=zoom.toFixed(zoom<10?1:0)+'×'}
 function resetCamera(){yaw=-.65;pitch=.55;zoom=1;panX=panY=0;staticPlot();state();syncUrl();syncZoom()}
 function focusSelected(){if(!selected)return;const p=project(selected.coords);panX+=(plotWidth/2-p.x)/plotWidth;panY+=(plotHeight/2-p.y)/plotHeight;zoomAt(2)}
-function line(a,b,color,width=1,dashed=false){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dashed?[4,5]:[]);ctx.stroke();ctx.setLineDash([])}
-function axes(){ctx.font='11px system-ui';ctx.fillStyle='#a4b3c9';if(mode!=='3d'){
+function line(a,b,color,width=1,dashed=false){if(mode==='3d'){screenSegments.push({a,b,fill:color,width,dashed});return;}ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dashed?[4,5]:[]);ctx.stroke();ctx.setLineDash([])}
+function axes(){window.gridDepthState=null;ctx.font='11px system-ui';ctx.fillStyle='#a4b3c9';if(mode!=='3d'){
  const ax=[+mode[0],+mode[1]],pad=52,scale=planarScale(),mid=ranges.map(r=>(r[0]+r[1])/2);
  for(let i=0;i<=4;i++){
   const x=pad+(plotWidth-pad*2)*i/4,y=plotHeight-pad-(plotHeight-pad*2)*i/4;
@@ -294,36 +286,48 @@ function axes(){ctx.font='11px system-ui';ctx.fillStyle='#a4b3c9';if(mode!=='3d'
  }
  ctx.textAlign='center';ctx.fillText(axisCaption(ax[0]),plotWidth/2,plotHeight-10);
  ctx.save();ctx.translate(11,plotHeight/2);ctx.rotate(-Math.PI/2);ctx.fillText(axisCaption(ax[1]),0,0);ctx.restore();ctx.textAlign='left';return}
- const origin=ranges.map(r=>r[0]);for(let axis=0;axis<3;axis++){const end=[...origin];end[axis]=ranges[axis][1];line(project(origin),project(end),'#50627f');const p=project(end);ctx.fillText(axisCaption(axis),p.x+4,p.y+4);for(let step=0;step<=4;step++){for(let other=axis+1;other<3;other++){const a=[...origin],b=[...origin];a[axis]=b[axis]=ranges[axis][0]+(ranges[axis][1]-ranges[axis][0])*step/4;b[other]=ranges[other][1];line(project(a),project(b),'#263449')}}}}
+ const planes=VehicleViewControls.backPlanes(ranges,yaw,pitch),origin=planes.corner;window.gridDepthState=planes;
+ for(let axis=0;axis<3;axis++){
+  const end=[...origin];end[axis]=planes.opposite[axis];line(project(origin),project(end),'#50627f');
+  const p=project(end);ctx.fillText(axisCaption(axis),p.x+4,p.y+4);
+  for(let step=0;step<=4;step++)for(let other=axis+1;other<3;other++){
+   const a=[...origin],b=[...origin];a[axis]=b[axis]=ranges[axis][0]+(ranges[axis][1]-ranges[axis][0])*step/4;
+   b[other]=planes.opposite[other];line(project(a),project(b),'#263449');
+  }
+ }
+}
 function staticPlot(){
- const renderStarted=performance.now();staticFrame=0;if(!plotWidth)return;ctx.globalAlpha=1;ctx.clearRect(0,0,plotWidth,plotHeight);axes();screenPoints=[];
+ const renderStarted=performance.now();staticFrame=0;if(!plotWidth)return;ctx.globalAlpha=1;ctx.clearRect(0,0,plotWidth,plotHeight);screenSegments=[];axes();screenPoints=[];
  const projectPoint=VehicleViewControls.projector(ranges,mode,yaw,pitch,zoom,panX,panY,plotWidth,plotHeight);
  const counts={},plottedElevations={};
- for(const c of categories){if(!visibleSeries.has(c))continue;const points=comparisonPoints(c),active=c===color;
+ for(const c of categories){if(!visibleSeries.has(c))continue;const rows=comparisonPoints(c),points=[];
+  for(const row of rows){const p=projectPoint(row.coords);p.row=row;p.fill=pointColor(row);p.radius=pointRadius;points.push(p);screenPoints.push(p)}
   if(showPaths&&D.seriesMeta[c].paths!==false){
-   const ringMap=new Map();for(const r of points){const ring=ringMap.get(r.elevation)||new Map();ring.set(r.heading,r);ringMap.set(r.elevation,ring)}
-   ctx.globalAlpha=active?.65:.45;
-   for(const ring of [...ringMap.values()].map(r=>[...r.values()].sort((a,b)=>a.heading-b.heading))){for(let i=1;i<ring.length;i++)line(projectPoint(ring[i-1].coords),projectPoint(ring[i].coords),pointColor(ring[i]),1,ring[i].heading-ring[i-1].heading>(D.seriesMeta[c].step??5));if(ring.length>1)line(projectPoint(ring.at(-1).coords),projectPoint(ring[0].coords),pointColor(ring[0]),1,true)}
+   const ringMap=new Map();for(const p of points){const ring=ringMap.get(p.row.elevation)||new Map();ring.set(p.row.heading,p);ringMap.set(p.row.elevation,ring)}
+   const add=(a,b,dashed)=>screenSegments.push({a,b,fill:VehicleViewControls.pathColor(b.fill),width:1,dashed});
+   for(const ring of [...ringMap.values()].map(r=>[...r.values()].sort((a,b)=>a.row.heading-b.row.heading))){
+    for(let i=1;i<ring.length;i++)add(ring[i-1],ring[i],ring[i].row.heading-ring[i-1].row.heading>(D.seriesMeta[c].step??5));
+    if(ring.length>1)add(ring.at(-1),ring[0],true);
+   }
   }
-  for(const row of points){const p=projectPoint(row.coords);p.row=row;p.fill=pointColor(row);p.radius=pointRadius;screenPoints.push(p)}
-  counts[c]=points.length;plottedElevations[c]=[...new Set(points.map(r=>r.elevation))];
+  counts[c]=points.length;plottedElevations[c]=[...new Set(rows.map(r=>r.elevation))];
  }
- const renderBackend=scatterRenderer.draw(ctx,screenPoints,mode,plotWidth,plotHeight);
+ const renderBackend=scatterRenderer.draw(ctx,screenPoints,mode,plotWidth,plotHeight,screenSegments);
  window.orbitPlotState={series:categories.filter(c=>visibleSeries.has(c)),counts,elevations:plottedElevations,rows:screenPoints.length,rowIds:screenPoints.map(p=>p.row.embedding_row),allElevations,allHeadings,elevationMode,headingMode,selectedHeadings:[...selectedHeadings],selectedElevations:[...selectedElevations],showPaths,colorBy,palette};
  $('visible-count').textContent=`· ${visibleSeries.size} selected · ${screenPoints.length.toLocaleString()} views`;
  for(const [c,entry] of seriesCheckboxes){entry.count.textContent=VehicleAdditions.count(c,counts[c]||0,D);entry.label.dataset.inspected=String(c===color)}
  $('color-key').textContent=colorBy==='viewpoint'?'Dots and the view map share the same colors. Open “Place colors on the view map” to move their anchors.':'Dots show vehicle paint; the map shows viewpoint colors.';
- drawMarker();window.renderAudit={ms:performance.now()-renderStarted,rows:screenPoints.length,renderer:renderBackend,depthSorted:mode!=='3d'||screenPoints.every((p,i)=>i===0||screenPoints[i-1].depth<=p.depth),pointRadius};
+ drawMarker();window.renderAudit={ms:performance.now()-renderStarted,rows:screenPoints.length,segments:screenSegments.length,renderer:renderBackend,cameraConvention:'right-handed look-at',depthSorted:mode!=='3d'||screenPoints.every((p,i)=>i===0||screenPoints[i-1].depth<=p.depth),pointRadius};
 }
 
 function scheduleStatic(){if(!staticFrame)staticFrame=requestAnimationFrame(staticPlot)}
 function drawMarker(){
  marker.clearRect(0,0,plotWidth,plotHeight);window.orbitPoint=null;window.cameraOrbitPoint=null;if(!plotWidth)return;
  if(selected&&visibleSeries.has(selected.category)&&comparisonPoints(selected.category).includes(selected)){
-  window.orbitPoint=VehicleViewControls.selection(marker,screenPoints,selected);
+  window.orbitPoint=VehicleViewControls.selection(marker,screenPoints,selected,screenSegments);
  }
  const selectionStatus=$('selection-depth-status');
- if(selectionStatus)selectionStatus.textContent=window.orbitPoint?.occluded?(mode==='3d'?'Selected view is behind another dot. Rotate or zoom to reveal it.':'Selected view overlaps another dot. Zoom in or switch to 3D to separate them.'):window.orbitPoint?'White outline: selected view. Paths are background guides; dots follow depth in 3D.':'Selected view is outside the displayed filters.';
+ if(selectionStatus)selectionStatus.textContent=window.orbitPoint?.occluded?(mode==='3d'?'Selected view is behind another point or path. Rotate or zoom to reveal it.':'Selected view overlaps another dot. Zoom in or switch to 3D to separate them.'):window.orbitPoint?'White outline: selected view. Points, paths and grid share the same 3D depth.':'Selected view is outside the displayed filters.';
  if(mode==='3d')VehicleViewControls.orientation(marker,plotWidth,plotHeight,yaw,pitch,axisCaption);
  if(!selectedCameraSample)return;const native=byScanRow.get(selectedCameraSample.selected_embedding_row);
  if(!native||!visibleSeries.has(native.category)||!comparisonPoints(native.category).includes(native))return;
@@ -362,7 +366,7 @@ function clearPreview(){
  $('play').disabled=!visibleSeries.size;drawMarker();state();
 }
 function pickColor(next,{addToPlot=true}={}){color=next;if(selected?.category!==color)clearPreview();if(addToPlot){visibleSeries.add(color);syncSeriesCheckboxes()}$('play').disabled=!visibleSeries.size;document.documentElement.style.setProperty('--accent',D.colors[color]);$('series').value=color;$('elevation').disabled=uncalibrated(color);$('elevation').value=uncalibrated(color)?'unknown':String(elevation);drawViewSamples();setHeading(angle);scheduleStatic()}
-function closest(x,y){return VehicleViewControls.closest(screenPoints,x,y)}
+function closest(x,y){return scatterRenderer.pick(x,y)}
 let pointer=null;
 overlay.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false,pan:e.shiftKey||e.button===1||e.button===2||mode!=='3d'};overlay.setPointerCapture(e.pointerId)});
 overlay.addEventListener('pointermove',e=>{const rect=overlay.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;if(pointer){const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;if(Math.abs(e.clientX-pointer.startX)+Math.abs(e.clientY-pointer.startY)>2)pointer.moved=true;pointer.x=e.clientX;pointer.y=e.clientY;if(pointer.pan){panX+=dx/plotWidth;panY+=dy/plotHeight;scheduleStatic()}else if(mode==='3d'){yaw+=dx*.008;pitch=Math.max(-1.3,Math.min(1.3,pitch+dy*.008));scheduleStatic()}tooltip.style.display='none';return}const row=closest(x,y);tooltip.style.display=row?'block':'none';if(row){tooltip.textContent=`${VehicleAdditions.label(row.category,D)} · ${VehicleAdditions.angle(row.heading)}° / ${VehicleAdditions.angle(row.elevation)}°`;tooltip.style.left=Math.min(x+12,plotWidth-110)+'px';tooltip.style.top=y+12+'px'}});
