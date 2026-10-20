@@ -43,7 +43,7 @@
   "retained_historical": 2808,
   "removed_small_scans": 3527,
   "generator_sha256": "88f6c1478a6df68d8fde758f89b33d2ef1db3565aef4121c0c304683766e4364",
-  "viewer_sha256": "cba8e2668c0eb6b7cb42c72456afe14bfc3e2c69d52fdf189f4a1258f0724fdb",
+  "viewer_sha256": "2dc17a9a29f38b2b73abcf7e570bf479854e3401789534a98ae65716d67c3464",
   "thumbnail_encoding": "lossy WebP thumbnail, not exact encoder input",
   "vector_source": "Bound source rows in retained local dataset; no substituted vectors",
   "maximum_similarity_batch": 256,
@@ -54,8 +54,8 @@
       "bytes": 4285
     },
     "additions.css": {
-      "sha256": "8122b4b3b1dca4fa1317f17adf3febc50e01f3b94a25fd131eb8473fc3a0a253",
-      "bytes": 2836
+      "sha256": "62bf549ad0b0c5081cf4a55d3b81816578b38d6805fb4d9400d69ff95ebdfa64",
+      "bytes": 2903
     },
     "compact-loader.js": {
       "sha256": "bbcf91fb8e623306689ff8fa535800a25c679349f5ed2109eb5e013a2b4ca17f",
@@ -3406,8 +3406,8 @@
       "bytes": 202484
     },
     "view-controls.js": {
-      "sha256": "a36203ceaf09073627d57723d92c81e75e63763809dc6f4f8e8792630a5e5256",
-      "bytes": 15157
+      "sha256": "6f15eb0689ff3dfe27f8bdf900ab44d1716366027aa97a7ad2b06ed8ed1a0b6e",
+      "bytes": 16214
     }
   },
   "transport_repack": {
@@ -3434,11 +3434,11 @@
     "elapsed_sec": 11.849505416001193
   },
   "presentation_refresh": {
-    "utc": "2026-10-18T02:08:51Z",
-    "prior_publication_sha256": "716e152874665df5ef25b1ea4f7ac0e0d4b20b8dfd27296de37e55f83c474937",
-    "generator_sha256": "7b89d64e01b602cd93fe99dfc7065992961d6bcf2a1f4257f7741839a19f537d",
+    "utc": "2026-10-20T18:21:56Z",
+    "prior_publication_sha256": "1bb162195a9a55943b48447a4deda459784f0583ab0a94230e77858ab08b8024",
+    "generator_sha256": "14ad89985d77618793989e91b02d66f53c2df26a7fd686a7644c33dc390bac6f",
     "patch_sha256": "af2e7b69b8fb2037c416d14153624261951fa316bebcdc137cc8bbb1e8b1f495",
-    "interaction_patch_sha256": "669e7c2ffeb9078019a7f2b3ee30c34b1fb80b9efda95636f89308e16c1e9de7",
-    "changes": "Short truck labels, shown/available counts, filter-aligned markers, depth-correct rendering, fit/point-size controls, movable HSV color anchors. Existing embeddings and projections retained."
+    "interaction_patch_sha256": "00cdc85505d398fd6c48b5aa0dc238038d924199c93ab376b2a3c6dcbe512611",
+    "changes": "Depth-clipped selection outlines; visible-disc picking; equal glyph sizes across inspected groups; consistent CPU/WebGL ordering including ties. Existing data, projections, color controls and background path guides retained."
   }
 }

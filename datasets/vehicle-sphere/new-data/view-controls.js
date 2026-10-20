@@ -13,9 +13,13 @@ window.VehicleViewControls=(()=>{
     const s=Math.min(width*.56,height*.60)*zoom/Math.max(...ranges.map(r=>r[1]-r[0]));
     return v=>{const x=v[0]-mx,y=v[1]-my,z=v[2]-mz,ry=si*x+co*y;return{x:cx+(co*x-si*y)*s,y:cy-(sp*ry+cp*z)*s,depth:cp*ry-sp*z};};
   }
-  function drawPoints(ctx,points,mode){
+  function orderPoints(points,mode){
     // Positive camera depth is nearer. Stable source-ID ties remove group-order bias.
-    if(mode==='3d')points.sort((a,b)=>a.depth-b.depth||a.row.embedding_row-b.row.embedding_row);
+    points.sort((a,b)=>(mode==='3d'?a.depth-b.depth:0)||a.row.embedding_row-b.row.embedding_row);
+    return points;
+  }
+  function drawPoints(ctx,points,mode){
+    orderPoints(points,mode);
     ctx.globalAlpha=1;
     for(const p of points){ctx.fillStyle=p.fill;ctx.beginPath();ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);ctx.fill();}
   }
@@ -30,8 +34,8 @@ window.VehicleViewControls=(()=>{
         gl=canvas.getContext('webgl2',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});if(!gl){failed=true;return false;}
         const shader=(type,source)=>{const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
         const vertex=shader(gl.VERTEX_SHADER,`#version 300 es
-          in vec3 position;in vec4 appearance;uniform vec4 viewport;uniform vec2 depths;out vec3 rgb;
-          void main(){gl_Position=vec4(position.x/viewport.x*2.-1.,1.-position.y/viewport.y*2.,-.9+1.8*(depths.y-position.z)/max(depths.y-depths.x,.00001),1.);gl_PointSize=appearance.w*viewport.z;rgb=appearance.xyz;}`);
+          in vec3 position;in vec4 appearance;uniform vec4 viewport;out vec3 rgb;
+          void main(){gl_Position=vec4(position.x/viewport.x*2.-1.,1.-position.y/viewport.y*2.,position.z,1.);gl_PointSize=appearance.w*viewport.z;rgb=appearance.xyz;}`);
         const fragment=shader(gl.FRAGMENT_SHADER,`#version 300 es
           precision highp float;in vec3 rgb;out vec4 pixel;
           void main(){if(length(gl_PointCoord-vec2(.5))>.5)discard;pixel=vec4(rgb,1.);}`);
@@ -47,25 +51,46 @@ window.VehicleViewControls=(()=>{
       const gpu=points.length>0&&preference!=='canvas'&&(preference==='webgl'||points.length>=10000)&&init();
       canvas.style.display=gpu?'':'none';
       if(!gpu){drawPoints(ctx,points,mode);return failed?'canvas fallback':'depth-sorted canvas';}
-      if(mode==='3d')points.sort((a,b)=>a.depth-b.depth||a.row.embedding_row-b.row.embedding_row);
+      orderPoints(points,mode);
       const dpr=devicePixelRatio||1,w=Math.round(width*dpr),h=Math.round(height*dpr);
       if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);
       if(array.length<points.length*7)array=new Float32Array(points.length*7);if(colors.size>8192)colors.clear();
-      let min=Infinity,max=-Infinity;
       for(let i=0;i<points.length;i++){
-        const p=points[i];min=Math.min(min,p.depth);max=Math.max(max,p.depth);let rgb=colors.get(p.fill);
+        const p=points[i];let rgb=colors.get(p.fill);
         if(!rgb){rgb=p.fill.startsWith('#')?[1,3,5].map(k=>parseInt(p.fill.slice(k,k+2),16)/255):(p.fill.match(/[\d.]+/g)||[1,1,1]).slice(0,3).map(v=>Number(v)/255);colors.set(p.fill,rgb);}
-        const j=i*7;array[j]=p.x;array[j+1]=p.y;array[j+2]=p.depth;array[j+3]=rgb[0];array[j+4]=rgb[1];array[j+5]=rgb[2];array[j+6]=p.radius*2;
+        // Only glyph order matters for this point layer. Encode its double-precision
+        // sort rank, avoiding cancellation/float32 reversals for nearly tied depths.
+        const j=i*7;array[j]=p.x;array[j+1]=p.y;array[j+2]=.9-1.8*i/Math.max(1,points.length-1);array[j+3]=rgb[0];array[j+4]=rgb[1];array[j+5]=rgb[2];array[j+6]=p.radius*2;
       }
       gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);if(capacity<array.byteLength){gl.bufferData(gl.ARRAY_BUFFER,array.byteLength,gl.DYNAMIC_DRAW);capacity=array.byteLength;}
-      gl.bufferSubData(gl.ARRAY_BUFFER,0,array.subarray(0,points.length*7));gl.uniform4f(gl.getUniformLocation(program,'viewport'),width,height,dpr,0);gl.uniform2f(gl.getUniformLocation(program,'depths'),min,max);
+      gl.bufferSubData(gl.ARRAY_BUFFER,0,array.subarray(0,points.length*7));gl.uniform4f(gl.getUniformLocation(program,'viewport'),width,height,dpr,0);
       gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,points.length);return 'WebGL2 depth buffer';
     },get graphics(){return gl;}};
   }
   function closest(points,x,y){
-    // Test the foreground glyph first; a hidden rear point must not win by center distance.
-    for(let i=points.length-1;i>=0;i--){const p=points[i];if((p.x-x)**2+(p.y-y)**2<=(p.radius+2)**2)return p.row;}
+    // Hit the visible disc, not an inflated invisible target over neighboring dots.
+    for(let i=points.length-1;i>=0;i--){const p=points[i];if((p.x-x)**2+(p.y-y)**2<=p.radius**2)return p.row;}
     return null;
+  }
+  function selection(ctx,points,row){
+    const index=points.findIndex(p=>p.row.embedding_row===row.embedding_row);
+    if(index<0)return null;
+    const p=points[index],occluded=closest(points,p.x,p.y)?.embedding_row!==row.embedding_row;
+    // A locator is an annotation, never a replacement colored disc. Hidden centers
+    // receive a textual status; visible outlines are clipped by foreground glyphs.
+    if(!occluded){
+      const radius=p.radius+4;
+      ctx.save();ctx.globalAlpha=1;ctx.lineWidth=1.5;ctx.strokeStyle='#fff';
+      ctx.beginPath();ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.stroke();
+      ctx.globalCompositeOperation='destination-out';ctx.fillStyle='#000';
+      for(let i=index+1;i<points.length;i++){
+        const q=points[i];
+        if((q.x-p.x)**2+(q.y-p.y)**2>(radius+q.radius+1)**2)continue;
+        ctx.beginPath();ctx.arc(q.x,q.y,q.radius+.5,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    }
+    return {x:p.x,y:p.y,row:row.embedding_row,fill:p.fill,occluded,highlight:'depth-clipped outline'};
   }
   function orientation(ctx,width,height,yaw,pitch,caption){
     const co=Math.cos(yaw),si=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),cx=width-53,cy=height-43;
@@ -140,5 +165,5 @@ window.VehicleViewControls=(()=>{
     pad.addEventListener('pointerup',e=>{if(active){move(e);active=null;}},true);pad.addEventListener('pointercancel',()=>active=null);
     panel.addEventListener('toggle',()=>{if(!panel.open&&api.editing)toggle.click();});new ResizeObserver(sync).observe(pad);sync();return api;
   }
-  return {projector,drawPoints,renderer,closest,orientation,positions,prepareHsv,color,mountAnchors};
+  return {projector,orderPoints,drawPoints,renderer,closest,selection,orientation,positions,prepareHsv,color,mountAnchors};
 })();
