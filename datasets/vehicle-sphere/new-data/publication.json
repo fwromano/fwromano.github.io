@@ -43,7 +43,7 @@
   "retained_historical": 2808,
   "removed_small_scans": 3527,
   "generator_sha256": "88f6c1478a6df68d8fde758f89b33d2ef1db3565aef4121c0c304683766e4364",
-  "viewer_sha256": "b15c2a925ce9e3d26718964f2b20762fa4f9e991a3dc268afbfe28cb4e34de1b",
+  "viewer_sha256": "d920962e42d4efba7ad5b89488320e7e2fb49afbec1f3eed8dea74c40d200132",
   "thumbnail_encoding": "lossy WebP thumbnail, not exact encoder input",
   "vector_source": "Bound source rows in retained local dataset; no substituted vectors",
   "maximum_similarity_batch": 256,
@@ -3512,5 +3512,13 @@
     "projection_fits": 8,
     "publication": "dinov3/publication.json",
     "verification_sha256": "d7545d474d9df4bc20722a49ea670a637d53bad26f8ea094325bc90d0727e04a"
+  },
+  "fusion_study": {
+    "url": "../fusion/",
+    "eligible_rows": 43200,
+    "conditions": 13,
+    "protocol_sha256": "3777a02ad03523bb322da955a98fea5cf6a78ceb0d5f7af4982c37d2a2891248",
+    "results_sha256": "495defddf130ccd972b773acfac459fc8d455f3c3be8466f014bf6a098460182",
+    "scope": "Held-out recognition of 20 known mesh/paint configurations; not physical-instance re-identification"
   }
 }

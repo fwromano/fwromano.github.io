@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "jobs": 13,
+  "conditions": [
+    {
+      "job": "all_elevations-s30",
+      "rows": 25920,
+      "arrays_sha256": "3f73e2e6b9fb393a01e6304f18a9eb3996864cdd335ed12f176e7a0f4dbe279b",
+      "passed": true
+    },
+    {
+      "job": "sector-0",
+      "rows": 10800,
+      "arrays_sha256": "4f5904b774ba642dba4b3a06384c9465d748651ee2c0f3a8504f4ee7ac514b14",
+      "passed": true
+    },
+    {
+      "job": "sector-1",
+      "rows": 10800,
+      "arrays_sha256": "a2191ada740cb4fa9ee9ae9f84e2b1a1cc25c30b60816daf628c9065515ae327",
+      "passed": true
+    },
+    {
+      "job": "sector-2",
+      "rows": 10800,
+      "arrays_sha256": "490c7a28fa269a6c8453cc8f9c3bc5bc283a6e637be5582617971c50e1797e12",
+      "passed": true
+    },
+    {
+      "job": "sector-3",
+      "rows": 10800,
+      "arrays_sha256": "61d1e1d4c702c7653e85cd46cafd2499c997347c26d71951af54313bf8697b99",
+      "passed": true
+    },
+    {
+      "job": "mirrored_sector-0",
+      "rows": 21480,
+      "arrays_sha256": "efc1ccbeec383499f339fd16b9114d3d35e2c7c4d7b1d1a6e67a68bfb72365be",
+      "passed": true
+    },
+    {
+      "job": "mirrored_sector-1",
+      "rows": 21720,
+      "arrays_sha256": "71a356a0287d894de5c7ecfcf323c1c7caba5c530641ee2a9f979ed2cd7cec54",
+      "passed": true
+    },
+    {
+      "job": "elevation-0",
+      "rows": 7200,
+      "arrays_sha256": "2a736b63571f32064cf79631b3978535fa13681f327053f2740d85e6b1825e23",
+      "passed": true
+    },
+    {
+      "job": "elevation-1",
+      "rows": 7200,
+      "arrays_sha256": "7ca905a0d470bc2c1cd974f1210871915ac6c5d0155c4ff131ea26195aafe063",
+      "passed": true
+    },
+    {
+      "job": "elevation-2",
+      "rows": 7200,
+      "arrays_sha256": "f1f68107e4c74e617d305f5e282a4ea9518ded9d1dfed0b21f3f062f6975dec0",
+      "passed": true
+    },
+    {
+      "job": "elevation-3",
+      "rows": 7200,
+      "arrays_sha256": "3a6f1b54f848dfe8161497968abe321170db6de88cf44aa412fc432a6fbbc788",
+      "passed": true
+    },
+    {
+      "job": "elevation-4",
+      "rows": 7200,
+      "arrays_sha256": "6483dd3ca85d39030769a1613a02084d33acb0149f861f335e9d885a04c3456a",
+      "passed": true
+    },
+    {
+      "job": "elevation-5",
+      "rows": 7200,
+      "arrays_sha256": "2c1ecb9fcb4b64f94a9779331fd348d6887c2c860a84c32285362d1385bd13d6",
+      "passed": true
+    }
+  ],
+  "independent_cosine_queries": 832,
+  "maximum_replayed_projection_error": 0.0,
+  "maximum_difference_from_historical_eg2_cosine": 0.0,
+  "protocol_sha256": "3777a02ad03523bb322da955a98fea5cf6a78ceb0d5f7af4982c37d2a2891248",
+  "verifier_sha256": "7bac7568c0a25a8c14753b981b542da2ac99c60b932c719f52b3580db79ea583",
+  "boundary": "Numerical and split checks; not physical-instance re-identification validation."
+}
