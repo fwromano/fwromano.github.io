@@ -1,0 +1,525 @@
+{
+  "schema": "embedding-studies.pages-comparison.v1",
+  "rows": 6335,
+  "models": [
+    "clip",
+    "gemma2",
+    "dinov3"
+  ],
+  "source_results_sha256": "15132c42d6b35d0166f56619bee9a3c5db163966a7ac0e11251ba4be8225f08c",
+  "source_report_sha256": "9e42a0f22b822e6b635280c02b320eb9b3b87dccd9fd520c3118b4cf17f394fb",
+  "exporter_sha256": "5fd058c2598e94f49b4b70a95e533ce833f1007b74ec138bb60caffce4532302",
+  "base_commit": "45c5622406de06f1454bc2e9ade7ff0621c39c18",
+  "reused_preview_sheets": {
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-00.webp": {
+      "sha256": "e9b2cb0282d0bdc53538c41c789d4451339a6a72882260d0021e387df479e7d0",
+      "git_blob": "cf71e40c590c543935bbfb2c1c024b196752d943"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-01.webp": {
+      "sha256": "7c16f6c7026657386e81c1c06c07a88ef6264a618e436e7d6b7d1aa86a6514d8",
+      "git_blob": "4dd2417f12aa46e2d4b1a8c62216f7894613728e"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-02.webp": {
+      "sha256": "86ca1bb2d5548412fc949db57abd8227347489bfdf6aa7843d060db19f77072b",
+      "git_blob": "cb6681b84427a2fe216589cda77dd88be24ab830"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-03.webp": {
+      "sha256": "2c2096b703eb47dc8449184404c64c915e9b08547480a39e47e87df08bd49f9a",
+      "git_blob": "d12cff63bc8a091382ffe5823c10a25890ee8352"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-04.webp": {
+      "sha256": "ab19d3c4b159771faa74f68b3a1b810d60230e79c563624b5cb50a7ae89436d3",
+      "git_blob": "17ee779690d417304b6b3c8cc4cd0373b61f904f"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-indigo-05.webp": {
+      "sha256": "57235e8a93c97e8361bc53f2390c0bbd936bb7f09ecf4d976106111261930439",
+      "git_blob": "b83d84e00e7e2bdf6be19f7af13852073ff5a6cc"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-00.webp": {
+      "sha256": "9cee6a7f8d4dfb77481c331e0e842b7093a7debca7fc2219c604986cf1de9bed",
+      "git_blob": "373fec49d34965b3f5ea768351fc540bf6196be2"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-01.webp": {
+      "sha256": "02cdd2bbbd3d406ce87844b1e8a953f6f07687f8aae3cf4416ee32cdff09efad",
+      "git_blob": "86518dc23182dae37a3c803b967148baaa2ef71c"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-02.webp": {
+      "sha256": "dcb8efb731ca107686d476917dad27cfe035ab87c7a3233d3d56831a9a4f0c5e",
+      "git_blob": "dce5c35c552bb234a82822f65cbaa7f16d28067c"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-03.webp": {
+      "sha256": "7a5725c31644050fa8a6be8625b2479c33f497199b5623ecc0a34f525abeadc3",
+      "git_blob": "966fb0fbff2ff18e3b06a177bb51ef58c2d68cfe"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-04.webp": {
+      "sha256": "ebcafac7ed4941706f038eac77ebb15f398449e8e6ae4f7a91059de67d04438c",
+      "git_blob": "6b59d2b44dd83001625d869e9bad1319b64d37e8"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-magenta-05.webp": {
+      "sha256": "c4581b863498fa882b22e5b91ee9d43439c54e74662bf65b92a27267c9742e8b",
+      "git_blob": "7b661a62f88388a42072d801962b8b453aecfaa8"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-00.webp": {
+      "sha256": "5bd13167e3a9a18ea65dbc53ca3873e749a8b2d87760de93c4277cb24d394000",
+      "git_blob": "7c3429f4164b069d6d5b3d3e028aa1d2d8701167"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-01.webp": {
+      "sha256": "a1d63cb58d7346524f73888c54f6881d51247338e17534ca1aec577a0ba7d297",
+      "git_blob": "87b3073e047992e2ae65d1ef542c4cd3bcd6b945"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-02.webp": {
+      "sha256": "dbc26fc4523a909a2871d35ac59c4238b3a153ac35e91c692334613bcf54c584",
+      "git_blob": "969bd9acad9866dba61a81eee41263de74941729"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-03.webp": {
+      "sha256": "b3a4a98f37bd4cf719834272c759c88da918b72f2f273db0c4f7c2c63e20caad",
+      "git_blob": "be7149f31df3efec1b614b0d774c75a335f4a8c4"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-04.webp": {
+      "sha256": "43e7dbae2e52e5aec17df4169a9cdde247821baf2bdcf00bb68512995cdd5d34",
+      "git_blob": "c05577d49603df73e6341b9fa33523799f5bf322"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-white-05.webp": {
+      "sha256": "399a41118b61af14c936979bb151d7b1de2754630013d985c021f3909301e1fb",
+      "git_blob": "c14725925cace739cedf5afc7655bb1f8a4d2ac1"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-00.webp": {
+      "sha256": "95fb319377e39ce09cd37340e6d631a7eb929b863bee789d6771ce562831ccc2",
+      "git_blob": "c58e42f93c560f9f2e3073ef7b5a8bcb442aeed8"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-01.webp": {
+      "sha256": "3ab4d75b625f04e92158cd4c7fd4530b28834972e2d0acbeaaf3213c963d536b",
+      "git_blob": "5af0acecb080bbb94b41ecc84011fe9f768c5436"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-02.webp": {
+      "sha256": "c9acb418d42c53f0b7d181972ea9fdb247614be2b13c8d88f1a395d213f93f5a",
+      "git_blob": "24df26822cec1da5c2a544c09ed578fef0312c14"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-03.webp": {
+      "sha256": "449459993ab4cce3ecd1ba207043ef782ae8475bd2e865a464ce215d525e01d9",
+      "git_blob": "3bee5b1b78568feb4853523659b4c5bfb3fd7f9e"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-04.webp": {
+      "sha256": "579e6e9903bc92daf58b84092138f7721e77df25484c5fe06c61ffca41070635",
+      "git_blob": "653769506611fbf398172380b7dafdd158f692df"
+    },
+    "previews/sam31-83573105ac6b/sim2-jeep-yellow-05.webp": {
+      "sha256": "10afbf6263075be34351511a01a559750d2038ce455c6c46d97b847a06769129",
+      "git_blob": "ff8403feaca33693d5b1ff4bb2a1924191698055"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-original-00.webp": {
+      "sha256": "7235bcc1a210d4cf8d43b76ecb89556951833b5339dc892960d74171e99843ad",
+      "git_blob": "39fd8ba6c70c43ac877da83b3591bc001a7b3afa"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-original-01.webp": {
+      "sha256": "989bdac66cd7743c00f3340a1b2ffc04551fe95005cf17d934038e4312ab97f3",
+      "git_blob": "6323ae019a2732f2bf7064a81f2437c972adfe46"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-original-02.webp": {
+      "sha256": "a86373462c556554427acdd2804af577092f1ab543bded356fc8afa2f9513351",
+      "git_blob": "e515cea8767b7d580d9eb8c57044fe7464708f7c"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-black-00.webp": {
+      "sha256": "00b428beb82d450b8081fa71eb8478363bfe2e12f86247f84884e628456850ec",
+      "git_blob": "fc4345765ab95cf1a9a479bf5454f74611157b97"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-black-01.webp": {
+      "sha256": "44ecb3ad42473f0abc447fea8c0b5cc707f887022a0affbe3b23766aac37de7e",
+      "git_blob": "4756d92bde55ef8e77ba0aa3fa9b695ffc774185"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-black-02.webp": {
+      "sha256": "5f0fa3660fa008464b4bc334141ea3fad21bd18bbb8dbac478bebe9c0c967233",
+      "git_blob": "cebb54ff90a810fc64ef5f6e7e3a8d69baf55c60"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-blue-00.webp": {
+      "sha256": "628c97d1f51398da9973efeff478d592f365522b9ec0da6c309803d7020f55ba",
+      "git_blob": "eab5c27ee2803769b065a8511d1e7e938afcc81a"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-blue-01.webp": {
+      "sha256": "cb327e9d140abe675741f80abf32870f9dacb03419ceb199ca5f61a3de32cb46",
+      "git_blob": "479fdef48c2297bd6afa10a8aec34d9fb643eecd"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-blue-02.webp": {
+      "sha256": "f4dcf683df8962f9ed3b8f4e3e25f20ebeb9f0d7af8bc38ef2eca75addf4b71e",
+      "git_blob": "be7e46683c81b7669bc76daf2f3c50829a40d8b2"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-gray-00.webp": {
+      "sha256": "d19dc45a19c95318ff913915de94d6656bae9d5cade0076f39d13e7b9fe8bccd",
+      "git_blob": "40be4c8da6f24105e064881fd613d9a9a28809f8"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-gray-01.webp": {
+      "sha256": "2e2b9c0daa39b7217d20d7e4d55134629bda01910e9930e53ae94e7e02b04bb4",
+      "git_blob": "b4e0a65e8abfd37083d23f8ef06473b3c4f1c7d6"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-gray-02.webp": {
+      "sha256": "a0fa4a17a791a70da0f7c1c343f684e5b3595e42c53a777858b5620078a2fd30",
+      "git_blob": "2a2dc00434a42ff387f368e8c7f68480a8847990"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-green-00.webp": {
+      "sha256": "972919532ca1a0530f3d99d16ebe1332419a8c02ce2b00eade82ffb7477e57dd",
+      "git_blob": "1a8aa5087483bfe596fef0d74710893be375225c"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-green-01.webp": {
+      "sha256": "aad9d7284b93e73aec05d49438dc7269df3088226fe6e20f9ce04e258cc71c1f",
+      "git_blob": "95144ac0ca478fc529f0b03614b75346030cda83"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-green-02.webp": {
+      "sha256": "c780d7e6ed59423dc6b8955ec99bb416a59a7faf3be5a66fd8c0dc6e03e9ffc8",
+      "git_blob": "f2e600a0c72a86d4898e5a4091bd84900155fbb4"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-indigo-00.webp": {
+      "sha256": "8c8b733ee074fc8a0aed3df3884a9a0d31e4156470f972ff0e3595cf2d75f3ff",
+      "git_blob": "2727e93a6d27e3ad1e5d4b500835535406908395"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-indigo-01.webp": {
+      "sha256": "ebb58ca66d97955aafc03f9d4d07a7fb363991513ba3f9d79c599f2ce405ca90",
+      "git_blob": "b61c0176050844caa55553d2abab691ad270d37b"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-indigo-02.webp": {
+      "sha256": "03f3f32439ac1a7d031b2dfbbb60a3e7699bfaa63202cba4abee5dbe15fce255",
+      "git_blob": "7b894f798d37b7561612bc8f8fbcb9c206e6ecba"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-orange-00.webp": {
+      "sha256": "4d93066170adc6ab58b332b9970b8fd9f4aa5eb6f19ebaad6fcbe7eb3d01c12e",
+      "git_blob": "72b06e91c673f38ef72e83d12fac26dafe1d21a5"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-orange-01.webp": {
+      "sha256": "2d03bed8e1e89ba129eb9e66c353f80594e39b63a1b91f7c2f84883767b9d518",
+      "git_blob": "9105db64e65bb0697ceb68e81fc00df8db7ae3e6"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-orange-02.webp": {
+      "sha256": "5d6ac28ad73a70621cb01bdadc71d9b7f0d4495e705e83049e5f38671a01a27b",
+      "git_blob": "61b21999d4cc85463884d231fdadc0997178cadf"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-red-00.webp": {
+      "sha256": "d8c8fb8594bb40088b041012c923f5111c80bb89b2c7714927bb5dde5f517213",
+      "git_blob": "cbd28d5421eb54e9cae9ee08451ca65db2bd4168"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-red-01.webp": {
+      "sha256": "3d6a7c0a24d741e6e898e8205359c6c9f6d519f6b1f48a530a083f16ef7b3af7",
+      "git_blob": "14e6dc8ed08df455029498648ed04f17f69c778e"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-red-02.webp": {
+      "sha256": "4169495f224347721c7dee778f78d95e28d1f50a24802e722bd5525e79f62a35",
+      "git_blob": "12ce1e3c636d2b6a8c9fc169358107fa64d162f5"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-violet-00.webp": {
+      "sha256": "d28a960d6b29890f29f0bcdbf1b7b8c925672f8544c77938d51d143012d686b0",
+      "git_blob": "098c662b4e58f292414e5a05f7f3bc617e684003"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-violet-01.webp": {
+      "sha256": "5edec1d483e2fd60068b75e886ecf54173964c03756a92669d4133a5f06bab53",
+      "git_blob": "1540cb2be0cb1dab3e5eb451e0e856c60a4037ff"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-violet-02.webp": {
+      "sha256": "1931d114cda8aa6a6323ec28309d00687f783bd81532e179831bacbc25a0cf61",
+      "git_blob": "917f1410df3a7ccb675c70df06a01d81c8988123"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-white-00.webp": {
+      "sha256": "8e6cd0f3b3db4f80f8e766642a9a2f1fb6a3bad5388c15bc9cf2ae389b72f7bb",
+      "git_blob": "aa207ba1c136646792e14f13af0dcc56e071f73e"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-white-01.webp": {
+      "sha256": "a60069f9d6aab380e0719dd8aa81f8f026acaf9b5b063f1c4b746a30454e980e",
+      "git_blob": "95bd499c79eccc0b8f9ab36cbcf6d939fdaf0ef0"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-white-02.webp": {
+      "sha256": "3a8e5c9659877fc7fe69857642285f4e1f28d14d212601d72e46c53f8bd8855c",
+      "git_blob": "a3d708003af1c54bb1d585710e22bcf3d4d8dbf9"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-yellow-00.webp": {
+      "sha256": "c591098011c6c9d3beaf4cafc3a248ae5a64eaae793288447dbcd36aaa6a5d2d",
+      "git_blob": "23e0b1aae975437de1dc233b9cef1a749e177a33"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-yellow-01.webp": {
+      "sha256": "8747e13f6d54ae22eed9f7763f55b086815120c8a816a682626db5dfae25f5e4",
+      "git_blob": "c329c61565a493be5e26193405e51d532ff4a5c1"
+    },
+    "previews/sam31-83573105ac6b/scans-truck-yellow-02.webp": {
+      "sha256": "eb6eb9a5fc9edebcbafd8bd1d178ef93cdfabe2ff612efe291b7749f4f8935d9",
+      "git_blob": "6274681bd3f01d31077e969c31ac278384b50057"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-black-00.webp": {
+      "sha256": "a336bbe36af6e637079547f6d19d242f7a5f0480ccd06d4e3ce8d0a300db4e6b",
+      "git_blob": "a9dad6cd936053fe9131a394f960ff2a6d837012"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-black-01.webp": {
+      "sha256": "dc27f96d22d269392d72c1a14519e12a4cdc9af78f23eeb23232f20d177997bd",
+      "git_blob": "fc85c068c46a19c3191357de68423c70e1ea0225"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-black-02.webp": {
+      "sha256": "061e14cb1c39e936eaf6def5a5f18d1ac9c9c05878d6aa03e73dc6354f82bcec",
+      "git_blob": "f5f757932bbd98bb49910c7609bc17fc4f939db1"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-blue-00.webp": {
+      "sha256": "5dd4516140e99ebf68545471ecc21750a9c87a2d0d802895eb19ef9fa7117838",
+      "git_blob": "1d8d0b8480d6daea75eb588ed05c8351b1398f50"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-blue-01.webp": {
+      "sha256": "72bf178d6ea2e8dd3aa5c81703230e6516bcad6fa1923bcc9526fa8a9263b301",
+      "git_blob": "51f66b552302be5d5aacdc9be06ecddc9fceb181"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-blue-02.webp": {
+      "sha256": "1a4b16d1b48e8373681e8522b4c404efc69230c106c9616051b5e8aa2c97b566",
+      "git_blob": "6df2efbd75b34c38f4afb5911e190db8f2dff064"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-gray-00.webp": {
+      "sha256": "71c55abe9720209b047eb9eb69a52612775f99f47ab9ab2dd9480c92ac31af53",
+      "git_blob": "f8f51ac93935243aa6152a6864847530f57da2a6"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-gray-01.webp": {
+      "sha256": "83500b86d2f5849a7a7705cb6568eefd2ddac6946b9f3b6eeb6e094386a77091",
+      "git_blob": "7b48651171a7dea57d9742920699e38a62e60e60"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-gray-02.webp": {
+      "sha256": "48bef541897565bfb70cea9ceead649a55556106e492673d6321219432b261ba",
+      "git_blob": "ea03803db81bfd332ad323eb011d1ab92286da15"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-green-00.webp": {
+      "sha256": "ed309bdb5f90c54ebdea17dfb8dbf118ac5999523067a4153b4db061776a61e6",
+      "git_blob": "befa7ade99593a7e50e394dc3dd0d1828104c91d"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-green-01.webp": {
+      "sha256": "a809b01654f3324a92f6962f699e3b964d2baddc4eec138ac0f67612fc5d2de7",
+      "git_blob": "1346717fc07a3925087166cebb567f3926cf57d1"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-green-02.webp": {
+      "sha256": "4cdf72c98c3f05d81ab403a2d9f568c402a00e69dca799672ddb5535f0cd1977",
+      "git_blob": "b4ba6c2b2f2bafbefe5acf7ee45db4b918b8a67d"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-indigo-00.webp": {
+      "sha256": "581f384ca39ead3cb4fb909c045231f3eb4be395b972a3432c4f8499e11d8b80",
+      "git_blob": "7b17cdceb74f29be69a825c7774f6e3929bf60a6"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-indigo-01.webp": {
+      "sha256": "45f465c9d00cb7e08e46451bd4466a6bc005d70f824e0d412e687b3534ecb318",
+      "git_blob": "9bb7dc9fe638c60454c4803f49523e76b01a0bf8"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-indigo-02.webp": {
+      "sha256": "93643a36f64e908b8885100ad8099e2b412fb9089e3dfc04b16793237b862e08",
+      "git_blob": "1ff734c98664e1dc57c655dc05e6ce9ba1f4a18f"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-orange-00.webp": {
+      "sha256": "dbf43bd59a8f677e65736e27fcde3c6a4f052fb1cf752c0f818474eb4c53ff09",
+      "git_blob": "745a96a156260a44203a2526997e2530e65a6a1c"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-orange-01.webp": {
+      "sha256": "2bd02e91b34bea22947d3dfbe165aa0f10ed3fe1048f0f42a47ff34cfa689810",
+      "git_blob": "c32106e70e320b2a44aa3b8381ea2cf0036826e9"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-orange-02.webp": {
+      "sha256": "c12b7b6e083870e6650e9564f5e4da6b5bafdc0461ec6207e364a7952cfaa6ab",
+      "git_blob": "a3225867930c0fa147afa4a133650eee93691c48"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-red-00.webp": {
+      "sha256": "7f4efa4ba835387d982ae6f05ac1108ed3c3e43013e14b25db7d19eaf3bad3ca",
+      "git_blob": "9454f0a684d70c6173328ae77c8b2135cf1de776"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-red-01.webp": {
+      "sha256": "c804e8702a118ac79e66b004eb1a3ba4c256db5aad8d96e2f28a0eecddf4816f",
+      "git_blob": "92253647b2648e374ee9ee7d82b6a79bb573a489"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-red-02.webp": {
+      "sha256": "ad07a12d134019967399c5aa2ad7ad3032593f12bd304fd06288677e29a72332",
+      "git_blob": "e90c658c107fe256c7655dfc2f6771c1094fb794"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-violet-00.webp": {
+      "sha256": "751674169eff668c3b7f8212d7aff251f7562172f791959b816b946a529fd12c",
+      "git_blob": "e8065b7334567d61598eab428d8e6e7d10e98645"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-violet-01.webp": {
+      "sha256": "60e14026de5accf6573fad7f389cdc532eb15d3342d7383ecfe7f638f544dc1b",
+      "git_blob": "d13256ae56a88905fae0fc9dd442e8a4ee533877"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-violet-02.webp": {
+      "sha256": "f884700bd883e4b092722e93437281f71336f510dfaf085c005ad0bbdd315201",
+      "git_blob": "2f33c4a3e0c05205bc62bafda4e24453ff6bc3e9"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-white-00.webp": {
+      "sha256": "707410d57343d236290442292f0c783b7ee07e14f56f09a6ead2d5a63bb84462",
+      "git_blob": "d241738954ca709f7baa149be52ae9782ee91cab"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-white-01.webp": {
+      "sha256": "7395e7cb41b14d4e3dc1565b7cae0b343fe15a365225991f0d0662fc7659e2ee",
+      "git_blob": "8667dbecc3bfdf655230e4b96be07d60bd82cae6"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-white-02.webp": {
+      "sha256": "5aa2d2771422bffd7e8aa97378cc6e4cb98a1c0fdf47b11a0095e437bd119711",
+      "git_blob": "6ee7910530f58e86fb1ee76a2555dae7caac649f"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-yellow-00.webp": {
+      "sha256": "247a365b8f0c2cfeec06f72d9f67ec0b794ba8f212459a5ba05031f45123b107",
+      "git_blob": "4911e60c36e1b419fcca923e6142f189cef5c26c"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-yellow-01.webp": {
+      "sha256": "1426a96172dd62fe3caea8b3c4148ffbed951a2062ce13b3583781ee06b305e3",
+      "git_blob": "ac6a2b46495b2b3bcbb88a1d0c9c0f9da136d4a8"
+    },
+    "previews/sam31-83573105ac6b/scans-jeep-yellow-02.webp": {
+      "sha256": "8ada9192db1a5ed96138ec4eddfface8bbb927b553e9caad2d5156e4c24e12ba",
+      "git_blob": "6706b360d87c3f4bd2ad8d4668d419f195e4b914"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-00.webp": {
+      "sha256": "cf762d49798f93f16a51c87252446cbb916de015e9e2cdcfe08fff02873910d0",
+      "git_blob": "12153f426db32ad3eac40ebc811dccbf10b7d77e"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-01.webp": {
+      "sha256": "940c6d0e10548a7698b6e69e023b204d6b05486c6714890417b35be6862b0a1e",
+      "git_blob": "6952230901d4263329c1f362b6293bb868ec1eec"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-02.webp": {
+      "sha256": "1f42fa933d5ca667adf4857075ea52a40a3b1b77ccaf952bcbf53e1b7ea76428",
+      "git_blob": "2300b1d0c8f9f4e755bd0ea58cde7f94909112f0"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-03.webp": {
+      "sha256": "e4f6da537f37fe2808a71246ecee6fd8e7c04239f68acf165d4c2cb1246bbac7",
+      "git_blob": "5dfb7db4945d1a1e2b170886d93b3e8c472bfb19"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-04.webp": {
+      "sha256": "aac5351f457c2e7100fde9e3c1db9998f3bd9d504354130fa4ee3525e54d3737",
+      "git_blob": "dd2331bb006711907af1bf3987fa73bfefb4e459"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-indigo-05.webp": {
+      "sha256": "23095b12f4ff998e37cab2a25e4449780310e7f18cb090785b22ab6a8d3f8aef",
+      "git_blob": "df1f0502f08090635419d45e9a066ab3f084b822"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-00.webp": {
+      "sha256": "833747c6b8ab02af4a640e32353c003f804bc3a905adf331f5ddf35fb22fc77b",
+      "git_blob": "0e8e79d8b0397667f35b7371f34d38e479973ba4"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-01.webp": {
+      "sha256": "488d620a8817eea9312b09d3d5c9c3298d385bae75693f1702eb90b2b5fecc2f",
+      "git_blob": "c05154764f5cedebbf8915c8bcfc9996a76916cd"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-02.webp": {
+      "sha256": "6a2adcafd1b461da3c5bf5b6ca14f3c550d7ecd1f7ff1544a86a32232af2fd2c",
+      "git_blob": "add6b2eaa72d190640684803c69c1698d352b484"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-03.webp": {
+      "sha256": "ae81bb909c4733bd2e56895351a5746a7390af642be7d81b2c01ed478a01fb6d",
+      "git_blob": "6395e1b56e378faf349a78bbad26cefa0d6f693c"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-04.webp": {
+      "sha256": "508756eaf4e4d8d545c75dca9a5ec296d9f73e5dbdd74095463f17980fbb16df",
+      "git_blob": "c040d742cd49f9963e895f69c089d52a6c5e5553"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-magenta-05.webp": {
+      "sha256": "e25af526b5854715c5066cab197d681a13b937834cf157b66c58237d87f93c12",
+      "git_blob": "1288fded4040b97a363b0cc1b7e8289dc27e6f51"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-00.webp": {
+      "sha256": "5409b057b87e7a29d8e25082c3805ce2089a23ee46577b7d5aeed3f81d4a294c",
+      "git_blob": "52b136c958ebd8675296739403dbd78ebf9e9f9d"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-01.webp": {
+      "sha256": "df36a2e337036993c508648d42766a768a3a44c021a4dd830ac0577f5a8f4c14",
+      "git_blob": "72f1a61411e3f695782ca73a5a795c35359ab9c0"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-02.webp": {
+      "sha256": "8d5a8c00c81b312f900855214704f88a8201940ffd4e40084792b8e714d879e6",
+      "git_blob": "e45182296789f68173153315946ea919ed442d13"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-03.webp": {
+      "sha256": "c6d172524ca28b57d2f8aead68e84ffe23774da27397e64dfd55f13e8aac011e",
+      "git_blob": "1fa547d9d4c26cd25e9491e8de16215c05c5b4a5"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-04.webp": {
+      "sha256": "b37030b9993cf13d30fba3a8536d19e98785afd521874a4d6620ef96bc5c29ec",
+      "git_blob": "3fe091719aaaca79be81e82b24547a65da269df9"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-white-05.webp": {
+      "sha256": "5b28ac6f003300a9fd4a2c18e70980f1d575d9ddd2599c6929004ce2d4d0552a",
+      "git_blob": "03e33363d3b2e33a286b84a051474f97b24fc368"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-00.webp": {
+      "sha256": "89656a1271b04e2b9b68d35cb52060f780c75eb1c4cbcb28569137dc61b5608c",
+      "git_blob": "3f6265ffc8ed9894ba716944276f4f0b36e8330c"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-01.webp": {
+      "sha256": "dcd72730fde6f29d67959f5fb596daf8891bb07104c09707eb92ab32ec0ef6d6",
+      "git_blob": "bb6372de6cc6b96647b63185df7d0a8bd33e0c0d"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-02.webp": {
+      "sha256": "a3b29578c7046b17c8564fc2ff9f95b63af37da922d2796722953fa00a84f502",
+      "git_blob": "f1c8dbbc0277fd93b7e688479b5cb0a5361db675"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-03.webp": {
+      "sha256": "01bf3b8e24da8238d2cc73478c761b6e8e4302455d2eb76cedceb899def0ad19",
+      "git_blob": "65eca8942d2738c96a783577d08f202d64165dc9"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-04.webp": {
+      "sha256": "2007248daa8e081c76c2f7781c11f936da890dcb486adc0e477da8b3ef208fea",
+      "git_blob": "c1bf93970ea065a7d547feb57c46b5fb5572072f"
+    },
+    "previews/sim2-sam31-28dd7106dcf6/sim2-sam-3.1-jeep-yellow-05.webp": {
+      "sha256": "6b9223935f119ae5b3c672667b101ada1d17b752b8dba3b0cb15c860125f71d7",
+      "git_blob": "ed57c89527edde9c96ab61edf6c5e2334279070d"
+    }
+  },
+  "preview_size": [
+    256,
+    176
+  ],
+  "files": {
+    ".nojekyll": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "REPORT.md": {
+      "sha256": "f44f11899f705608549862b48804fd3ea32a259f3f685fb1cee4a16ea41dc3c5",
+      "bytes": 4380
+    },
+    "heading.png": {
+      "sha256": "d40c8813dc332e7e566471d450386d1cb7cdb2f259c674faa65fd77a4aa2ce9b",
+      "bytes": 92367
+    },
+    "heading.svg": {
+      "sha256": "100b7c3ede0d22d33034271e0b427be6e22fa85fc5ace632381798f0f1f61879",
+      "bytes": 42144
+    },
+    "index.html": {
+      "sha256": "c32f274429b350ac8e423b1e8c585ae52a2d2cbd980abfec78217794971e467e",
+      "bytes": 2522814
+    },
+    "invariance.png": {
+      "sha256": "58e6c13ac2081b6ba20ebe50b9f2769dc95041d4a8bcbdeb7584e1f2ae6eeb78",
+      "bytes": 208726
+    },
+    "invariance.svg": {
+      "sha256": "5ce9cf4aeae24b1e5f7fce6eb83f38ab958d58acc2987a17ad0d7a2f57d02249",
+      "bytes": 53591
+    },
+    "pose.csv": {
+      "sha256": "ea54814f051d68fa386cb009259b0117dee5cf2dee3ae510601fbe0fb035b6a6",
+      "bytes": 29279
+    },
+    "protocol.json.gz": {
+      "sha256": "9f8b76bfd0d01c23f4d8ca74e4ddf51054ab65154139493d0522501829cb5119",
+      "bytes": 896084
+    },
+    "results.json": {
+      "sha256": "15132c42d6b35d0166f56619bee9a3c5db163966a7ac0e11251ba4be8225f08c",
+      "bytes": 152992
+    },
+    "retrieval.csv": {
+      "sha256": "49a6b7442d5c28c3b87292911c38de818c0e3bf547fd2e111e0ef588062b610c",
+      "bytes": 5493
+    },
+    "retrieval.png": {
+      "sha256": "c747c78bcf6e47676de56f3a41c6c2429217bb6d56a5d8d26a9eb865be6897e6",
+      "bytes": 76631
+    },
+    "retrieval.svg": {
+      "sha256": "ff5f3882a3876fc0d918cc41b91000930d2eefbd6145a2129ff0b539d8c0d591",
+      "bytes": 37030
+    },
+    "scope.json": {
+      "sha256": "1efdf73466d868122e66bc68854dbf02077686269cb6ba6be7a94b0d6f53899c",
+      "bytes": 527
+    },
+    "verification.json": {
+      "sha256": "002f042f2e81992588be787c4ccc627a71ba4deb2f6f0bbb539bedf970a3e200",
+      "bytes": 442
+    }
+  }
+}

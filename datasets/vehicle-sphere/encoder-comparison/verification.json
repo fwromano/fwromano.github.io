@@ -1,0 +1,15 @@
+{
+  "state": "passed",
+  "models": [
+    "clip",
+    "gemma2",
+    "dinov3"
+  ],
+  "pose_fold_hashes_checked": 339,
+  "independent_scipy_cosine_checks": 324,
+  "retrieval_metric_recomputations": 108,
+  "probe_warnings": [],
+  "report_artifact_hashes_checked": 10,
+  "results_sha256": "15132c42d6b35d0166f56619bee9a3c5db163966a7ac0e11251ba4be8225f08c",
+  "verifier_sha256": "5e9a4b0db4710313355811cf5c44dcbed50774f9cf17174505c10a4dc4e687fb"
+}

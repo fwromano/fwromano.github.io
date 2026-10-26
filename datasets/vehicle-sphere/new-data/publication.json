@@ -43,7 +43,7 @@
   "retained_historical": 2808,
   "removed_small_scans": 3527,
   "generator_sha256": "88f6c1478a6df68d8fde758f89b33d2ef1db3565aef4121c0c304683766e4364",
-  "viewer_sha256": "0ed301ab3d7cb1dd01ca3101153c62d691530dbc3444e01db57288fe30aa0f20",
+  "viewer_sha256": "c95633c7c8c4cc474f5cf652260528f135ae6961d6df2faf328c77ef9cfbf1da",
   "thumbnail_encoding": "lossy WebP thumbnail, not exact encoder input",
   "vector_source": "Bound source rows in retained local dataset; no substituted vectors",
   "maximum_similarity_batch": 256,
@@ -3440,5 +3440,15 @@
     "patch_sha256": "af2e7b69b8fb2037c416d14153624261951fa316bebcdc137cc8bbb1e8b1f495",
     "interaction_patch_sha256": "007d3706646e502fb6212c5c68c052a569b67e2548d2cc4eaf22ab7d440eb3f0",
     "changes": "Correct right-handed camera depth; one per-pixel depth law for points, paths and grid in CPU/WebGL; pixel-center picking and clipped selection; context recovery. Existing embeddings, projections and color controls retained."
+  },
+  "encoder_comparison": {
+    "url": "../encoder-comparison/",
+    "matched_views": 6335,
+    "models": [
+      "clip",
+      "gemma2",
+      "dinov3"
+    ],
+    "results_sha256": "15132c42d6b35d0166f56619bee9a3c5db163966a7ac0e11251ba4be8225f08c"
   }
 }

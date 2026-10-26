@@ -1,0 +1,13 @@
+{
+  "models": [
+    "clip",
+    "gemma2",
+    "dinov3"
+  ],
+  "reason": "User requested just DINOv3 alongside the existing CLIP and EG2 baselines.",
+  "excluded_optional_model": "dinov2",
+  "original_protocol_sha256": "ca8944bab711818f93b6b49efa4a1c5fcc94f99b4d28907ea482fa5a39788d50",
+  "entrypoint_sha256": "12b04cfbbaa8a650dd9f8c792e2e76340decd8de7e68cbc0712d2632516236ab",
+  "numerical_engine_sha256": "43e5baa932debe3795fc7db74f762999dc68524fe1d8b4b57ad054dd19116803",
+  "changes_to_rows_splits_or_probe_methods": false
+}
