@@ -47,6 +47,7 @@
 <script src="new-data/compact-loader.js"></script>
 <script src="new-data/additions.js?v=c339329b96abce80"></script>
 <script data-interaction-version="4" src="new-data/view-controls.js?v=c5c61d1c32a17a05"></script>
+<script src="new-data/dinov3-adapter.js?v=8f1f40633f2a63d2"></script>
 <script>
 'use strict';
 (async()=>{
@@ -525,7 +526,7 @@ function axisCaption(i){return D.pcaFits?.[pcaKey]?.method==='PLS'?`LV${i+1}`:`P
 function pcaDescription(){
  const fit=D.pcaFits?.[pcaKey];if(!fit)return;
  const method=fit.method||'PCA',axis=method==='PLS'?'LV':'PC';
- document.querySelector('.plot-head .title').textContent=`${embeddingKey==='clip'?'CLIP B/16':'EmbeddingGemma 2'} · ${D.featureDimensions}D · ${fit.label}`;
+ document.querySelector('.plot-head .title').textContent=`${D.modelLabel||(embeddingKey==='clip'?'CLIP B/16':'EmbeddingGemma 2')} · ${D.featureDimensions}D · ${fit.label}`;
  document.querySelector('.intro').textContent='Compare current vehicle views with fresh PCA or supervised PLS. Choose vehicles below; display filters keep the selected axes fixed.';
  $('pca-fit-info').textContent=method==='PLS'?`Fitted on ${fit.fitCount.toLocaleString()} nonpolar scan views. Supervised display: axes mix the selected targets; separation is not held-out accuracy or identity confidence.`:`Fitted on ${fit.fitCount.toLocaleString()} current ${D.featureDimensions}D views. Percentages show embedding variance retained by this PCA.`;
  document.querySelector('footer span').textContent=`${D.rows.length.toLocaleString()} cached crops · ${Object.keys(D.colors).length} series · ${D.featureDimensions} → 3 ${method}`;
@@ -535,7 +536,7 @@ function pcaDescription(){
  [...$('projection').options].forEach((o,i)=>o.textContent=options[i]);
  $('projection').setAttribute('aria-label','Projection axes');$('plot').setAttribute('aria-label',method+' point cloud and heading paths');
  const notes=document.querySelector('details.notes p');
- notes.textContent=method==='PLS'?'PLS fits adopted type/color descriptions and/or relative viewing angles using 43,200 nonpolar scan embeddings. Each target block has equal centered variance. Query coordinates use only the image embedding. Sim2 and polar views are projected without inventing pose labels. These are exploratory display fits, not validation or calibrated confidence.':'PCA is refitted from the declared current cohort at each normalized prefix size. The full catalog contains all 50,400 dense scans and 2,808 Sim2 original/masked views. The smaller native scans are omitted from this viewer and remain in the source archive. Display filters do not refit axes. Three displayed coordinates discard some embedding information.';
+ notes.textContent=method==='PLS'?'PLS fits adopted type/color descriptions and/or relative viewing angles using 43,200 nonpolar scan embeddings. Each target block has equal centered variance. Query coordinates use only the image embedding. Sim2 and polar views are projected without inventing pose labels. These are exploratory display fits, not validation or calibrated confidence.':'PCA is fitted on the declared current cohort. EG2 offers normalized prefixes; DINOv3 uses its full normalized 768D CLS vector. The full catalog contains all 50,400 dense scans and 2,808 Sim2 original/masked views. The smaller native scans are omitted from this viewer and remain in the source archive. Display filters do not refit axes. Three displayed coordinates discard some embedding information.';
 }
 
 if(pcaSelector&&D.pcaFits){

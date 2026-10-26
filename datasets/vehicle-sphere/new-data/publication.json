@@ -43,7 +43,7 @@
   "retained_historical": 2808,
   "removed_small_scans": 3527,
   "generator_sha256": "88f6c1478a6df68d8fde758f89b33d2ef1db3565aef4121c0c304683766e4364",
-  "viewer_sha256": "f92b1bf1321c12b8d82899eeb7e7f99d83fa411b1c68f19f6ab3923f6c17a3c6",
+  "viewer_sha256": "b15c2a925ce9e3d26718964f2b20762fa4f9e991a3dc268afbfe28cb4e34de1b",
   "thumbnail_encoding": "lossy WebP thumbnail, not exact encoder input",
   "vector_source": "Bound source rows in retained local dataset; no substituted vectors",
   "maximum_similarity_batch": 256,
@@ -3408,6 +3408,58 @@
     "view-controls.js": {
       "sha256": "c5c61d1c32a17a0542e6b38a57cf96980e987409a12b7d24ba9d60f3bec72929",
       "bytes": 24319
+    },
+    "dinov3-adapter.js": {
+      "sha256": "8f1f40633f2a63d273ea2598efb8590c5a77bc201d4d6ad7c740d204343511cf",
+      "bytes": 6282
+    },
+    "dinov3/projection-scans.json.gz": {
+      "sha256": "764e6b79bef6190b48e4f938da81408f625e29ded5fbfd482b53c961520fb1aa",
+      "bytes": 149771
+    },
+    "dinov3/coordinates.f32.gz": {
+      "sha256": "3f845a8d8eaec888599498ca7098c95efca4540c119f5cb5908d12e38465b7b0",
+      "bytes": 4913368
+    },
+    "dinov3/projection-pls.json.gz": {
+      "sha256": "784fd7fdf8de71076127f82385c1fa2de2a424e565483df0b3d38b8c712bca7f",
+      "bytes": 137127
+    },
+    "dinov3/projection-all.json.gz": {
+      "sha256": "71d5e34720ff85e30d2bf030591a820d7b3c4bbf28be765eb47f8ccf6f8d3f4b",
+      "bytes": 158082
+    },
+    "dinov3/projection-masked.json.gz": {
+      "sha256": "67900d2e6607a51494af99434d6239607766f8a562ebebd9fa53aecfb0059022",
+      "bytes": 33155
+    },
+    "dinov3/publication.json": {
+      "sha256": "dc6b569a889072b6da9ac2099f27b252fd959c80c2428c0cec3faeaf257a9f79",
+      "bytes": 9070
+    },
+    "dinov3/README.html": {
+      "sha256": "4448e636dc2bc5f9b1728b1ffca3f2230f92a347155b71c0990f3f3d89636fce",
+      "bytes": 1549
+    },
+    "dinov3/metadata.json.gz": {
+      "sha256": "9c51a98bf7a58aaf4b4676fbd79b63b54344bda02e879cda446b3dd6329b94bc",
+      "bytes": 174395
+    },
+    "dinov3/projection-pls-pose.json.gz": {
+      "sha256": "749345652558e6e10e16a2867a4d94cde6a268c81a1ff71ec5c2b4f7890c158e",
+      "bytes": 137143
+    },
+    "dinov3/projection-original.json.gz": {
+      "sha256": "4e886a9669d591fec40b26915cffae64bd4f7976028132ac29de979825330b37",
+      "bytes": 33329
+    },
+    "dinov3/projection-paired.json.gz": {
+      "sha256": "2f2ebb2e1bfc80e1e8156c85579d10eea49a74dfabde2a201313f4c89e39cd7c",
+      "bytes": 37027
+    },
+    "dinov3/projection-pls-attributes.json.gz": {
+      "sha256": "3b9b011d5eff902408a3a829f141d0e34bf1226a0c367f4a0aee65e16d6d1c14",
+      "bytes": 137111
     }
   },
   "transport_repack": {
@@ -3450,5 +3502,15 @@
       "dinov3"
     ],
     "results_sha256": "15132c42d6b35d0166f56619bee9a3c5db163966a7ac0e11251ba4be8225f08c"
+  },
+  "dinov3": {
+    "complete": true,
+    "visible_rows": 53208,
+    "scan_embeddings": 50400,
+    "sim2_embeddings": 2808,
+    "dimensions": 768,
+    "projection_fits": 8,
+    "publication": "dinov3/publication.json",
+    "verification_sha256": "d7545d474d9df4bc20722a49ea670a637d53bad26f8ea094325bc90d0727e04a"
   }
 }
