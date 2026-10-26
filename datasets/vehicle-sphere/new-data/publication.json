@@ -43,7 +43,7 @@
   "retained_historical": 2808,
   "removed_small_scans": 3527,
   "generator_sha256": "88f6c1478a6df68d8fde758f89b33d2ef1db3565aef4121c0c304683766e4364",
-  "viewer_sha256": "c95633c7c8c4cc474f5cf652260528f135ae6961d6df2faf328c77ef9cfbf1da",
+  "viewer_sha256": "f92b1bf1321c12b8d82899eeb7e7f99d83fa411b1c68f19f6ab3923f6c17a3c6",
   "thumbnail_encoding": "lossy WebP thumbnail, not exact encoder input",
   "vector_source": "Bound source rows in retained local dataset; no substituted vectors",
   "maximum_similarity_batch": 256,
